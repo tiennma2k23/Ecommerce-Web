@@ -5,34 +5,74 @@
 }
 
 .signup-page {
-    background-color: #1f1f1f;
     height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
-    justify-content: center;
     overflow: hidden;
-    flex-direction: column;
+    flex-direction: row;
 }
 
-.logo {
-  width: 30%;
+.signup-left {
+  width: 40%;
+  height: 100vh;
+  background-color: #1f1f1f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.signup-logo {
+  width: 50%;
+}
+
+.signupToLogin-btn {
+  width: 300px;
+  padding: 10px 0px;
+  text-align: center;
+  background-color: #fefefe;
+  border-radius: 50px;
+  color: #1f1f1f;
+  font-weight: 600;
+}
+
+.signup-right {
+  width: 60%;
+  height: 100vh;
+  background-color: #fefefe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.signup-text {
+  font-size: 30px;
+  font-weight: 700;
 }
 
 .signup-form {
-  width: 40%;
+  width: 100%;
   margin-top: 20px;
-  color: #fefefe;
+  color: #1f1f1f;
   font-weight: 700;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  text-align: center;
+}
+
+.signup-label {
+  margin: 0 20%;
 }
 
 .signup-form > input {
-  width: 100%;
+  width: 60%;
   padding: 15px;
-  margin-top: 8px;
+  margin: 8px auto;
   border: 1px solid #fefefe;
   background-color: #1f1f1f;
   color: #fefefe;
@@ -55,25 +95,30 @@
   border: 1px solid #1ed760;
 }
 
-.password-container {
+.signup-password-container {
   position: relative;
-  width: 100%;
+  width: 60%;
+  text-align: center;
 }
 
-.password-container input {
+.signup-password-container > input {
   width: 100%;
   padding: 15px;
-  margin-top: 8px;
+  margin: 8px 33%;
   border: 1px solid #fefefe;
   background-color: #1f1f1f;
   color: #fefefe;
   border-radius: 8px;
 }
 
-.toggle-password {
+.signup-password-container > input:nth-of-type(1) {
+  margin-bottom: 15px;
+}
+
+.signup-toggle-password {
   position: absolute;
-  right: 15px;
-  top: 56%;
+  right: -30%;
+  top: 45%;
   transform: translateY(-50%);
   cursor: pointer;
   color: #ccc; 
@@ -87,11 +132,11 @@
   width: 300px;
   padding: 10px 0px;
   text-align: center;
-  background-color: #fefefe;
+  background-color: #1f1f1f;
   border-radius: 50px;
-  color: #1f1f1f;
+  color: #fefefe;
   font-weight: 600;
-  margin-top: 20%;
+  margin-top: 10%;
 }
 
 a {
