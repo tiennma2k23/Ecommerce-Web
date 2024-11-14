@@ -5,18 +5,18 @@
 }
 
 .signup-page {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  flex-direction: row;
 }
 
 .signup-left {
   width: 40%;
   height: 100vh;
-  background-color: #1f1f1f;
+  background-color: wheat;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,7 +25,8 @@
 }
 
 .signup-logo {
-  width: 50%;
+  font-size: 40px;
+  color: white;
 }
 
 .signupToLogin-btn {
@@ -71,28 +72,23 @@
 
 .signup-form > input {
   width: 60%;
-  padding: 15px;
+  padding: 10px;
   margin: 8px auto;
-  border: 1px solid #fefefe;
-  background-color: #1f1f1f;
-  color: #fefefe;
+  border: 1px solid #1f1f1f;
+  color: #1f1f1f;
   border-radius: 8px;
+  font-size: 16px;
 }
 
 .signup-form > input:-webkit-autofill {
-  background-color: #1f1f1f !important;
-  -webkit-box-shadow: 0 0 0 1000px #1f1f1f inset !important;
-  color: #fefefe !important;
-  -webkit-text-fill-color: #fefefe !important;
+  background-color: #fefefe !important;
+  -webkit-box-shadow: 0 0 0 1000px #fefefe inset !important;
+  color: #1f1f1f !important;
+  -webkit-text-fill-color: #1f1f1f !important;
 }
 
 .signup-form > input:nth-of-type(1) {
   margin-bottom: 15px;
-}
-
-.signup-form > input:focus {
-  outline: none;
-  border: 1px solid #1ed760;
 }
 
 .signup-password-container {
@@ -103,12 +99,12 @@
 
 .signup-password-container > input {
   width: 100%;
-  padding: 15px;
+  padding: 10px;
   margin: 8px 33%;
-  border: 1px solid #fefefe;
-  background-color: #1f1f1f;
-  color: #fefefe;
+  border: 1px solid #1f1f1f;
+  color: #1f1f1f;
   border-radius: 8px;
+  font-size: 16px;
 }
 
 .signup-password-container > input:nth-of-type(1) {
@@ -121,7 +117,7 @@
   top: 45%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: #ccc; 
+  color: #0a0909; 
 }
 
 .toggle-password:hover {
@@ -129,14 +125,16 @@
 }
 
 .signup-btn {
-  width: 300px;
+  width: 45%;
   padding: 10px 0px;
   text-align: center;
-  background-color: #1f1f1f;
+  background-color: wheat;
   border-radius: 50px;
   color: #fefefe;
   font-weight: 600;
-  margin-top: 10%;
+  margin: 3% auto 0;
+  cursor: pointer;
+  border: none;
 }
 
 a {
