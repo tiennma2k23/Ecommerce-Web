@@ -131,9 +131,9 @@ public class EmailService {
             double itemPrice = item.getProduct().getPrice() * item.getQuantity();
             sb.append("<tr>")
                     .append("<td>").append(item.getProduct().getName()).append("</td>")
-                    .append("<td>").append("Rs : ").append(item.getProduct().getPrice()).append("</td>")
+                    .append("<td>").append("VND : ").append(item.getProduct().getPrice()).append("</td>")
                     .append("<td>").append(item.getQuantity()).append("</td>")
-                    .append("<td>").append("Rs :").append(itemPrice).append("</td>")
+                    .append("<td>").append("VND :").append(itemPrice).append("</td>")
                     .append("</tr>");
             totalPrice += itemPrice;
         }

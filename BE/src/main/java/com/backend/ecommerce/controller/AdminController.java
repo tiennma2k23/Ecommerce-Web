@@ -81,5 +81,21 @@ public class AdminController {
         categoryService.deleteCategoryById(categoryId);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/orders/current-month")
+    public ResponseEntity<List<Order>> getOrdersInCurrentMonth() {
+        List<Order> orders = orderService.getOrdersInCurrentMonth();
+        return ResponseEntity.ok(orders);
+    }
 
+    @GetMapping("/orders/current-week")
+    public ResponseEntity<List<Order>> getOrdersInCurrentWeek() {
+        List<Order> orders = orderService.getOrdersInCurrentWeek();
+        return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/orders/last-year")
+    public ResponseEntity<List<Order>> getOrdersInLastYear() {
+        List<Order> orders = orderService.getOrdersInLastYear();
+        return ResponseEntity.ok(orders);
+    }
 }

@@ -10,6 +10,7 @@ import javax.mail.MessagingException;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -112,6 +113,25 @@ public class OrderService {
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         List<Order> orders = orderRepository.findByUser(user);
         return orders;
+    }
+
+    public List<Order> getOrdersInCurrentMonth() {
+        LocalDate start = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
+        LocalDate end = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
+        return orderRepository.findByOrderDateBetween(start, end);
+    }
+
+    public List<Order> getOrdersInCurrentWeek() {
+        LocalDate now = LocalDate.now();
+        LocalDate start = now.with(java.time.DayOfWeek.MONDAY);
+        LocalDate end = now.with(java.time.DayOfWeek.SUNDAY);
+        return orderRepository.findByOrderDateBetween(start, end);
+    }
+
+    public List<Order> getOrdersInLastYear() {
+        LocalDate end = LocalDate.now();
+        LocalDate start = end.minusYears(1).plusDays(1); // last year from today's date
+        return orderRepository.findByOrderDateBetween(start, end);
     }
 
 }
