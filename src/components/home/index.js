@@ -8,7 +8,7 @@ import UserEdit from "../admin/userManagement/userEdit";
 import ProductManagement from "../admin/productManagament/productManagement";
 import ProductCreate from "../admin/productManagament/productCreate";
 import ProductEdit from "../admin/productManagament/productEdit";
-// import LoanDetail from "../admin/sell/loanDetail";
+import LoanDetail from "../admin/sell/loanDetail";
 
 export default function Home() {
     return (
@@ -24,7 +24,7 @@ export default function Home() {
                     <Route path="/product-management" element={<ProductManagement />} />
                     <Route path="/product-management/product-create" element={<ProductCreate />} />
                     <Route path="/product-management/product-edit" element={<ProductEdit />} />
-                    {/* <Route path="/loan/loan-detail" element={<LoanDetail />} /> */}
+                    <Route path="/loan/loan-detail" element={<LoanDetail />} />
                 </Routes>
             </div>
         </Router>
