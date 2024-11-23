@@ -21,7 +21,7 @@ const Login = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-
+  
     if (currentState === 'Sign Up') {
       try {
         const response = await CreateAccountApi(
@@ -32,8 +32,8 @@ const Login = () => {
         );
         alert('Account created successfully! Please verify your email');
         setIsAuthenticated(true);
-        setCurrentState('Login');  // Cập nhật state để chuyển qua trang Login
-        navigate("/login");  // Chuyển hướng đến trang Login
+        setCurrentState('Login'); // Cập nhật state để chuyển qua trang Login
+        navigate("/login"); // Chuyển hướng đến trang Login
       } catch (error) {
         alert('Failed to create account. Please try again.');
         console.error(error);
@@ -41,15 +41,18 @@ const Login = () => {
     } else {
       try {
         const response = await LoginApi(formData.email, formData.password);
+        // Lưu token vào localStorage
+        if (response && response.token) {
+          localStorage.setItem('authToken', response.token);
+        }
         setIsAuthenticated(true);
-        navigate("/");  // Chuyển hướng đến trang chủ sau khi đăng nhập thành công
+        navigate("/"); // Chuyển hướng đến trang chủ sau khi đăng nhập thành công
       } catch (error) {
         alert('Login failed. Please check your credentials.');
         console.error(error);
       }
-    }   
-  };
-
+    }
+  };  
 
   return (
     <form

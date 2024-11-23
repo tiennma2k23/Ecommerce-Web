@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from "react-router-dom";
+import { getAllUserApi } from "../../../axios/user";
 import './userManagement.css';
 
 export default function UserManagement() {
@@ -9,32 +10,39 @@ export default function UserManagement() {
     const recordsPerPage = 5;
     const navigate = useNavigate();
 
-    const data = [
-        { id: 100, email: "A@gmail.com", name: "Apple", phone: "09984744883", address: "Hanoi" },
-        { id: 101, email: "B@gmail.com", name: "Banana", phone: "09984744884", address: "Saigon" },
-        { id: 102, email: "C@gmail.com", name: "Cherry", phone: "09984744885", address: "Danang" },
-        { id: 103, email: "D@gmail.com", name: "Date", phone: "09984744886", address: "Hue" },
-        { id: 104, email: "E@gmail.com", name: "Elderberry", phone: "09984744887", address: "Can Tho" },
-        { id: 105, email: "F@gmail.com", name: "Fig", phone: "09984744888", address: "Nha Trang" },
-        { id: 106, email: "G@gmail.com", name: "Grape", phone: "09984744889", address: "Hai Phong" },
-        { id: 107, email: "H@gmail.com", name: "Honeydew", phone: "09984744890", address: "Ha Long" },
-        { id: 108, email: "I@gmail.com", name: "Indian Fig", phone: "09984744891", address: "Da Lat" },
-        { id: 109, email: "J@gmail.com", name: "Jackfruit", phone: "09984744892", address: "Quy Nhon" },
-        { id: 110, email: "K@gmail.com", name: "Mango", phone: "09984744892", address: "Ho Chi Minh" },
-        { id: 111, email: "M@gmail.com", name: "Lemon", phone: "09984744892", address: "Nam Dinh" },
-        { id: 112, email: "L@gmail.com", name: "Egg", phone: "09984744892", address: "Thai Binh" },
-        { id: 113, email: "N@gmail.com", name: "Tomato", phone: "09984744892", address: "Da Nang" },
-        { id: 114, email: "O@gmail.com", name: "Potato", phone: "09984744892", address: "Quang Tri" },
-    ];
-
+    const [users, setUsers] = useState([]); // Khởi tạo là mảng rỗng
     const [searchInput, setSearchInput] = useState("");
+
+    // Gọi API khi component được mount
+    useEffect(() => {
+        async function fetchUsers() {
+            const storedToken = localStorage.getItem('authToken'); // Khai báo storedToken bên trong hàm fetchUsers
+            if (!storedToken) {
+                console.error("Token không tồn tại trong localStorage");
+                return;
+            }
+    
+            try {
+                console.log("Token được sử dụng:", storedToken);
+                const data = await getAllUserApi(storedToken);
+                console.log("Danh sách người dùng:", data);
+                setUsers(Array.isArray(data) ? data : []); // Đảm bảo users luôn là mảng
+            } catch (error) {
+                console.error("Không thể lấy danh sách người dùng:", error);
+                setUsers([]); // Gán mảng rỗng nếu có lỗi
+            }
+        }
+    
+        fetchUsers();
+    }, []); // Chỉ gọi useEffect khi component được mount        
 
     const handleChange = (e) => {
         setSearchInput(e.target.value);
         setCurrentPage(1); 
     };
 
-    const filteredData = data.filter(
+    // Lọc dữ liệu dựa trên từ khóa tìm kiếm
+    const filteredData = users.filter(
         (item) =>
             item.name.toLowerCase().includes(searchInput.toLowerCase()) ||
             item.email.toLowerCase().includes(searchInput.toLowerCase()) ||
@@ -43,8 +51,7 @@ export default function UserManagement() {
 
     const totalPages = Math.ceil(filteredData.length / recordsPerPage);
     
-    // Kiểm tra và đưa currentPage về trang đầu nếu cần
-    const indexOfLastRecord = currentPage > totalPages ? 1 : currentPage * recordsPerPage;
+    const indexOfLastRecord = currentPage * recordsPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
     const currentRecords = filteredData.slice(indexOfFirstRecord, indexOfLastRecord);
 

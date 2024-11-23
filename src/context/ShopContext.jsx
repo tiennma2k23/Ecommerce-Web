@@ -84,6 +84,7 @@ const ShopContextProvider = (props) => {
 
     const logout = () => {
         setIsAuthenticated(false); 
+        localStorage.clear(); 
         navigate('/login'); 
     };
 

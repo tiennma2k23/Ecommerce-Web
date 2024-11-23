@@ -15,6 +15,7 @@ import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import UserManagement from './components/admin/userManagement/userManagement';
 
 const App = () => {
   const { isAuthenticated } = useContext(ShopContext); 
@@ -27,7 +28,7 @@ const App = () => {
     <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
       <ToastContainer />
       <Navbar />
-      <SearchBar />
+      <SearchBar /> 
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/collection' element={<Collection/>} />
@@ -45,6 +46,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path='/admin/user-management' element={<UserManagement/>} />
       </Routes>
       <Footer/>
     </div>
