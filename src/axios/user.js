@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function getAllUserApi(authToken) {
-    const url = "https://cool-actual-liger.ngrok-free.app/admin/users/get"; // Đường dẫn API
+    const url = "http://localhost:9999/admin/users/get"; // Đường dẫn API
     const token = authToken; 
 
     try {
