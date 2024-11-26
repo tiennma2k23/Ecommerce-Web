@@ -113,8 +113,24 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>16</source>
-					<target>16</target>
+					<source>15</source>
+					<target>15</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Main-Class>com.backend.ecommerce.Application</Main-Class> <!-- Đảm bảo thay thế bằng lớp chính của bạn -->
+						</manifestEntries>
+					</archive>
 				</configuration>
 			</plugin>
 			<plugin>
