@@ -49,4 +49,22 @@ async function LoginApi(email, password) {
     }
 }
 
-export { CreateAccountApi, LoginApi };
+async function LogoutApi(token) {
+    try {
+        const response = await axios.post(
+            'http://192.168.10.101:9999/auth/logout',
+            null,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error during logout:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+export { CreateAccountApi, LoginApi, LogoutApi };
