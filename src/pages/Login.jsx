@@ -44,6 +44,12 @@ const Login = () => {
         // Lưu token vào localStorage
         if (response && response.token) {
           localStorage.setItem('authToken', response.token);
+          localStorage.setItem('userName', response.name);
+          localStorage.setItem('userId', response.userId);
+          localStorage.setItem('userEmail', response.email);
+          localStorage.setItem('userName', response.name);
+          localStorage.setItem('userRole', response.role);
+          localStorage.setItem('defaultCartId', response.defaultCartId);
         }
         setIsAuthenticated(true);
         navigate("/"); // Chuyển hướng đến trang chủ sau khi đăng nhập thành công
