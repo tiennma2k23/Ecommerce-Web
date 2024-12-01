@@ -67,4 +67,30 @@ async function LogoutApi(token) {
     }
 }
 
-export { CreateAccountApi, LoginApi, LogoutApi };
+async function CreateCartApi(userId) {
+    try {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            throw new Error('Authorization token is missing');
+        }
+
+        const response = await axios.post(
+            `http://192.168.10.101:9999/cart/create`,
+            null,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                params: {
+                    user_id: userId,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error during CreateCartApi: ', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+export { CreateAccountApi, LoginApi, LogoutApi, CreateCartApi };
