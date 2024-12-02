@@ -15,7 +15,6 @@ const ShopContextProvider = (props) => {
     const [showSearch,setShowSearch] = useState(false);
     const [cartItems,setCartItems] = useState({});
     const [isAuthenticated, setIsAuthenticated] = useState(false); 
-    const [isAuthenticated, setIsAuthenticated] = useState(false); 
     const navigate = useNavigate();
 
     const addToCart = async (itemId, size) => {
@@ -111,8 +110,6 @@ const ShopContextProvider = (props) => {
         search,setSearch,showSearch,setShowSearch,
         cartItems,addToCart,
         getCartCount,updateQuantity,
-        getCartAmount, navigate, 
-        isAuthenticated, setIsAuthenticated, logout
         getCartAmount, navigate, 
         isAuthenticated, setIsAuthenticated, logout
     }
