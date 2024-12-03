@@ -1,5 +1,5 @@
 import React, {useContext } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ShopContext } from '../src/context/ShopContext';
 import Home from './pages/Home'
 import Collection from './pages/Collection'
@@ -15,7 +15,9 @@ import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UserManagement from './components/admin/userManagement/userManagement';
+import LayoutDefault from './components/admin/layouts/LayoutDefault';
+
+
 
 const App = () => {
   const { isAuthenticated } = useContext(ShopContext); 
@@ -24,33 +26,49 @@ const App = () => {
     return isAuthenticated ? children : <Navigate to="/login" />;
   };
 
+  const location = useLocation();
+  const isAdminRoute = location?.pathname?.startsWith("/admin") ;
+  const isAdmin = localStorage.getItem('role') == 'ADMIN'
+  console.log(isAdmin);
+
+
+// Ví dụ sử dụng:
+
+
+
   return (
-    <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
-      <ToastContainer />
-      <Navbar />
-      <SearchBar /> 
-      <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/collection' element={<Collection/>} />
-        <Route path='/about' element={<About/>} />
-        <Route path='/contact' element={<Contact/>} />
-        <Route path='/product/:productId' element={<Product/>} />
-        <Route path='/cart' element={<Cart/>} />
-        <Route path='/login' element={<Login/>} />
-        <Route path='/place-order' element={<PlaceOrder/>} />
-        <Route
-          path="/orders"
-          element={
-            <ProtectedRoute>
-              <Orders />
-            </ProtectedRoute>
-          }
-        />
-        <Route path='/admin/user-management' element={<UserManagement/>} />
-      </Routes>
-      <Footer/>
-    </div>
-  )
+    (isAdminRoute && isAdmin) ? (
+        <LayoutDefault />
+      ) : (
+      <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+        <ToastContainer />
+        <Navbar />
+        <SearchBar /> 
+        <Routes>
+          <Route path='/' element={<Home/>} />
+          <Route path='/collection' element={<Collection/>} />
+          <Route path='/about' element={<About/>} />
+          <Route path='/contact' element={<Contact/>} />
+          <Route path='/product/:productId' element={<Product/>} />
+          <Route path='/cart' element={<Cart/>} />
+          <Route path='/login' element={<Login/>} />
+          <Route path='/place-order' element={<PlaceOrder/>} />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <Footer/>
+      </div>
+    )
+  );
+  
+
+  
 }
 
 export default App

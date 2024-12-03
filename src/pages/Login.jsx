@@ -44,6 +44,7 @@ const Login = () => {
         // Lưu token vào localStorage
         if (response && response.token) {
           localStorage.setItem('authToken', response.token);
+          localStorage.setItem('role', response.role)
         }
         setIsAuthenticated(true);
         navigate("/"); // Chuyển hướng đến trang chủ sau khi đăng nhập thành công
