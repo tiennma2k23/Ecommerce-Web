@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function getAllCategoryApi(authToken) {
-    const url = "http://13.76.169.48:9999/admin/category/all"; // Đường dẫn API
+    const url = "https://ecommercebe.southeastasia.cloudapp.azure.com/admin/category/all"; // Đường dẫn API
     const token = authToken; 
 
     try {

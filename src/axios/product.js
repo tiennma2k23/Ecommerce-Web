@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function getAllProductApi(authToken) {
-    const url = "http://13.76.169.48:9999/user/products/all"; // Đường dẫn API
+    const url = "https://ecommercebe.southeastasia.cloudapp.azure.com/user/products/all"; // Đường dẫn API
     const token = authToken; 
 
     try {
@@ -23,7 +23,7 @@ async function getAllProductApi(authToken) {
 }
 
 async function createProductApi(authToken, categoryId, name, image_1, price, description, quantity) {
-    const url = `http://13.76.169.48:9999/admin/products/add?categoryId=${categoryId}`; // Đường dẫn API
+    const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/admin/products/add?categoryId=${categoryId}`; // Đường dẫn API
     const token = authToken; // Thay authToken bằng giá trị token hợp lệ
 
     try {
@@ -56,7 +56,7 @@ async function createProductApi(authToken, categoryId, name, image_1, price, des
 }
 
 async function updateProductApi(authToken, categoryId, id, name, price, description, quantity) {
-    const url = `http://13.76.169.48:9999/admin/products/update?categoryId=${categoryId}`; // Đường dẫn API
+    const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/admin/products/update?categoryId=${categoryId}`; // Đường dẫn API
 
     try {
         const response = await axios.put(
@@ -96,7 +96,7 @@ async function updateProductApi(authToken, categoryId, id, name, price, descript
 }
 
 async function deleteProductApi(authToken, id) {
-    const url = `http://13.76.169.48:9999/admin/products/delete?id=${id}`; // Đường dẫn API
+    const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/admin/products/delete?id=${id}`; // Đường dẫn API
 
     try {
         const response = await axios.delete(url, {
