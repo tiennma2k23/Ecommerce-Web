@@ -23,4 +23,33 @@ async function getAllUserApi(authToken) {
     
 }
 
-export { getAllUserApi };
+async function changeRole(userEmail) {
+    const token = localStorage.getItem('authToken');  // Lấy token từ localStorage
+    
+    if (!token) {
+        console.error("Token không tồn tại trong localStorage");
+        return;
+    }
+
+    const url = `http://192.168.10.101:9999/admin/users/${userEmail}/role?newRole=ADMIN`;
+
+    try {
+        const response = await axios.put(url, {}, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,  // Thêm token vào header
+            },
+        });
+
+        console.log("Thay đổi vai trò thành công:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Lỗi khi thay đổi vai trò:", error);
+        throw error;
+    }
+}
+
+export { 
+    getAllUserApi,
+    changeRole
+};

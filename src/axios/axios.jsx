@@ -49,4 +49,26 @@ async function LoginApi(email, password) {
     }
 }
 
-export { CreateAccountApi, LoginApi };
+async function LogoutApi(authToken) {
+    try {
+        const config = {
+            method: 'post',
+            url: 'http://192.168.10.101:9999/auth/logout',
+            headers: {
+                'Authorization': `Bearer ${authToken}` // Đảm bảo có tiền tố Bearer
+            }
+        };
+
+        const response = await axios.request(config);
+        return response.data;
+    } catch (error) {
+        console.error('Error during logout:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+export { 
+    CreateAccountApi, 
+    LoginApi,
+    LogoutApi 
+};
