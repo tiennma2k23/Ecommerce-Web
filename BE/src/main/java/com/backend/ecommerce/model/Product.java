@@ -20,19 +20,24 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
-
+    @Lob
     @Column(nullable = false)
     private String image_1;
+    @Lob
     @Column(nullable = true)
     private String image_2;
+    @Lob
     @Column(nullable = true)
     private String image_3;
+    @Lob
     @Column(nullable = true)
     private String image_4;
+    @Lob
     @Column(nullable = true)
     private String image_5;
     @Column(nullable = false)
     private Double price;
+    @Lob
     @Column(nullable = false)
     private String description;
 

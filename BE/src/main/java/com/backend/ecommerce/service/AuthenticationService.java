@@ -127,5 +127,21 @@ public class AuthenticationService {
         tokenRepository.save(storedToken);
     }
 
+    public boolean isTokenValid(String token) {
+        try {
+            var storedToken = tokenRepository.findByToken(token);
+            if (storedToken.isEmpty()) {
+                return false; // Token không tồn tại
+            }
+
+            Token tokenEntity = storedToken.get();
+            return !tokenEntity.isExpired() && !tokenEntity.isRevoked();
+        } catch (Exception ex){
+            throw ex;
+        }
+
+    }
+
+
 
 }

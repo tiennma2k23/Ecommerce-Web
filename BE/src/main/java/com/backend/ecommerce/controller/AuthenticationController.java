@@ -78,6 +78,23 @@ public class AuthenticationController {
         return ResponseEntity.ok("User has been logged out successfully.");
     }
 
+    @GetMapping("/validate-token")
+    public ResponseEntity<Boolean> validateToken(@RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return ResponseEntity.badRequest().body(false); // Trả về false nếu header không hợp lệ
+        }
+
+        String token = authorizationHeader.substring(7); // Lấy token sau "Bearer "
+        try {
+            boolean isValid = authenticationService.isTokenValid(token);
+            return ResponseEntity.ok(isValid);
+        }
+        catch (Exception ex){
+            return ResponseEntity.ok(false);
+        }
+
+    }
+
 
 
 }
