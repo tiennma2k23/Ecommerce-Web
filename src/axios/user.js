@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function getAllUserApi(authToken) {
-    const url = "http://192.168.10.101:9999/admin/users/get"; // Đường dẫn API
+    const url = "http://13.76.169.48:9999/admin/users/get"; // Đường dẫn API
     const token = authToken; 
 
     try {
@@ -31,7 +31,7 @@ async function changeRole(userEmail) {
         return;
     }
 
-    const url = `http://192.168.10.101:9999/admin/users/${userEmail}/role?newRole=ADMIN`;
+    const url = `http://13.76.169.48:9999/admin/users/${userEmail}/role?newRole=ADMIN`;
 
     try {
         const response = await axios.put(url, {}, {

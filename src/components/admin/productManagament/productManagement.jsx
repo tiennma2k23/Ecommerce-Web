@@ -1,16 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faCirclePlus, faPenToSquare, faTrash, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faMagnifyingGlass,
+    faCirclePlus,
+    faPenToSquare,
+    faTrash,
+    faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllCategoryApi } from "../../../axios/category";
 import { getAllProductApi, deleteProductApi } from "../../../axios/product";
-import './productManagement.css';
+import "./productManagement.css";
 
 export default function ProductManagement() {
-    const [categorys, setCategorys] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [showCategoryList, setShowCategoryList] = useState(false);
-    const [product, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 4;
     const navigate = useNavigate();
@@ -37,24 +43,28 @@ export default function ProductManagement() {
                 setProducts(Array.isArray(data) ? data : []);
             } catch (error) {
                 console.error("Không thể lấy danh sách sản phẩm:", error);
-                setProducts([]); 
+                setProducts([]);
             }
         }
 
         fetchProducts();
     }, []);
 
-    const filteredData = product.filter(
+    const filteredData = products.filter(
         (item) =>
             item.name.toLowerCase().includes(searchInput.toLowerCase()) &&
             (selectedCategory ? item.category.name === selectedCategory : true)
     );
 
+    console.log("Dữ liệu sản phẩm sau khi lọc:", filteredData);
+
     const totalPages = Math.max(Math.ceil(filteredData.length / recordsPerPage), 1);
 
     const indexOfLastRecord = Math.min(currentPage * recordsPerPage, filteredData.length);
-    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+    const indexOfFirstRecord = Math.max(indexOfLastRecord - recordsPerPage, 0);
     const currentRecords = filteredData.slice(indexOfFirstRecord, indexOfLastRecord);
+
+    console.log("Dữ liệu sản phẩm trên trang hiện tại:", currentRecords);
 
     const handlePrevPage = () => {
         if (currentPage > 1) {
@@ -75,8 +85,8 @@ export default function ProductManagement() {
         }
         try {
             const response = await getAllCategoryApi(storedToken);
-            setCategorys(Array.isArray(response) ? response : []);
-            setShowCategoryList(!showCategoryList); 
+            setCategories(Array.isArray(response) ? response : []);
+            setShowCategoryList(!showCategoryList);
         } catch (error) {
             console.error("Không thể lấy danh sách danh mục:", error);
         }
@@ -109,11 +119,17 @@ export default function ProductManagement() {
             console.error("Token không tồn tại trong localStorage");
             return;
         }
-    
+
         try {
-            await deleteProductApi(storedToken, id); // Truyền token vào hàm API
-            // Sau khi xóa thành công, cập nhật danh sách sản phẩm
-            setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
+            await deleteProductApi(storedToken, id);
+            setProducts((prevProducts) => {
+                const updatedProducts = prevProducts.filter((product) => product.id !== id);
+                const newTotalPages = Math.max(Math.ceil(updatedProducts.length / recordsPerPage), 1);
+                if (currentPage > newTotalPages) {
+                    setCurrentPage(newTotalPages);
+                }
+                return updatedProducts;
+            });
             console.log(`Sản phẩm có ID ${id} đã được xóa thành công.`);
         } catch (error) {
             console.error("Lỗi khi xóa sản phẩm:", error);
@@ -127,8 +143,8 @@ export default function ProductManagement() {
                     <div className="product-btn">
                         <h1>Danh sách sản phẩm</h1>
                         <Link to="/admin/product-management/product-create" className="btn-add">
-                                <FontAwesomeIcon icon={faCirclePlus} />
-                                <span>Thêm sản phẩm</span>
+                            <FontAwesomeIcon icon={faCirclePlus} />
+                            <span>Thêm sản phẩm</span>
                         </Link>
                     </div>
                     <div className="product-content">
@@ -147,27 +163,24 @@ export default function ProductManagement() {
                         <label htmlFor="category">
                             <span>Danh mục</span>
                             <div className="product-search">
-                                <input 
-                                    type="text" 
-                                    id="category" 
-                                    name="category" 
+                                <input
+                                    type="text"
+                                    id="category"
+                                    name="category"
                                     value={selectedCategory || ""}
                                     onClick={handleCategory}
-                                    readOnly 
+                                    readOnly
                                 />
                                 {showCategoryList && (
                                     <ul className="category-selection" ref={categoryListRef}>
-                                        {categorys.map((cat, index) => (
-                                            <li 
-                                                key={index} 
-                                                onClick={() => selectCategory(cat.name)}
-                                            >
+                                        {categories.map((cat, index) => (
+                                            <li key={index} onClick={() => selectCategory(cat.name)}>
                                                 {cat.name}
                                             </li>
                                         ))}
                                     </ul>
                                 )}
-                                <FontAwesomeIcon icon={faChevronDown}  className="icon-down"/>
+                                <FontAwesomeIcon icon={faChevronDown} className="icon-down" />
                             </div>
                         </label>
                     </div>
@@ -182,42 +195,54 @@ export default function ProductManagement() {
                             <th>Số lượng</th>
                             <th>Mô tả</th>
                             <th>Ảnh minh họa</th>
-                            <th>Danh mục</th> {/* Cột danh mục */}
+                            <th>Danh mục</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {currentRecords.map((item) => (
-                            <tr key={item.id}>
-                                <td>{item.id}</td>
-                                <td className="table-cell">{item.name}</td>
-                                <td>{item.price}</td>
-                                <td>{item.quantity}</td>
-                                <td className="table-cell">{item.description}</td>
-                                <td>
-                                    {item.image_1 ? (
-                                        <img 
-                                            src={item.image_1.startsWith("data:image/") ? item.image_1 : `data:image/jpeg;base64,${item.image_1}`} 
-                                            alt={item.name} 
-                                            style={{ width: "50px", height: "55px", objectFit: "cover" }}
-                                        />
-                                    ) : (
-                                        <span>Không có ảnh</span>
-                                    )}
-                                </td>
-                                <td>{item.category.name}</td> {/* Hiển thị tên danh mục */}
-                                <td>
-                                    <div className="product-btn">
-                                        <button className="btn-edit" onClick={() => handleEdit(item)}>
-                                            <FontAwesomeIcon icon={faPenToSquare} />
-                                        </button>
-                                        <button className="btn-delete" onClick={() => handleDelete(item.id)}>
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                    </div>
+                        {currentRecords.length > 0 ? (
+                            currentRecords.map((item) => (
+                                <tr key={item.id}>
+                                    <td>{item.id}</td>
+                                    <td className="table-cell">{item.name}</td>
+                                    <td>{item.price}</td>
+                                    <td>{item.quantity}</td>
+                                    <td className="table-cell">{item.description}</td>
+                                    <td>
+                                        {item.image_1 ? (
+                                            <img
+                                                src={
+                                                    item.image_1.startsWith("data:image/")
+                                                        ? item.image_1
+                                                        : `data:image/jpeg;base64,${item.image_1}`
+                                                }
+                                                alt={item.name}
+                                                style={{ width: "50px", height: "55px", objectFit: "cover" }}
+                                            />
+                                        ) : (
+                                            <span>Không có ảnh</span>
+                                        )}
+                                    </td>
+                                    <td>{item.category.name}</td>
+                                    <td>
+                                        <div className="product-btn">
+                                            <button className="btn-edit" onClick={() => handleEdit(item)}>
+                                                <FontAwesomeIcon icon={faPenToSquare} />
+                                            </button>
+                                            <button className="btn-delete" onClick={() => handleDelete(item.id)}>
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="8" style={{ textAlign: "center" }}>
+                                    Không có sản phẩm nào để hiển thị.
                                 </td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -226,7 +251,9 @@ export default function ProductManagement() {
                 <button onClick={handlePrevPage} disabled={currentPage === 1}>
                     Trước
                 </button>
-                <span>Trang {currentPage} trên {totalPages}</span>
+                <span>
+                    Trang {currentPage} trên {totalPages}
+                </span>
                 <button onClick={handleNextPage} disabled={currentPage === totalPages}>
                     Sau
                 </button>
