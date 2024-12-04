@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import GroceryIcon from "../../components/Assets/product-detail/grocery.svg"
+import "./productDetail.css"
 import axios from "axios";
+
 function ProductDetail() {
   //lấy tham số của đường dẫn động
   const { id } = useParams();
@@ -24,16 +27,31 @@ function ProductDetail() {
   }
   return (
     <>
-      <ul>
-        <li>{productDetail.id}</li>
-        <li>{productDetail.title}</li>
-        <li>{productDetail.category}</li>
-        <li>
-          <img src={productDetail.thumbnail} />
-        </li>
-        <li>{productDetail.price}</li>
-        <li>{productDetail.rating}</li>
-      </ul>
+      <div className="product-detail">
+        <div className="thumbnails">
+          <div className="main-thumbnail">
+            <img src={productDetail.thumbnail} className="img-thumbnail" />
+          </div>
+          <div className="product-thumbnails">
+            <img src={productDetail.thumbnail} className="product-thumbnail" />
+            <img src={productDetail.thumbnail} />
+          </div>
+        </div>
+        <div className="detail">
+          <div className="product-title">{productDetail.title}</div>
+          <div className="price-category">
+            <div className="product-price">{productDetail.price} VNĐ</div>
+            <div className="category">
+              <span className="product-category">Danh mục </span>
+              <img src={GroceryIcon} alt="" className="icon-category" />
+              <div className="product-category">{productDetail.category}</div>
+            </div>
+          </div>
+          <div className="product-quantity">{productDetail.stock}</div>
+          <div className="product-quantity">{productDetail.description}</div>
+        </div>
+
+      </div>
     </>
   );
 }

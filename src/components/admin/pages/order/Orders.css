@@ -1,0 +1,101 @@
+/* Table container chỉnh sửa */
+.order-container {
+    margin: 20px;
+    width: 100%;
+}
+
+.order-table  {
+    border: 1px solid #ddd;
+    border-radius: 100px;
+}
+
+.order-tabs {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+}
+
+.order-tab {
+    position: relative;
+    padding: 10px 20px;
+    margin-right: 10px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    color: #555;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.order-tab.active {
+    font-weight: bold;
+    color: #222;
+    border-bottom: 2px solid #f0ad4e; /* Màu vàng cho tab đang chọn */
+}
+
+.order-tab:hover {
+    color: #333;
+}
+
+.order-tab span {
+    font-size: 0.9em;
+    background: #ddd;
+    color: #555;
+    padding: 2px 6px;
+    border-radius: 12px;
+    margin-left: 8px;
+    font-weight: normal;
+}
+
+.order-tab.active span {
+    background: #f0ad4e; /* Màu vàng cho số đếm của tab đang chọn */
+    color: #fff;
+}
+
+/* Thêm lại màu trạng thái */
+.status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+}
+
+/* Xanh lá cho trạng thái "Dispatched" */
+.status-green {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Đỏ cho trạng thái "Cancelled" */
+.status-red {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Xanh dương cho trạng thái "Processing" */
+.status-blue {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.order-search {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 10px 0px;
+}
+
+.order-search input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+
+}
+
+.search-btn img {
+    width: 20px;
+    margin: 2px;
+}

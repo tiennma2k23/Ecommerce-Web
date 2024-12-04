@@ -39,12 +39,11 @@ function Dashboard() {
 
   const fetchOrders = async () => {
     try {
-      const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraGFuaGx5cHQxNEBnbWFpbC5jb20iLCJpYXQiOjE3MzI1MTc0MTYsImV4cCI6MTczMjUzMTgxNn0.00mOJqJS6nWWC9L2xWMgcjLDO8bkHOoMZsHTlAt7JeU"
-
+      const token = localStorage.getItem('authToken')
       // Gửi yêu cầu API với token trong header Authorization
       const response = await axios.get("http://192.168.10.101:9999/admin/orders/current-month", {
         headers: {
-          Authorization: `Bearer ${token}` // Cung cấp token ở đây
+          Authorization: {token} // Cung cấp token ở đây
         }
       });
 

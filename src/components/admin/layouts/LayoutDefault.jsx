@@ -10,9 +10,10 @@ import UserEdit from "../pages/userManagement/userEdit";
 import UserCreate from "../pages/userManagement/userCreate";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Header from "../components/Header/Header";
-import OrderManagement from "../pages/sales/Orders";
+import OrderManagement from "../pages/order/Orders";
 import Setting from "../pages/setting/Setting";
 import "./LayoutDefault.css";
+import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 
 function LayoutDefault() {
   return (
@@ -21,6 +22,8 @@ function LayoutDefault() {
         <Sidebar />
         <div className="content">
           <Header />
+          <Breadcrumbs className="breadcrumbs"/>
+
           <div className="main-content">
             <Routes>
               {/* Redirect /admin to /admin/dashboard */}
