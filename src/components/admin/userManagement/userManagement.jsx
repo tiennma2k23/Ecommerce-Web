@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from "react-router-dom";
-import { getAllUserApi } from "../../../axios/user";
+import { faMagnifyingGlass, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
+import { getAllUserApi, changeRole } from "../../../axios/user";
 import './userManagement.css';
 
 export default function UserManagement() {
@@ -45,11 +45,11 @@ export default function UserManagement() {
     const filteredData = users.filter((item) => {
         const name = item.name || ""; // Đảm bảo có giá trị chuỗi mặc định
         const email = item.email || "";
-        const phone = item.phone || "";
+        const role = item.role || "";
         return (
             name.toLowerCase().includes(searchInput.toLowerCase()) ||
             email.toLowerCase().includes(searchInput.toLowerCase()) ||
-            phone.includes(searchInput)
+            role.includes(searchInput)
         );
     });    
 
@@ -71,9 +71,20 @@ export default function UserManagement() {
         }
     };
 
-    const handleEdit = (user) => {
-        navigate("/user-management/user-edit", { state: { user } });
-    };
+    const handleEdit = async (userEmail) => {
+        try {
+            // Change the user's role
+            await changeRole(userEmail);
+            
+            // Update the users state to reflect the role change
+            const updatedUsers = users.map((user) =>
+                user.email === userEmail ? { ...user, role: newRole } : user
+            );
+            setUsers(updatedUsers);
+        } catch (error) {
+            console.error("Error changing role:", error);
+        }
+    };    
 
     return (
         <div className="user-container">
@@ -83,12 +94,11 @@ export default function UserManagement() {
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                     <input
                         name="search"
-                        placeholder="Nhập Tên/ Email/ Số điện thoại"
+                        placeholder="Nhập Tên/ Email/ Vai trò"
                         value={searchInput}
                         onChange={handleChange}
                     />
                 </div>
-                <Link to="/user-management/user-create" className="btn-add">Thêm tài khoản</Link>
             </div>
 
             <table className="user-table">
@@ -97,9 +107,8 @@ export default function UserManagement() {
                         <th>ID</th>
                         <th>Email</th>
                         <th>Tên</th>
-                        <th>Số điện thoại</th>
-                        <th>Địa chỉ</th>
-                        <th>Hành động</th>
+                        <th>Vai trò</th>
+                        <th>Cấp quyền</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,16 +116,15 @@ export default function UserManagement() {
                         <tr key={item.id}>
                             <td>{item.id}</td>
                             <td>{item.email}</td>
-                            <td>{item.name}</td>
-                            <td>{item.phone}</td>
-                            <td>{item.address}</td>
+                            <td>{item.firstname} {item.lastname}</td>
+                            <td>{item.role}</td>
                             <td>
                                 <div className="user-btn">
-                                    <button className="btn-edit" onClick={() => handleEdit(item)}>
+                                    <button
+                                        className="btn-edit"
+                                        onClick={() => handleEdit(item.email)} // Pass email and current role
+                                    >
                                         <FontAwesomeIcon icon={faPenToSquare} />
-                                    </button>
-                                    <button className="btn-delete">
-                                        <FontAwesomeIcon icon={faTrash} />
                                     </button>
                                 </div>
                             </td>

@@ -16,6 +16,9 @@ import SearchBar from './components/SearchBar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserManagement from './components/admin/userManagement/userManagement';
+import ProductManagement from './components/admin/productManagament/productManagement';
+import ProductCreate from './components/admin/productManagament/productCreate';
+import ProductEdit from './components/admin/productManagament/productEdit';
 
 const App = () => {
   const { isAuthenticated } = useContext(ShopContext); 
@@ -47,6 +50,9 @@ const App = () => {
           }
         />
         <Route path='/admin/user-management' element={<UserManagement/>} />
+        <Route path='/admin/product-management' element={<ProductManagement/>} />
+        <Route path='/admin/product-management/product-create' element={<ProductCreate/>} />
+        <Route path='/admin/product-management/product-edit' element={<ProductEdit/>} />
       </Routes>
       <Footer/>
     </div>

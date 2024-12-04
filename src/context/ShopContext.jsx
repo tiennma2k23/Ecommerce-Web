@@ -3,6 +3,7 @@ import { products } from "../assets/assets";
 import { toast } from "react-toastify";
 import Product from "../pages/Product";
 import { useNavigate } from "react-router-dom";
+import { LogoutApi } from "../axios/axios";
 
 export const ShopContext = createContext();
 
@@ -82,12 +83,26 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     }
 
-    const logout = () => {
-        setIsAuthenticated(false); 
-        localStorage.clear(); 
-        navigate('/login'); 
+    const logout = async () => {
+        try {
+            const authToken = localStorage.getItem('authToken');
+            
+            if (!authToken) {
+                console.warn('No auth token found in localStorage');
+                navigate('/login');
+                return;
+            }
+    
+            await LogoutApi(authToken);
+    
+            setIsAuthenticated(false);
+            localStorage.clear();
+            navigate('/login');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
     };
-
+    
     const value = {
         products, currency, delivery_fee,
         search,setSearch,showSearch,setShowSearch,

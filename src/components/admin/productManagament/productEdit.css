@@ -47,11 +47,11 @@
     background-color: rgb(41 43 42 / 63%);
 }
 
-.image-preview {
-    width: 300px; 
-    height: 300px; 
-    object-fit: cover; 
-    border-radius: 8px; 
-    margin: 10px auto;
-    border: 1px solid #ddd; 
+img.image-preview {
+    width: 300px !important;
+    height: 300px !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+    margin: 10px auto !important;
+    border: 1px solid #ddd !important;
 }
