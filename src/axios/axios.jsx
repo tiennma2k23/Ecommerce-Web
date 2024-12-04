@@ -93,4 +93,19 @@ async function CreateCartApi(userId) {
     }
 }
 
-export { CreateAccountApi, LoginApi, LogoutApi, CreateCartApi };
+async function CheckTokenApi() {
+    try {
+        const token = localStorage.getItem("authToken");
+
+        // Kiểm tra trạng thái fulfilled của token
+        if (token) {
+            return true; // Token hợp lệ (fulfilled với true)
+        }
+        return false; // Token không hợp lệ
+    } catch (error) {
+        console.error("Error while checking token:", error.message);
+        return false;
+    }
+}
+
+export { CreateAccountApi, LoginApi, LogoutApi, CreateCartApi, CheckTokenApi };

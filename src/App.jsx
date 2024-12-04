@@ -1,4 +1,4 @@
-import React, {useContext } from 'react'
+import React, {useContext, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ShopContext } from '../src/context/ShopContext';
 import Home from './pages/Home'
@@ -16,12 +16,24 @@ import SearchBar from './components/SearchBar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserManagement from './components/admin/userManagement/userManagement';
+import { CheckTokenApi } from './axios/axios';
 
 const App = () => {
-  const { isAuthenticated } = useContext(ShopContext); 
+  const { isAuthenticated, setIsAuthenticated } = useContext(ShopContext);
+
+  useEffect(() => {
+    const checkToken = async () => {
+        const isLoggedIn = await CheckTokenApi();
+        setIsAuthenticated(isLoggedIn);
+    };
+
+    checkToken();
+  }, []);
+
+  console.log(isAuthenticated);
 
   const ProtectedRoute = ({ children }) => {
-    return isAuthenticated ? children : <Navigate to="/login" />;
+    return isAuthenticated ? children : <Navigate to="/login"/>;
   };
 
   return (
