@@ -52,7 +52,11 @@ public class ProductService {
             existingProduct.setDescription(product.getDescription());
             existingProduct.setPrice(product.getPrice());
             existingProduct.setQuantity(product.getQuantity());
-
+            existingProduct.setImage_1(product.getImage_1()!=null? product.getImage_1() : existingProduct.getImage_1());
+            existingProduct.setImage_2(product.getImage_2()!=null? product.getImage_2() : existingProduct.getImage_2());
+            existingProduct.setImage_3(product.getImage_3()!=null? product.getImage_3() : existingProduct.getImage_3());
+            existingProduct.setImage_4(product.getImage_4()!=null? product.getImage_4() : existingProduct.getImage_4());
+            existingProduct.setImage_5(product.getImage_5()!=null? product.getImage_5() : existingProduct.getImage_5());
             Category category = categoryRepository.findById(categoryId).orElse(null);
             if (category != null) {
                 existingProduct.setCategory(category);
