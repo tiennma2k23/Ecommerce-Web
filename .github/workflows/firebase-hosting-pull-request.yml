@@ -12,8 +12,25 @@ jobs:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
+      # Checkout the code from the PR branch
       - uses: actions/checkout@v4
-      - run: npm run build
+
+      # Set up Node.js environment (if not set already in your repo)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Chỉnh sửa theo phiên bản Node.js bạn đang sử dụng
+
+      # Cài đặt dependencies với npm
+      - run: npm install
+
+      # Cài đặt các dependencies cần thiết nếu sử dụng yarn
+      - run: yarn install
+
+      # Chạy ứng dụng với `yarn start` để khởi động
+      - run: yarn start
+
+      # Deploy to Firebase Hosting (only after build)
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}

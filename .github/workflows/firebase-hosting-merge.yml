@@ -10,8 +10,25 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the code
       - uses: actions/checkout@v4
+
+      # Set up Node.js environment (if not set already in your repo)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Phiên bản Node.js bạn đang sử dụng
+
+      # Cài đặt các dependencies bằng npm
+      - run: npm install
+
+      # Cài đặt các dependencies bằng yarn
+      - run: yarn install
+
+      # Build dự án với npm run build (tạo thư mục dist)
       - run: npm run build
+
+      # Deploy lên Firebase Hosting
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
