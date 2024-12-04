@@ -13,7 +13,7 @@ async function CreateAccountApi(firstName, lastName, email, password) {
     try {
         // Make the POST request to the server API
         const response = await axios.post(
-            'http://13.76.169.48:9999/auth/sign-up',
+            'https://ecommercebe.southeastasia.cloudapp.azure.com/auth/sign-up',
             requestData,
             {
                 headers: {
@@ -36,7 +36,7 @@ async function CreateAccountApi(firstName, lastName, email, password) {
 
 async function LoginApi(email, password) {
     try {
-        const response = await axios.post('http://13.76.169.48:9999/auth/sign-in', {
+        const response = await axios.post('https://ecommercebe.southeastasia.cloudapp.azure.com/auth/sign-in', {
             email: email,
             password: password
         });
@@ -53,7 +53,7 @@ async function LogoutApi(authToken) {
     try {
         const config = {
             method: 'post',
-            url: 'http://13.76.169.48:9999/auth/logout',
+            url: 'https://ecommercebe.southeastasia.cloudapp.azure.com/auth/logout',
             headers: {
                 'Authorization': `Bearer ${authToken}` // Đảm bảo có tiền tố Bearer
             }
