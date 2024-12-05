@@ -800,6 +800,6 @@ async function fetchProductData() {
 fetchProductData();
 
 // Sử dụng dữ liệu sau khi đã gán
-setTimeout(() => {
-    console.log('Product Data in Global Variable:', productData); // Dữ liệu có sẵn ở đây
-}, 1000);
+// setTimeout(() => {
+//     console.log('Product Data in Global Variable:', productData); // Dữ liệu có sẵn ở đây
+// }, 1000);
