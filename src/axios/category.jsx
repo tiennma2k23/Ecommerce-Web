@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-async function getAllUserApi(authToken) {
-    const url = "http://192.168.10.101:9999/admin/users/get"; // Đường dẫn API
+async function getAllCategoryApi(authToken) {
+    const baseUrl = 'https://ecommercebe.southeastasia.cloudapp.azure.com'
+
+    const url = `${baseUrl}/admin/category/all`; // Đường dẫn API
     const token = authToken; 
 
     try {
         const response = await axios.get(url, {
             headers: {
-                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`, 
             },
         });
@@ -23,4 +24,6 @@ async function getAllUserApi(authToken) {
     
 }
 
-export { getAllUserApi };
+export { 
+    getAllCategoryApi
+};

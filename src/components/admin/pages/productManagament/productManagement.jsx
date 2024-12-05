@@ -1,49 +1,71 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faCirclePlus, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+import React, { useState, useEffect, useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faMagnifyingGlass,
+    faCirclePlus,
+    faPenToSquare,
+    faTrash,
+    faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import './productManagement.css';
+import { getAllCategoryApi } from "../../../../axios/category";
+import { getAllProductApi, deleteProductApi } from "../../../../axios/product";
+import "./productManagement.css";
 
 export default function ProductManagement() {
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [showCategoryList, setShowCategoryList] = useState(false);
+    const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const recordsPerPage = 5;
+    const recordsPerPage = 4;
     const navigate = useNavigate();
-
-    const data = [
-        { id: 200, name: "Nike Air Max 270", price: 150, quantity: 20, specialPrice: 135, discount: 10, description: "Giày chạy bộ cao cấp, nhẹ và thoáng khí", image: "nike_air_max_270.jpg" },
-        { id: 201, name: "Adidas Ultraboost", price: 180, quantity: 15, specialPrice: 160, discount: 11, description: "Giày thể thao tăng hiệu suất chạy bộ", image: "adidas_ultraboost.jpg" },
-        { id: 202, name: "Puma Future Rider", price: 120, quantity: 30, specialPrice: 105, discount: 12, description: "Giày thể thao với thiết kế hiện đại", image: "puma_future_rider.jpg" },
-        { id: 203, name: "Under Armour Hovr", price: 140, quantity: 25, specialPrice: 125, discount: 10, description: "Giày tập gym với độ bền cao", image: "under_armour_hovr.jpg" },
-        { id: 204, name: "New Balance 990v5", price: 170, quantity: 12, specialPrice: 155, discount: 9, description: "Giày chạy bộ chuyên dụng", image: "new_balance_990v5.jpg" },
-        { id: 205, name: "Asics Gel-Kayano", price: 160, quantity: 18, specialPrice: 145, discount: 9, description: "Giày chạy bộ hỗ trợ đệm tốt", image: "asics_gel_kayano.jpg" },
-        { id: 206, name: "Reebok Nano X", price: 130, quantity: 22, specialPrice: 115, discount: 11, description: "Giày thể thao đa năng cho tập luyện", image: "reebok_nano_x.jpg" },
-        { id: 207, name: "Jordan Air Zoom", price: 190, quantity: 14, specialPrice: 175, discount: 8, description: "Giày bóng rổ chất lượng cao", image: "jordan_air_zoom.jpg" },
-        { id: 208, name: "Fila Disruptor", price: 90, quantity: 35, specialPrice: 80, discount: 11, description: "Giày thời trang với thiết kế độc đáo", image: "fila_disruptor.jpg" },
-        { id: 209, name: "Converse Chuck Taylor", price: 75, quantity: 40, specialPrice: 65, discount: 13, description: "Giày thể thao cổ điển", image: "converse_chuck_taylor.jpg" },
-        { id: 210, name: "Skechers Go Run", price: 110, quantity: 28, specialPrice: 100, discount: 9, description: "Giày chạy bộ êm ái và nhẹ", image: "skechers_go_run.jpg" },
-        { id: 211, name: "Mizuno Wave Rider", price: 130, quantity: 16, specialPrice: 115, discount: 12, description: "Giày chạy bộ chuyên dụng", image: "mizuno_wave_rider.jpg" },
-        { id: 212, name: "Brooks Ghost", price: 150, quantity: 20, specialPrice: 135, discount: 10, description: "Giày chạy bộ thoải mái", image: "brooks_ghost.jpg" },
-        { id: 213, name: "Hoka One One", price: 165, quantity: 18, specialPrice: 150, discount: 9, description: "Giày chạy đường dài chuyên nghiệp", image: "hoka_one_one.jpg" },
-        { id: 214, name: "Vans Old Skool", price: 85, quantity: 50, specialPrice: 75, discount: 12, description: "Giày thời trang phong cách cổ điển", image: "vans_old_skool.jpg" }
-    ];
-
-
     const [searchInput, setSearchInput] = useState("");
+    const categoryListRef = useRef(null);
+
+    const storedToken = localStorage.getItem("authToken");
 
     const handleChange = (e) => {
         setSearchInput(e.target.value);
-        setCurrentPage(1); 
+        setCurrentPage(1);
     };
 
-    const filteredData = data.filter(
-        (item) => item.name.toLowerCase().includes(searchInput.toLowerCase()) 
+    useEffect(() => {
+        async function fetchProducts() {
+            if (!storedToken) {
+                console.error("Token không tồn tại trong localStorage");
+                return;
+            }
+
+            try {
+                const data = await getAllProductApi(storedToken);
+                console.log("Danh sách sản phẩm:", data);
+                setProducts(Array.isArray(data) ? data : []);
+            } catch (error) {
+                console.error("Không thể lấy danh sách sản phẩm:", error);
+                setProducts([]);
+            }
+        }
+
+        fetchProducts();
+    }, []);
+
+    const filteredData = products.filter(
+        (item) =>
+            item.name.toLowerCase().includes(searchInput.toLowerCase()) &&
+            (selectedCategory ? item.category.name === selectedCategory : true)
     );
 
-    const totalPages = Math.ceil(filteredData.length / recordsPerPage);
+    console.log("Dữ liệu sản phẩm sau khi lọc:", filteredData);
 
-    const indexOfLastRecord = currentPage > totalPages ? 1 : currentPage * recordsPerPage;
-    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+    const totalPages = Math.max(Math.ceil(filteredData.length / recordsPerPage), 1);
+
+    const indexOfLastRecord = Math.min(currentPage * recordsPerPage, filteredData.length);
+    const indexOfFirstRecord = Math.max(indexOfLastRecord - recordsPerPage, 0);
     const currentRecords = filteredData.slice(indexOfFirstRecord, indexOfLastRecord);
+
+    console.log("Dữ liệu sản phẩm trên trang hiện tại:", currentRecords);
 
     const handlePrevPage = () => {
         if (currentPage > 1) {
@@ -57,32 +79,114 @@ export default function ProductManagement() {
         }
     };
 
+    const handleCategory = async () => {
+        if (!storedToken) {
+            console.error("Token không tồn tại trong localStorage");
+            return;
+        }
+        try {
+            const response = await getAllCategoryApi(storedToken);
+            setCategories(Array.isArray(response) ? response : []);
+            setShowCategoryList(!showCategoryList);
+        } catch (error) {
+            console.error("Không thể lấy danh sách danh mục:", error);
+        }
+    };
+
+    const selectCategory = (categoryName) => {
+        setSelectedCategory(categoryName);
+        setShowCategoryList(false);
+        setCurrentPage(1);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (categoryListRef.current && !categoryListRef.current.contains(event.target)) {
+                setShowCategoryList(false);
+            }
+        };
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
+
     const handleEdit = (product) => {
-        navigate("/product-management/product-edit", { state: { product } });
+        navigate("/admin/product-management/product-edit", { state: { product } });
+    };
+
+    const handleDelete = async (id) => {
+        if (!storedToken) {
+            console.error("Token không tồn tại trong localStorage");
+            return;
+        }
+
+        try {
+            await deleteProductApi(storedToken, id);
+            setProducts((prevProducts) => {
+                const updatedProducts = prevProducts.filter((product) => product.id !== id);
+                const newTotalPages = Math.max(Math.ceil(updatedProducts.length / recordsPerPage), 1);
+                if (currentPage > newTotalPages) {
+                    setCurrentPage(newTotalPages);
+                }
+                return updatedProducts;
+            });
+            console.log(`Sản phẩm có ID ${id} đã được xóa thành công.`);
+        } catch (error) {
+            console.error("Lỗi khi xóa sản phẩm:", error);
+        }
     };
 
     return (
         <div className="product-container">
             <div className="product-body">
                 <div className="product-header">
-                    <h1>Danh sách sản phẩm</h1>
-                    <div className="product-content">
-                        <div className="product-search">
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                            <input
-                                name="search"
-                                placeholder="Tìm kiếm sản phẩm theo tên..."
-                                value={searchInput}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <Link to="/product-management/product-create" className="btn-add">
+                    <div className="product-btn">
+                        <h1>Danh sách sản phẩm</h1>
+                        <Link to="/admin/product-management/product-create" className="btn-add">
                             <FontAwesomeIcon icon={faCirclePlus} />
                             <span>Thêm sản phẩm</span>
                         </Link>
-                    </div>   
+                    </div>
+                    <div className="product-content">
+                        <div className="pro-con-left">
+                            <span>Tên sản phẩm</span>
+                            <div className="product-search">
+                                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                                <input
+                                    name="search"
+                                    placeholder="Tìm kiếm sản phẩm theo tên..."
+                                    value={searchInput}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </div>
+                        <label htmlFor="category">
+                            <span>Danh mục</span>
+                            <div className="product-search">
+                                <input
+                                    type="text"
+                                    id="category"
+                                    name="category"
+                                    value={selectedCategory || ""}
+                                    onClick={handleCategory}
+                                    readOnly
+                                />
+                                {showCategoryList && (
+                                    <ul className="category-selection" ref={categoryListRef}>
+                                        {categories.map((cat, index) => (
+                                            <li key={index} onClick={() => selectCategory(cat.name)}>
+                                                {cat.name}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                                <FontAwesomeIcon icon={faChevronDown} className="icon-down" />
+                            </div>
+                        </label>
+                    </div>
                 </div>
-                
+
                 <table className="product-table">
                     <thead>
                         <tr>
@@ -90,36 +194,56 @@ export default function ProductManagement() {
                             <th>Tên</th>
                             <th>Giá</th>
                             <th>Số lượng</th>
-                            <th>Giá ưu đãi</th>
-                            <th>Giảm giá</th>
                             <th>Mô tả</th>
                             <th>Ảnh minh họa</th>
+                            <th>Danh mục</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {currentRecords.map((item) => (
-                            <tr key={item.id}>
-                                <td>{item.id}</td>
-                                <td>{item.name}</td>
-                                <td>{item.price}</td>
-                                <td>{item.quantity}</td>
-                                <td>{item.specialPrice}</td>
-                                <td>{item.discount}</td>
-                                <td>{item.description}</td>
-                                <td>{item.image}</td>
-                                <td>
-                                    <div className="product-btn">
-                                        <button className="btn-edit" onClick={() => handleEdit(item)}>
-                                            <FontAwesomeIcon icon={faPenToSquare} />
-                                        </button>
-                                        <button className="btn-delete">
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                    </div>
+                        {currentRecords.length > 0 ? (
+                            currentRecords.map((item) => (
+                                <tr key={item.id}>
+                                    <td>{item.id}</td>
+                                    <td className="table-cell">{item.name}</td>
+                                    <td>{item.price}</td>
+                                    <td>{item.quantity}</td>
+                                    <td className="table-cell">{item.description}</td>
+                                    <td>
+                                        {item.image_1 ? (
+                                            <img
+                                                src={
+                                                    item.image_1.startsWith("data:image/")
+                                                        ? item.image_1
+                                                        : `data:image/jpeg;base64,${item.image_1}`
+                                                }
+                                                alt={item.name}
+                                                style={{ width: "50px", height: "55px", objectFit: "cover" }}
+                                            />
+                                        ) : (
+                                            <span>Không có ảnh</span>
+                                        )}
+                                    </td>
+                                    <td>{item.category.name}</td>
+                                    <td>
+                                        <div className="product-btn">
+                                            <button className="btn-edit" onClick={() => handleEdit(item)}>
+                                                <FontAwesomeIcon icon={faPenToSquare} />
+                                            </button>
+                                            <button className="btn-delete" onClick={() => handleDelete(item.id)}>
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="8" style={{ textAlign: "center" }}>
+                                    Không có sản phẩm nào để hiển thị.
                                 </td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -128,7 +252,9 @@ export default function ProductManagement() {
                 <button onClick={handlePrevPage} disabled={currentPage === 1}>
                     Trước
                 </button>
-                <span>Trang {currentPage} trên {totalPages}</span>
+                <span>
+                    Trang {currentPage} trên {totalPages}
+                </span>
                 <button onClick={handleNextPage} disabled={currentPage === totalPages}>
                     Sau
                 </button>

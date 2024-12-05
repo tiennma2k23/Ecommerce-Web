@@ -81,6 +81,11 @@
     color: #004085;
 }
 
+.status-yellow {
+    background-color: #f0ad4e;
+    color: #ffffffcf;
+}
+
 .order-search {
     display: flex;
     align-items: center;

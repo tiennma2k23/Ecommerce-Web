@@ -6,25 +6,27 @@ const Order = () => {
   const [activeTab, setActiveTab] = useState('All');
   const [search, setSearch] = useState('');
   const orders = [
-    { id: '6286437', date: '24/10/2019', customer: 'Hana Wharton', status: 'Processing - Packaging', items: 2, total: 87.99, paymentMethod: 'Credit Payments' },
-    { id: '6286421', date: '24/10/2019', customer: 'Liya Milne', status: 'Dispatched', items: 1, total: 12.99, paymentMethod: 'Manual Payment' },
-    { id: '6286414', date: '24/10/2019', customer: 'Tamsin Bloom', status: 'Processing - Waiting Dispatch', items: 1, total: 201.49, paymentMethod: 'Credit Payments' },
-    { id: '6286385', date: '24/10/2019', customer: 'Coby Beil', status: 'Cancelled', items: 1, total: 502.99, paymentMethod: 'Credit Payments' },
-    { id: '6286378', date: '24/10/2019', customer: 'Nathaniel Humphreys', status: 'Dispatched', items: 1, total: 102.99, paymentMethod: 'Credit Payments' },
+    { id: '6286437', date: '24/10/2019', customer: 'Hana Wharton', status: 'Khởi tạo', items: 2, total: 87.99, paymentMethod: 'Credit Payments' },
+    { id: '6286421', date: '24/10/2019', customer: 'Liya Milne', status: 'Đang giao', items: 1, total: 12.99, paymentMethod: 'Manual Payment' },
+    { id: '6286414', date: '24/10/2019', customer: 'Tamsin Bloom', status: 'Đã thanh toán', items: 1, total: 201.49, paymentMethod: 'Credit Payments' },
+    { id: '6286385', date: '24/10/2019', customer: 'Coby Beil', status: 'Hoàn thành', items: 1, total: 502.99, paymentMethod: 'Credit Payments' },
+    { id: '6286378', date: '24/10/2019', customer: 'Nathaniel Humphreys', status: 'Đã hủy', items: 1, total: 102.99, paymentMethod: 'Credit Payments' },
   ];
 
   // Đếm số đơn hàng theo trạng thái
   const countOrders = (status) => {
     switch (status) {
-      case 'Pending':
-        return orders.filter(order => order.status.includes('Processing')).length;
-      case 'Processing':
-        return orders.filter(order => order.status.startsWith('Processing')).length;
-      case 'Complete':
-        return orders.filter(order => order.status === 'Dispatched').length;
-      case 'Cancelled':
-        return orders.filter(order => order.status === 'Cancelled').length;
-      case 'All':
+      case 'Khởi tạo':
+        return orders.filter(order => order.status.includes('Khởi tạo')).length;
+      case 'Đang giao':
+        return orders.filter(order => order.status.startsWith('Đang giao')).length;
+      case 'Đã thanh toán':
+        return orders.filter(order => order.status.startsWith('Đã thanh toán')).length;
+      case 'Hoàn thành':
+        return orders.filter(order => order.status === 'Hoàn thành').length;
+      case 'Đã hủy':
+        return orders.filter(order => order.status === 'Đã hủy').length;
+      case 'Tất cả':
       default:
         return orders.length;
     }
@@ -35,11 +37,12 @@ const Order = () => {
     let filteredOrders = orders;
     
     // Lọc theo trạng thái
-    if (status === 'All') filteredOrders = orders;
-    if (status === 'Pending') filteredOrders = orders.filter(order => order.status.includes('Processing'));
-    if (status === 'Processing') filteredOrders = orders.filter(order => order.status.startsWith('Processing'));
-    if (status === 'Complete') filteredOrders = orders.filter(order => order.status === 'Dispatched');
-    if (status === 'Cancelled') filteredOrders = orders.filter(order => order.status === 'Cancelled');
+    if (status === 'Tất cả') filteredOrders = orders;
+    if (status === 'Khởi tạo') filteredOrders = orders.filter(order => order.status.includes('Khởi tạo'));
+    if (status === 'Đang giao') filteredOrders = orders.filter(order => order.status.includes('Đang giao'));
+    if (status === 'Đã thanh toán') filteredOrders = orders.filter(order => order.status.startsWith('Đã thanh toán'));
+    if (status === 'Hoàn thành') filteredOrders = orders.filter(order => order.status === 'Hoàn thành');
+    if (status === 'Đã hủy') filteredOrders = orders.filter(order => order.status === 'Đã hủy');
 
     // Lọc theo từ khóa tìm kiếm
     if (search) {
@@ -55,9 +58,11 @@ const Order = () => {
 
   // Lấy lớp CSS cho trạng thái
   const getStatusClass = (status) => {
-    if (status === 'Dispatched') return 'status-green';
-    if (status === 'Cancelled') return 'status-red';
-    if (status.includes('Processing')) return 'status-blue';
+    if (status === 'Khởi tạo') return 'status-green';
+    if (status === 'Đã hủy') return 'status-red';
+    if (status.includes('Đang giao')) return 'status-blue';
+    if (status.includes('Đã thanh toán')) return 'status-blue';
+    if (status.includes('Hoàn thành')) return 'status-yellow';
     return '';
   };
 
@@ -65,7 +70,7 @@ const Order = () => {
     <div className="order-container">
       {/* Tabs */}
       <div className="order-tabs">
-        {['All', 'Pending', 'Processing', 'Complete', 'Cancelled'].map((tab) => (
+        {['Tất cả', 'Khởi tạo', 'Đang giao', 'Đã thanh toán', 'Hoàn thành', 'Đã hủy'].map((tab) => (
           <button
             key={tab}
             className={`order-tab ${activeTab === tab ? 'active' : ''}`}

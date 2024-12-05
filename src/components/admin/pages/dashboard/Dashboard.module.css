@@ -9,7 +9,8 @@
 .table {
   display: flex;
   flex-direction: row;
-  padding-left: 20px;
+  padding-left: 10px;
+  table-layout: fixed;
 
 }
 .dashboard1 {
@@ -69,6 +70,11 @@ td {
   font-size: 1rem;
   color: #555;
 }
+td[data-label="Sản phẩm"] {
+  width: 50%; /* Tăng độ rộng của ô sản phẩm */
+  font-size: 1rem; /* Điều chỉnh kích thước chữ nếu cần */
+  padding-left: 20px; /* Thêm khoảng cách cho ô sản phẩm */
+}
 
 th {
   background-color: #f2f2f2;
@@ -78,6 +84,14 @@ th {
 
 td {
   background-color: #fff;
+}
+
+td img {
+  width: 60%;
+  height: auto; /* Duy trì tỷ lệ khung hình */
+  object-fit: contain; /* Đảm bảo ảnh nằm gọn trong khung */
+  display: block; /* Đảm bảo ảnh là block để căn giữa */
+  margin: 0 auto;
 }
 
 tr:nth-child(even) td {
@@ -109,7 +123,7 @@ td[data-label="STT"] {
 }
 
 .pagination .active {
-  background-color: #4caf50;
+  background-color: #007bff;
   color: white;
 }
 

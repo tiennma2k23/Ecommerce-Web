@@ -14,7 +14,6 @@ import OrderManagement from "../pages/order/Orders";
 import Setting from "../pages/setting/Setting";
 import "./LayoutDefault.css";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
-
 function LayoutDefault() {
   return (
     <>
