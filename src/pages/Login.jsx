@@ -6,7 +6,7 @@ import { CreateAccountApi, LoginApi } from '../axios/axios';
 const Login = () => {
   const navigate = useNavigate();
   const { setIsAuthenticated } = useContext(ShopContext);
-  const [currentState, setCurrentState] = useState('Sign Up');
+  const [currentState, setCurrentState] = useState('Login');
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
