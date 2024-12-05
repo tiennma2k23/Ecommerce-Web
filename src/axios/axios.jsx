@@ -13,7 +13,7 @@ async function CreateAccountApi(firstName, lastName, email, password) {
     try {
         // Make the POST request to the server API
         const response = await axios.post(
-            'http://192.168.10.101:9999/auth/sign-up',
+            'https://ecommercebe.southeastasia.cloudapp.azure.com/auth/sign-up',
             requestData,
             {
                 headers: {
@@ -36,7 +36,7 @@ async function CreateAccountApi(firstName, lastName, email, password) {
 
 async function LoginApi(email, password) {
     try {
-        const response = await axios.post('http://192.168.10.101:9999/auth/sign-in', {
+        const response = await axios.post('https://ecommercebe.southeastasia.cloudapp.azure.com/auth/sign-in', {
             email: email,
             password: password
         });
@@ -52,7 +52,7 @@ async function LoginApi(email, password) {
 async function LogoutApi(token) {
     try {
         const response = await axios.post(
-            'http://192.168.10.101:9999/auth/logout',
+            'https://ecommercebe.southeastasia.cloudapp.azure.com/auth/logout',
             null,
             {
                 headers: {
@@ -75,7 +75,7 @@ async function CreateCartApi(userId) {
         }
 
         const response = await axios.post(
-            `http://192.168.10.101:9999/cart/create`,
+            `https://ecommercebe.southeastasia.cloudapp.azure.com/cart/create`,
             null,
             {
                 headers: {
