@@ -93,6 +93,55 @@ async function CreateCartApi(userId) {
     }
 }
 
+async function GetCartApi(cartId) {
+    try {
+        // Lấy token từ localStorage
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            throw new Error('Token not found. Please log in again.');
+        }
+
+        // Gửi yêu cầu GET
+        const response = await axios.get(`https://ecommercebe.southeastasia.cloudapp.azure.com/cart/get`, {
+            params: { id: cartId },
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        // Trả về dữ liệu từ API
+        return response.data;
+    } catch (error) {
+        console.error('Error while fetching cart:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+async function GetProductApi() {
+    try {
+        // Lấy token từ localStorage
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            throw new Error('Token not found. Please log in again.');
+        }
+
+        // Gửi yêu cầu GET
+        const response = await axios.get('https://ecommercebe.southeastasia.cloudapp.azure.com/user/products/all', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        // Trả về dữ liệu từ API
+        return response.data;
+    } catch (error) {
+        console.error('Error while fetching products:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
 async function CheckTokenApi() {
     try {
         const token = localStorage.getItem("authToken");
@@ -108,4 +157,4 @@ async function CheckTokenApi() {
     }
 }
 
-export { CreateAccountApi, LoginApi, LogoutApi, CreateCartApi, CheckTokenApi };
+export { CreateAccountApi, LoginApi, LogoutApi, CreateCartApi, GetCartApi, GetProductApi, CheckTokenApi };
