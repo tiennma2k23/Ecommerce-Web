@@ -123,15 +123,12 @@ async function GetProductApi() {
         // Lấy token từ localStorage
         const token = localStorage.getItem('token');
 
-        if (!token) {
-            throw new Error('Token not found. Please log in again.');
-        }
+        // if (!token) {
+        //     throw new Error('Token not found. Please log in again.');
+        // }
 
         // Gửi yêu cầu GET
         const response = await axios.get('https://ecommercebe.southeastasia.cloudapp.azure.com/user/products/all', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
         });
 
         // Trả về dữ liệu từ API
