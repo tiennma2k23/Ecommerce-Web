@@ -24,13 +24,15 @@ const Login = () => {
   
     if (currentState === 'Sign Up') {
         try {
+
             const response = await CreateAccountApi(
                 formData.firstName,
                 formData.lastName,
                 formData.email,
                 formData.password
             );
-            if (response.status === 201) {
+            console.log(response);
+            if (response === "Verify you email") {
                 alert('Account created successfully! Please verify your email.');
                 setCurrentState('Login'); // Chuyển sang trạng thái đăng nhập
                 navigate("/login");
@@ -38,7 +40,7 @@ const Login = () => {
                 throw new Error('Account creation failed');
             }
         } catch (error) {
-            alert('Failed to create account. Please try again.');
+            // alert('Failed to create account. Please try again.');
             console.error(error);
         }
     } else {

@@ -2,6 +2,10 @@ import axios from 'axios';
 
 
 async function CreateAccountApi(firstName, lastName, email, password) {
+    console.log(firstName);
+    console.log(lastName);
+    console.log(email);
+    console.log(password);
     // Prepare the data to be sent in JSON format
     const requestData = {
         firstname: firstName,
