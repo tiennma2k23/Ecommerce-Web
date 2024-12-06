@@ -94,6 +94,16 @@ public class AuthenticationController {
         }
 
     }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return ResponseEntity.badRequest().body("Invalid token format");
+        }
+
+        String token = authorizationHeader.substring(7); // Lấy token sau "Bearer "
+        authenticationService.logout(token);
+        return ResponseEntity.ok("User has been logged out successfully.");
+    }
 
 
 
