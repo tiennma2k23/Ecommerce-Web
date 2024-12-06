@@ -21,7 +21,7 @@ import ProductCreate from './components/admin/productManagament/productCreate';
 import ProductEdit from './components/admin/productManagament/productEdit';
 
 const App = () => {
-  const { isAuthenticated } = useContext(ShopContext); 
+  const { isAuthenticated, handleAuthentication } = useContext(ShopContext); 
 
   const ProtectedRoute = ({ children }) => {
     return isAuthenticated ? children : <Navigate to="/login" />;
@@ -39,7 +39,7 @@ const App = () => {
         <Route path='/contact' element={<Contact/>} />
         <Route path='/product/:productId' element={<Product/>} />
         <Route path='/cart' element={<Cart/>} />
-        <Route path='/login' element={<Login/>} />
+        <Route path='/login' element={<Login setIsAuthenticated={handleAuthentication}/>} />
         <Route path='/place-order' element={<PlaceOrder/>} />
         <Route
           path="/orders"
