@@ -1,5 +1,5 @@
-import React from 'react';
 import axios from 'axios';
+
 
 async function CreateAccountApi(firstName, lastName, email, password) {
     // Prepare the data to be sent in JSON format
@@ -35,6 +35,7 @@ async function CreateAccountApi(firstName, lastName, email, password) {
 }
 
 async function LoginApi(email, password) {
+
     try {
         const response = await axios.post('https://ecommercebe.southeastasia.cloudapp.azure.com/auth/sign-in', {
             email: email,
@@ -44,7 +45,13 @@ async function LoginApi(email, password) {
         return response.data;
     } catch (error) {
         // Xử lý lỗi
-        console.error('Error during login:', error.response ? error.response.data : error.message);
+        if (error.code === 'ERR_NETWORK') {
+            console.error('Network error:', error.message);
+        } else if (error.response) {
+            console.error('Server error:', error.response.data);
+        } else {
+            console.error('Unexpected error:', error.message);
+        }
         throw error;
     }
 }

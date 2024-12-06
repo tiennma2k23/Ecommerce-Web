@@ -46,8 +46,13 @@ const Login = () => {
             const response = await LoginApi(formData.email, formData.password);
             if (response && response.token) {
                 localStorage.setItem('authToken', response.token);
+                localStorage.setItem('role', response.role);
                 handleAuthentication(true); // Cập nhật trạng thái đăng nhập
-                navigate("/"); // Chuyển hướng về trang chủ
+                if(response.role == "USER") {
+                  navigate("/"); // Chuyển hướng về trang chủ
+                } else if (response.role == "ADMIN") {
+                  navigate("/admin")
+                }
             } else {
                 alert('Login failed. Please check your credentials.');
             }
