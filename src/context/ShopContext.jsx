@@ -14,8 +14,18 @@ const ShopContextProvider = (props) => {
     const [search,setSearch] = useState('');
     const [showSearch,setShowSearch] = useState(false);
     const [cartItems,setCartItems] = useState({});
-    const [isAuthenticated, setIsAuthenticated] = useState(false); 
+    // Lấy trạng thái từ localStorage (mặc định là false nếu chưa có giá trị)
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        return JSON.parse(localStorage.getItem("isAuthenticated")) || false;
+    });
+
     const navigate = useNavigate();
+
+    // Hàm để cập nhật trạng thái xác thực và lưu vào localStorage
+    const handleAuthentication = (value) => {
+        setIsAuthenticated(value);
+        localStorage.setItem("isAuthenticated", JSON.stringify(value));
+    };
 
     const addToCart = async (itemId, size) => {
 
@@ -109,7 +119,7 @@ const ShopContextProvider = (props) => {
         cartItems,addToCart,
         getCartCount,updateQuantity,
         getCartAmount, navigate, 
-        isAuthenticated, setIsAuthenticated, logout
+        isAuthenticated, setIsAuthenticated, handleAuthentication, logout
     }
 
     return (

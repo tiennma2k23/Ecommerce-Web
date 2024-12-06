@@ -5,7 +5,7 @@ import { CreateAccountApi, LoginApi } from '../axios/axios';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useContext(ShopContext);
+  const { setIsAuthenticated, handleAuthentication } = useContext(ShopContext);
   const [currentState, setCurrentState] = useState('Login');
   const [formData, setFormData] = useState({
     firstName: '',
@@ -23,36 +23,47 @@ const Login = () => {
     event.preventDefault();
   
     if (currentState === 'Sign Up') {
-      try {
-        const response = await CreateAccountApi(
-          formData.firstName,
-          formData.lastName,
-          formData.email,
-          formData.password
-        );
-        alert('Account created successfully! Please verify your email');
-        setIsAuthenticated(true);
-        setCurrentState('Login'); // Cập nhật state để chuyển qua trang Login
-        navigate("/login"); // Chuyển hướng đến trang Login
-      } catch (error) {
-        alert('Failed to create account. Please try again.');
-        console.error(error);
-      }
-    } else {
-      try {
-        const response = await LoginApi(formData.email, formData.password);
-        // Lưu token vào localStorage
-        if (response && response.token) {
-          localStorage.setItem('authToken', response.token);
+        try {
+
+            const response = await CreateAccountApi(
+                formData.firstName,
+                formData.lastName,
+                formData.email,
+                formData.password
+            );
+            console.log(response);
+            if (response === "Verify you email") {
+                alert('Account created successfully! Please verify your email.');
+                setCurrentState('Login'); // Chuyển sang trạng thái đăng nhập
+                navigate("/login");
+            } else {
+                throw new Error('Account creation failed');
+            }
+        } catch (error) {
+            // alert('Failed to create account. Please try again.');
+            console.error(error);
         }
-        setIsAuthenticated(true);
-        navigate("/"); // Chuyển hướng đến trang chủ sau khi đăng nhập thành công
-      } catch (error) {
-        alert('Login failed. Please check your credentials.');
-        console.error(error);
-      }
+    } else {
+        try {
+            const response = await LoginApi(formData.email, formData.password);
+            if (response && response.token) {
+                localStorage.setItem('authToken', response.token);
+                localStorage.setItem('role', response.role);
+                handleAuthentication(true); // Cập nhật trạng thái đăng nhập
+                if(response.role == "USER") {
+                  navigate("/"); // Chuyển hướng về trang chủ
+                } else if (response.role == "ADMIN") {
+                  navigate("/admin")
+                }
+            } else {
+                alert('Login failed. Please check your credentials.');
+            }
+        } catch (error) {
+            alert('Login failed. Please try again.');
+            console.error(error);
+        }
     }
-  };  
+  };
 
   return (
     <form
