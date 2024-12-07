@@ -18,7 +18,6 @@ async function CreateAccountApi(firstName, lastName, email, password) {
         // Make the POST request to the server API
         const response = await axios.post(
             'https://ecommercebe.southeastasia.cloudapp.azure.com/auth/sign-up',
-            'https://ecommercebe.southeastasia.cloudapp.azure.com/auth/sign-up',
             requestData,
             {
                 headers: {
