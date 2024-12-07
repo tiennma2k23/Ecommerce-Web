@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
-import { getAllUserApi, changeRole } from "../../../../axios/user";
+// import { getAllUserApi, changeRole } from "../../../../axios/user";
+import { getAllUserApi, changeRole } from "../../../../axios/user.jsx";
 import './userManagement.css';
 
 export default function UserManagement() {
