@@ -61,23 +61,23 @@ async function LoginApi(email, password) {
     }
 }
 
-async function LogoutApi(authToken) {
-    try {
-        const config = {
-            method: 'post',
-            url: 'https://ecommercebe.southeastasia.cloudapp.azure.com/auth/logout',
-            headers: {
-                'Authorization': `Bearer ${authToken}` // Đảm bảo có tiền tố Bearer
-            }
-        };
+// async function LogoutApi(authToken) {
+//     try {
+//         const config = {
+//             method: 'post',
+//             url: 'https://ecommercebe.southeastasia.cloudapp.azure.com/auth/logout',
+//             headers: {
+//                 'Authorization': `Bearer ${authToken}` // Đảm bảo có tiền tố Bearer
+//             }
+//         };
 
-        const response = await axios.request(config);
-        return response.data;
-    } catch (error) {
-        console.error('Error during logout:', error.response ? error.response.data : error.message);
-        throw error;
-    }
-}
+//         const response = await axios.request(config);
+//         return response.data;
+//     } catch (error) {
+//         console.error('Error during logout:', error.response ? error.response.data : error.message);
+//         throw error;
+//     }
+// }  
 
 async function LogoutApi(token) {
     try {
