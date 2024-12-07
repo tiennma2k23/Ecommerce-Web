@@ -1,22 +1,15 @@
-import React, {useContext, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { ShopContext } from '../src/context/ShopContext';
-import Home from './pages/Home'
-import Collection from './pages/Collection'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import Product from './pages/Product'
-import Cart from './pages/Cart'
-import Login from './pages/Login'
-import PlaceOrder from './pages/PlaceOrder'
-import Orders from './pages/Orders'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import SearchBar from './components/SearchBar'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import UserManagement from './components/admin/userManagement/userManagement';
-import { CheckTokenApi } from './axios/axios';
+import React, { useContext } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { ShopContext } from "./context/ShopContext";
+import Home from "./pages/Home";
+import Collection from "./pages/Collection";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Product from "./pages/Product";
+import Cart from "./pages/Cart";
+import Login from "./pages/Login";
+import PlaceOrder from "./pages/PlaceOrder";
+import Orders from "./pages/Orders";
 import UserLayout from "./pages/userLayout";
 import LayoutDefault from './components/admin/layouts/LayoutDefault';
 
