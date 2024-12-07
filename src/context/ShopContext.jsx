@@ -3,6 +3,7 @@ import { products } from "../assets/assets";
 import { toast } from "react-toastify";
 import Product from "../pages/Product";
 import { useNavigate } from "react-router-dom";
+import { LogoutApi } from "../axios/axios";
 
 export const ShopContext = createContext();
 
@@ -13,8 +14,18 @@ const ShopContextProvider = (props) => {
     const [search,setSearch] = useState('');
     const [showSearch,setShowSearch] = useState(false);
     const [cartItems,setCartItems] = useState({});
-    const [isAuthenticated, setIsAuthenticated] = useState(false); 
+    // Lấy trạng thái từ localStorage (mặc định là false nếu chưa có giá trị)
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        return JSON.parse(localStorage.getItem("isAuthenticated")) || false;
+    });
+
     const navigate = useNavigate();
+
+    // Hàm để cập nhật trạng thái xác thực và lưu vào localStorage
+    const handleAuthentication = (value) => {
+        setIsAuthenticated(value);
+        localStorage.setItem("isAuthenticated", JSON.stringify(value));
+    };
 
     const addToCart = async (itemId, size) => {
 
@@ -82,19 +93,33 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     }
 
-    const logout = () => {
-        setIsAuthenticated(false); 
-        localStorage.clear(); 
-        navigate('/login'); 
+    const logout = async () => {
+        try {
+            const authToken = localStorage.getItem('authToken');
+            
+            if (!authToken) {
+                console.warn('No auth token found in localStorage');
+                navigate('/login');
+                return;
+            }
+    
+            await LogoutApi(authToken);
+    
+            setIsAuthenticated(false);
+            localStorage.clear();
+            navigate('/login');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
     };
-
+    
     const value = {
         products, currency, delivery_fee,
         search,setSearch,showSearch,setShowSearch,
         cartItems,addToCart,
         getCartCount,updateQuantity,
         getCartAmount, navigate, 
-        isAuthenticated, setIsAuthenticated, logout
+        isAuthenticated, setIsAuthenticated, handleAuthentication, logout
     }
 
     return (

@@ -25,13 +25,14 @@ async function getAllUserApi(authToken) {
 
 async function changeRole(userEmail) {
     const token = localStorage.getItem('authToken');  // Lấy token từ localStorage
+    console.log(userEmail);
     
     if (!token) {
         console.error("Token không tồn tại trong localStorage");
         return;
     }
 
-    const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/admin/users/${userEmail}/role?newRole=ADMIN`;
+    const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/user/${userEmail}/role?newRole=ADMIN`;
 
     try {
         const response = await axios.put(url, {}, {
