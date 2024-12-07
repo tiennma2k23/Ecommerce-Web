@@ -48,6 +48,12 @@ const Login = () => {
             const response = await LoginApi(formData.email, formData.password);
             if (response && response.token) {
                 localStorage.setItem('authToken', response.token);
+          localStorage.setItem('userName', response.name);
+          localStorage.setItem('userId', response.userId);
+          localStorage.setItem('userEmail', response.email);
+          localStorage.setItem('userName', response.name);
+          localStorage.setItem('userRole', response.role);
+          localStorage.setItem('defaultCartId', response.defaultCartId);
                 localStorage.setItem('role', response.role);
                 handleAuthentication(true); // Cập nhật trạng thái đăng nhập
                 if(response.role == "USER") {

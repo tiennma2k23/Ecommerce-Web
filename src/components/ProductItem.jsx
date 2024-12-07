@@ -8,11 +8,19 @@ const ProductItem = ({id,image,name,price}) => {
 
   return (
     <Link className='text-gray-700 cursor-pointer' to={`/product/${id}`}>
-      <div className='overflow-hidden'>
+      <div className='overflow-hidden' 
+      style={{
+        width: '100%',
+        aspectRatio: '1 / 1',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
         <img className='hover:scale-110 transition ease-in-out' src={image[0]} alt="" />
       </div>
       <p className='pt-3 pb-1 text-sm'>{name}</p>
-      <p className='text-sm font-medium'>{currency}{price}</p>
+      <p className='text-sm font-medium'>{Intl.NumberFormat().format(price)}{currency}</p>
     </Link>
   )
 }

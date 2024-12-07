@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 import Product from "../pages/Product";
 import { useNavigate } from "react-router-dom";
 import { LogoutApi } from "../axios/axios";
+import { LogoutApi } from "../axios/axios";
 
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
 
-    const currency = '$';
-    const delivery_fee = 10;
+    const currency = 'đ';
+    const delivery_fee = 20000;
     const [search,setSearch] = useState('');
     const [showSearch,setShowSearch] = useState(false);
     const [cartItems,setCartItems] = useState({});
@@ -35,6 +36,7 @@ const ShopContextProvider = (props) => {
         }
 
         let cartData = structuredClone(cartItems);
+        console.log(cartData);
 
         if (cartData[itemId]) {
             if (cartData[itemId][size]) {
@@ -95,21 +97,22 @@ const ShopContextProvider = (props) => {
 
     const logout = async () => {
         try {
-            const authToken = localStorage.getItem('authToken');
-            
-            if (!authToken) {
-                console.warn('No auth token found in localStorage');
-                navigate('/login');
-                return;
-            }
-    
-            await LogoutApi(authToken);
-    
-            setIsAuthenticated(false);
-            localStorage.clear();
-            navigate('/login');
+          const token = localStorage.getItem('authToken'); // Lấy token từ localStorage
+      
+          if (!token) {
+            console.warn('No token found. Proceeding to clear session.');
+          } else {
+            await LogoutApi(token); // Gọi API logout
+            console.log('Logged out successfully from server.');
+          }
         } catch (error) {
-            console.error('Logout failed:', error);
+          console.error('Error during logout:', error.response ? error.response.data : error.message);
+          alert('Failed to log out from server, but session will be cleared locally.');
+        } finally {
+          // Dù thành công hay lỗi, vẫn xóa localStorage và điều hướng
+          setIsAuthenticated(false);
+          localStorage.clear();
+          navigate('/login');
         }
     };
     
