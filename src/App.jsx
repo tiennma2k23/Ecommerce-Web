@@ -1,5 +1,5 @@
 import React, {useContext, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ShopContext } from '../src/context/ShopContext';
 import Home from './pages/Home'
 import Collection from './pages/Collection'
@@ -17,6 +17,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserManagement from './components/admin/userManagement/userManagement';
 import { CheckTokenApi } from './axios/axios';
+import UserLayout from "./pages/userLayout";
 
 // const App = () => {
 //   const { isAuthenticated, setIsAuthenticated } = useContext(ShopContext);
