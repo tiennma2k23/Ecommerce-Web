@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import Product from "../pages/Product";
 import { useNavigate } from "react-router-dom";
 import { LogoutApi } from "../axios/axios";
-import { LogoutApi } from "../axios/axios";
 
 export const ShopContext = createContext();
 
