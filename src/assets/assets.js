@@ -17,7 +17,7 @@ import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
 import vnpay_logo from './vnpay.png'
 import zalopay_logo from './zalopay_logo.png'
-import { GetProductApi } from '../axios/axios'
+import { getAllProductApi } from '../axios/product'
 import { data } from 'autoprefixer'
 
 export const assets = {
@@ -99,8 +99,9 @@ function formatProductData(product) {
 
 // Hàm lấy dữ liệu và gán vào biến toàn cục
 async function fetchProductData() {
+    const storedToken = localStorage.getItem("authToken");
     try {
-        productData = await GetProductApi(); // Gán dữ liệu vào biến toàn cục
+        productData = await getAllProductApi(storedToken); // Gán dữ liệu vào biến toàn cục
         console.log('Fetched Product Data:', productData); // Kiểm tra dữ liệu
         let newData = formatProductData(productData);
         products.push(...newData);
