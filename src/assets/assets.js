@@ -103,7 +103,6 @@ async function fetchProductData() {
         productData = await GetProductApi(); // Gán dữ liệu vào biến toàn cục
         console.log('Fetched Product Data:', productData); // Kiểm tra dữ liệu
         let newData = formatProductData(productData);
-        console.log(newData);
         products.push(...newData);
         console.log(products);
         return products;
