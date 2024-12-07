@@ -42,16 +42,12 @@ export default function UserManagement() {
     };
 
     // Lọc dữ liệu dựa trên từ khóa tìm kiếm
-    const filteredData = users.filter((item) => {
-        const name = item.name || ""; // Đảm bảo có giá trị chuỗi mặc định
-        const email = item.email || "";
-        const phone = item.phone || "";
-        return (
-            name.toLowerCase().includes(searchInput.toLowerCase()) ||
-            email.toLowerCase().includes(searchInput.toLowerCase()) ||
-            phone.includes(searchInput)
-        );
-    });    
+    const filteredData = users.filter(
+        (item) =>
+            item.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+            item.email.toLowerCase().includes(searchInput.toLowerCase()) ||
+            item.phone.includes(searchInput)
+    );
 
     const totalPages = Math.ceil(filteredData.length / recordsPerPage);
     
