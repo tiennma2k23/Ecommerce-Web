@@ -67,17 +67,6 @@ public class AuthenticationController {
         return ResponseEntity.ok("Your email has been verified. A default cart has been created.");
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader("Authorization") String authorizationHeader) {
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            return ResponseEntity.badRequest().body("Invalid token format");
-        }
-
-        String token = authorizationHeader.substring(7); // Lấy token sau "Bearer "
-        authenticationService.logout(token);
-        return ResponseEntity.ok("User has been logged out successfully.");
-    }
-
     @GetMapping("/validate-token")
     public ResponseEntity<Boolean> validateToken(@RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
