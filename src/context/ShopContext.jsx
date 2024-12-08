@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from "react";
-import { products } from "../assets/assets";
+import { products, formatProductData } from "../assets/assets";
 import { toast } from "react-toastify";
 import Product from "../pages/Product";
 import { useNavigate } from "react-router-dom";
-import { LogoutApi } from "../axios/axios";
+import { LogoutApi, GetProductApi } from "../axios/axios";
 
 export const ShopContext = createContext();
 
@@ -14,12 +14,33 @@ const ShopContextProvider = (props) => {
     const [search,setSearch] = useState('');
     const [showSearch,setShowSearch] = useState(false);
     const [cartItems,setCartItems] = useState({});
+    const [products, setProducts] = useState([]); // State để lưu danh sách sản phẩm
+    const [loadingProducts, setLoadingProducts] = useState(true); // Trạng thái tải sản phẩm
     // Lấy trạng thái từ localStorage (mặc định là false nếu chưa có giá trị)
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
         return JSON.parse(localStorage.getItem("isAuthenticated")) || false;
     });
 
     const navigate = useNavigate();
+
+    // Hàm lấy dữ liệu sản phẩm
+    const fetchProductData = async () => {
+        try {
+            const productData = await GetProductApi(); // Gọi API lấy sản phẩm
+            const formattedData = formatProductData(productData); // Định dạng dữ liệu
+            setProducts(formattedData); // Cập nhật state sản phẩm
+        } catch (error) {
+            console.error('Failed to fetch product data:', error.message);
+            toast.error('Failed to load products. Please try again.');
+        } finally {
+            setLoadingProducts(false); // Kết thúc trạng thái loading
+        }
+    };
+
+    // Gọi fetchProductData khi component được mount
+    useEffect(() => {
+        fetchProductData();
+    }, []);
 
     // Hàm để cập nhật trạng thái xác thực và lưu vào localStorage
     const handleAuthentication = (value) => {
@@ -116,7 +137,7 @@ const ShopContextProvider = (props) => {
     };
     
     const value = {
-        products, currency, delivery_fee,
+        products, loadingProducts, currency, delivery_fee,
         search,setSearch,showSearch,setShowSearch,
         cartItems,addToCart,
         getCartCount,updateQuantity,
@@ -126,7 +147,7 @@ const ShopContextProvider = (props) => {
 
     return (
         <ShopContext.Provider value={value}>
-            {props.children}
+            {loadingProducts ? <div>Loading products...</div> : props.children}
         </ShopContext.Provider>
     )
 
