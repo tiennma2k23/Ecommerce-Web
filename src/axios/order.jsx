@@ -67,8 +67,105 @@ async function AddProductToCartApi(cartId, productId, quantity)
                 Authorization: `Bearer ${token}`,
             },
         });
+
+        console.log(response);
+        return response.data;
     } catch (error) {
         console.error('Error while adding product to cart:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+async function updateQuantityItem(cartId, itemId, quantity) {
+    try {
+        // Lấy token từ localStorage
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+            throw new Error('Token not found. Please log in again.');
+        }
+
+        // Gửi yêu cầu PUT với query parameters
+        const response = await axios.put(
+            `https://ecommercebe.southeastasia.cloudapp.azure.com/cart/update/item/quantity`, 
+            null, // No body content required for PUT request
+            {
+                params: {
+                    cartId: cartId,    // Cart ID
+                    itemId: itemId,    // Item ID
+                    quantity: quantity // New quantity
+                },
+                headers: {
+                    Authorization: `Bearer ${token}` // Authorization header with the token
+                }
+            }
+        );
+
+        // Trả về dữ liệu từ API
+        return response.data;
+    } catch (error) {
+        console.error('Error while updating cart:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+async function removeItem(cartId, itemId) {
+    try {
+        // Lấy token từ localStorage
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+            throw new Error('Token not found. Please log in again.');
+        }
+
+        // Gửi yêu cầu DELETE
+        const response = await axios.delete(
+            `https://ecommercebe.southeastasia.cloudapp.azure.com/cart/remove/items`, 
+            {
+                params: {
+                    cartId: cartId,    // Query Parameter: Cart ID
+                    itemId: itemId,    // Query Parameter: Item ID
+                },
+                headers: {
+                    Authorization: `Bearer ${token}` // Gửi token trong Authorization Header
+                }
+            }
+        );
+
+        // Trả về dữ liệu từ API
+        return response.data;
+    } catch (error) {
+        console.error('Error while removing cart item:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+async function clearCart(cartId) {
+    try {
+        // Lấy token từ localStorage
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+            throw new Error('Token not found. Please log in again.');
+        }
+
+        // Gửi yêu cầu DELETE
+        const response = await axios.delete(
+            `https://ecommercebe.southeastasia.cloudapp.azure.com/cart/clear`, 
+            {
+                params: {
+                    id: cartId
+                },
+                headers: {
+                    Authorization: `Bearer ${token}` // Gửi token trong Authorization Header
+                }
+            }
+        );
+
+        // Trả về dữ liệu từ API
+        return response.data;
+    } catch (error) {
+        console.error('Error while removing cart item:', error.response ? error.response.data : error.message);
         throw error;
     }
 }
@@ -109,5 +206,8 @@ export {
     CreateCartApi, 
     GetCartApi, 
     AddProductToCartApi, 
+    updateQuantityItem,
+    removeItem,
+    clearCart,
     CheckOutCartApi, 
 };
