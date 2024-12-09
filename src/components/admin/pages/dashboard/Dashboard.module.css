@@ -99,7 +99,7 @@ tr:nth-child(even) td {
 }
 
 img {
-  width: 16%;
+  width: 100%;
   height: auto;
   border-radius: 4px;
 }
