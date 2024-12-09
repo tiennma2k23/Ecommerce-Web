@@ -46,7 +46,7 @@ export const products = [];
 
 let productData = [];
 
-function formatProductData(product) {
+export function formatProductData(product) {
     const defaultData = {
         _id: "",
         name: "Unnamed Product",
@@ -96,26 +96,3 @@ function formatProductData(product) {
 
     return [];
 }
-
-// Hàm lấy dữ liệu và gán vào biến toàn cục
-async function fetchProductData() {
-    const storedToken = localStorage.getItem("authToken");
-    try {
-        productData = await getAllProductApi(storedToken); // Gán dữ liệu vào biến toàn cục
-        console.log('Fetched Product Data:', productData); // Kiểm tra dữ liệu
-        let newData = formatProductData(productData);
-        products.push(...newData);
-        console.log(products);
-        return products;
-    } catch (error) {
-        console.error('Failed to fetch product data:', error.message);
-    }
-}
-
-// Gọi hàm để lấy dữ liệu
-fetchProductData();
-
-// Sử dụng dữ liệu sau khi đã gán
-// setTimeout(() => {
-//     console.log('Product Data in Global Variable:', productData); // Dữ liệu có sẵn ở đây
-// }, 1000);
