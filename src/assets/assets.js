@@ -46,7 +46,7 @@ export const products = [];
 
 let productData = [];
 
-function formatProductData(product) {
+export function formatProductData(product) {
     const defaultData = {
         _id: "",
         name: "Unnamed Product",

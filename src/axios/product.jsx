@@ -6,9 +6,6 @@ async function getAllProductApi(authToken) {
 
     try {
         const response = await axios.get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`, 
-            },
         });
         console.log("Response data:", response.data);
         return response.data;
