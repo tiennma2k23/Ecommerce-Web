@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { LogoutApi } from "../axios/axios";
 import { AddProductToCartApi, GetCartApi, updateQuantityItem, removeItem, clearCart } from "../axios/order";
 import { getAllProductApi } from "../axios/product";
-import { formatProductData } from "../assets/assets";
 
 export const ShopContext = createContext();
 
