@@ -39,7 +39,7 @@ export default function Login() {
 
     return (
         <div className="login-page">
-            <div className="logo">FOREVER</div>
+            <div className="logo">SPORTER</div>
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="email">Email</label>
                 <input 

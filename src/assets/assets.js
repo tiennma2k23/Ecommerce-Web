@@ -13,7 +13,6 @@ import support_img from './support_img.png'
 import menu_icon from './menu_icon.png'
 import about_img from './about_img.png'
 import contact_img from './contact_img.png'
-import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
 import vnpay_logo from './vnpay.png'
 import zalopay_logo from './zalopay_logo.png'
@@ -36,7 +35,6 @@ export const assets = {
     menu_icon,
     about_img,
     contact_img,
-    stripe_logo,
     cross_icon,
     vnpay_logo,
     zalopay_logo
