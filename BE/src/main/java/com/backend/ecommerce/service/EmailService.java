@@ -72,14 +72,15 @@ public class EmailService {
         if (!existingOrder.isPresent()) {
             throw new EntityNotFoundException("Order not found with ID: " + order_id);
         }
-        String customerName = existingOrder.get().getUser().getFirstname();
+        String customerName = existingOrder.get().getUser().getFirstname() + ' '+ existingOrder.get().getUser().getLastname();
+        String phoneNumber = existingOrder.get().getUser().getPhoneNumber() == null ? "" : " have phone number: " + existingOrder.get().getUser().getPhoneNumber();
         String contactEmail = "support@hihi.com";
         String companyName = "Hihihi";
         String orderDetails = getOrderDetails(order_id);
 
         String htmlMessage = "<html><body>"
                 + "<div style=\"font-family: Arial, sans-serif; font-size: 14px;\">"
-                + "<p>Dear " + customerName + ",</p>"
+                + "<p>Dear " + customerName + phoneNumber + " ,</p>"
                 + "<p>Thank you for placing your order with us. We appreciate your business.</p>"
                 + "<p>We are pleased to inform you that your order has been received and is being processed. Please see the details below:</p>"
                 + "<table style=\"border-collapse: collapse; width: 100%;\">"
