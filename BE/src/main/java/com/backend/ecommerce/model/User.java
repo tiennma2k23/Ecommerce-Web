@@ -40,6 +40,8 @@ public class User implements UserDetails {
     private String link;
     @Column(name = "cart_id_default", nullable = false, columnDefinition = "BIGINT DEFAULT -1")
     private Long cartIdDefault = -1L;
+    @Column
+    private String phoneNumber;
 
 @JsonIgnore
     public String getVerificationToken() {
