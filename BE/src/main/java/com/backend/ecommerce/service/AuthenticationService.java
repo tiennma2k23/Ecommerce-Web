@@ -62,6 +62,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .cartIdDefault(-1L)
                 .role(Role.USER)
+                .phoneNumber(request.getPhoneNumber())
                 .build();
         var savedUser = userRepository.save(user);
         emailService.sendVerificationEmail(user.getEmail(), verificationToken);
@@ -93,6 +94,7 @@ public class AuthenticationService {
                 .userId(user.getId())
                 .name(user.getFirstname() + " " + user.getLastname())
                 .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
                 .build();
 
     }
