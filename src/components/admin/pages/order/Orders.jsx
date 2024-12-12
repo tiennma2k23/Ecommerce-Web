@@ -178,10 +178,10 @@ const Order = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Ngày giờ</th>
+            <th>Ngày mua</th>
             <th>Khách hàng</th>
             <th>Trạng thái</th>
-            <th>Số lượng</th>
+            <th>Số điện thoại</th>
             <th>Tổng tiền</th>
             <th>Thanh toán</th>
             <th>Hành động</th>
@@ -199,7 +199,7 @@ const Order = () => {
                   {order.statusDescription}
                 </span>
               </td>
-              <td>{order.orderItems.length}</td>
+              <td>0946234129</td>
               <td>{order.totalAmount.toFixed(2)} VNĐ</td>
               <td>{order.payment === 'CASH_ON_DELIVERY' ? 'Thanh toán khi nhận hàng' : order.payment}</td>
               <td>
@@ -249,8 +249,8 @@ const Order = () => {
 
       {/* Modal hiển thị chi tiết đơn hàng */}
       {selectedOrder && (
-         <div className="order-detail-modal">
-  <div className="order-detail-content">
+         <div className="order-detail-modal" onClick={closeModal}>
+  <div className="order-detail-content" onClick={(e) => e.stopPropagation()} >
     {/* Header */}
     <div className="order-header">
       <strong>Chi tiết đơn hàng # {selectedOrder.id}</strong>

@@ -17,6 +17,12 @@ const Breadcrumbs = () => {
     "product-management": 'Quản lý sản phẩm',
     "user-management": 'Quản lý tài khoản',
     setting: 'Cài đặt',
+    "category-management": 'Quản lý danh mục',
+    "product-create": "Thêm sản phẩm mới",
+    "product-edit": "Chỉnh sửa sản phẩm",
+    "user-edit": "Chỉnh sửa người dùng",
+    "user-create": "Thêm mới người dùng",
+
   };
 
   useEffect(() => {

@@ -60,6 +60,7 @@ import OrderManagement from "../pages/order/Orders";
 import Setting from "../pages/setting/Setting";
 import "./LayoutDefault.css";
 import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
+import CategoryManagement from "../pages/categoryManagement/categoryManagement";
 function LayoutDefault() {
   return (
     <>
@@ -83,6 +84,7 @@ function LayoutDefault() {
               <Route path="/admin/user-management" element={<UserManagement />} />
               <Route path="/admin/user-management/user-edit" element={<UserEdit />} />
               <Route path="/admin/user-management/user-create" element={<UserCreate />} />
+              <Route path="/admin/category-management" element={<CategoryManagement />} />
               <Route path="/admin/setting" element={<Setting />} />
             </Routes>
           </div>

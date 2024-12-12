@@ -164,8 +164,10 @@
   /* Nội dung chính trong modal */
   .order-detail-content {
     background: #fff;
-    width: 90%;
+    width: 60%;
     max-width: 1200px;
+    max-height: 80%;
+    overflow: auto;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     padding: 20px;

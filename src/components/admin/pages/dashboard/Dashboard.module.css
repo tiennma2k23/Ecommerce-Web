@@ -6,13 +6,7 @@
   flex-grow: 1;
 }
 
-.table {
-  display: flex;
-  flex-direction: row;
-  padding-left: 10px;
-  table-layout: fixed;
 
-}
 .dashboard1 {
   display: flex;
   justify-content: space-between;
@@ -37,7 +31,7 @@
 
 .right__table {
   width: 50%;
-  margin-top: 20px;
+  margin: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -45,23 +39,29 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
 }
 
+.order__table {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
 .right__tableTitle {
   font-size: 1.5rem;
   font-weight: 600;
   color: #333;
   padding: 16px;
-  text-align: left;
+  text-align: center;
 }
 
 .right_tableWrapper {
-  overflow-x: auto;
+  /* overflow-x: auto; */
   padding: 16px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+
 
 th,
 td {
@@ -98,11 +98,13 @@ tr:nth-child(even) td {
   background-color: #f8f8f8;
 }
 
+/* img {
+  width: 16%;
 img {
   width: 100%;
   height: auto;
   border-radius: 4px;
-}
+} */
 
 td[data-label="STT"] {
   font-weight: bold;
@@ -129,19 +131,6 @@ td[data-label="STT"] {
 
 .pagination a:hover {
   background-color: #ddd;
-}
-
-.chartContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px 0;
-  margin-left: 20px;
-  width: 40%;
-}
-
-.chartContainer h3 {
-  margin-bottom: 10px;
 }
 
 .icon {
@@ -175,4 +164,68 @@ td[data-label="STT"] {
   font-size: 14px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 500;
+}
+
+.main__dashboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Căn chỉnh đều hai bên */
+  align-items: flex-start; /* Đảm bảo căn theo đỉnh */
+}
+
+
+.daily__chart {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  width: 50%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.right__chart {
+  /* padding: 20px; */
+  width: 100%;
+}
+
+.status__created {
+  background-color: #c3ebcd !important;
+  font-weight: 600;
+  color: #155724 ;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.status__cancelled {
+  font-weight: 600;
+  border-radius: 10px;
+  color: #fff;
+  background-color:  #dc3545 !important;
+  padding: 5px 10px;
+}
+
+.status__completed {
+  font-weight: 600;
+  border-radius: 10px;
+  color: #fff;
+  padding: 5px 10px;
+  background-color:  #f0ad4e !important;
+}
+
+.status__paid {
+  font-weight: 600;
+  border-radius: 10px;
+  color: #fff;
+  padding: 5px 10px;
+  background-color:  #669fea !important;
+}
+.status__shipping {
+  font-weight: 600;
+  border-radius: 10px;
+  color: #fff;
+  padding: 5px 10px;
+  background-color:  #4ea7f0 !important;
 }
