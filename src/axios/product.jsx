@@ -6,16 +6,10 @@ async function getAllProductApi(authToken) {
 
     try {
         const response = await axios.get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`, 
-            },
         });
-        console.log("Response status:", response.status);
-        console.log("Response headers:", response.headers);
         console.log("Response data:", response.data);
         return response.data;
     } catch (error) {
-        console.error("Error response status:", error.response?.status);
         console.error("Error response data:", error.response?.data || error.message);
         throw error;
     }
@@ -44,12 +38,9 @@ async function createProductApi(authToken, categoryId, name, image_1, price, des
             }
         );
 
-        console.log("Response status:", response.status);
-        console.log("Response headers:", response.headers);
         console.log("Response data:", response.data);
         return response.data;
     } catch (error) {
-        console.error("Error response status:", error.response?.status);
         console.error("Error response data:", error.response?.data || error.message);
         throw error;
     }
@@ -76,13 +67,10 @@ async function updateProductApi(authToken, categoryId, id, name, price, descript
             }
         );
 
-        console.log("Response status:", response.status); // Trạng thái HTTP
         console.log("Response data:", response.data);     // Dữ liệu trả về
         return response.data; // Trả về dữ liệu từ API
     } catch (error) {
         if (error.response) {
-            // Xử lý lỗi từ server (4xx, 5xx)
-            console.error("Error status:", error.response.status);
             console.error("Error response data:", error.response.data);
         } else if (error.request) {
             // Xử lý lỗi không nhận được phản hồi từ server

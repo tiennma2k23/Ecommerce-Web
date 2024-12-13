@@ -53,7 +53,7 @@ export default function Signup() {
     return (
         <div className="signup-page">
             <div className="signup-left">
-                <div className="signup-logo">FOREVER</div>
+                <div className="signup-logo">SPORTER</div>
                 <Link to="/login" className="signupToLogin-btn">LOG IN</Link>
             </div>
             <div className="signup-right">

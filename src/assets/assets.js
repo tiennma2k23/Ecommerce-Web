@@ -13,11 +13,10 @@ import support_img from './support_img.png'
 import menu_icon from './menu_icon.png'
 import about_img from './about_img.png'
 import contact_img from './contact_img.png'
-import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
 import vnpay_logo from './vnpay.png'
 import zalopay_logo from './zalopay_logo.png'
-import { GetProductApi } from '../axios/axios'
+import { getAllProductApi } from '../axios/product'
 import { data } from 'autoprefixer'
 
 export const assets = {
@@ -36,7 +35,6 @@ export const assets = {
     menu_icon,
     about_img,
     contact_img,
-    stripe_logo,
     cross_icon,
     vnpay_logo,
     zalopay_logo
@@ -46,7 +44,7 @@ export const products = [];
 
 let productData = [];
 
-function formatProductData(product) {
+export function formatProductData(product) {
     const defaultData = {
         _id: "",
         name: "Unnamed Product",
@@ -96,25 +94,3 @@ function formatProductData(product) {
 
     return [];
 }
-
-// Hàm lấy dữ liệu và gán vào biến toàn cục
-async function fetchProductData() {
-    try {
-        productData = await GetProductApi(); // Gán dữ liệu vào biến toàn cục
-        console.log('Fetched Product Data:', productData); // Kiểm tra dữ liệu
-        let newData = formatProductData(productData);
-        products.push(...newData);
-        console.log(products);
-        return products;
-    } catch (error) {
-        console.error('Failed to fetch product data:', error.message);
-    }
-}
-
-// Gọi hàm để lấy dữ liệu
-fetchProductData();
-
-// Sử dụng dữ liệu sau khi đã gán
-// setTimeout(() => {
-//     console.log('Product Data in Global Variable:', productData); // Dữ liệu có sẵn ở đây
-// }, 1000);

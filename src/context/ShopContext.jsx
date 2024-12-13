@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-import { products } from "../assets/assets";
+import { products, formatProductData } from "../assets/assets";
 import { toast } from "react-toastify";
 import Product from "../pages/Product";
 import { useNavigate } from "react-router-dom";
 import { LogoutApi } from "../axios/axios";
+import { AddProductToCartApi, GetCartApi, updateQuantityItem, removeItem, clearCart } from "../axios/order";
+import { getAllProductApi } from "../axios/product";
 
 export const ShopContext = createContext();
 
@@ -14,6 +16,8 @@ const ShopContextProvider = (props) => {
     const [search,setSearch] = useState('');
     const [showSearch,setShowSearch] = useState(false);
     const [cartItems,setCartItems] = useState({});
+    const [products, setProducts] = useState([]); // State để lưu danh sách sản phẩm
+    const [loadingProducts, setLoadingProducts] = useState(true); // Trạng thái tải sản phẩm
     // Lấy trạng thái từ localStorage (mặc định là false nếu chưa có giá trị)
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
         return JSON.parse(localStorage.getItem("isAuthenticated")) || false;
@@ -21,60 +25,95 @@ const ShopContextProvider = (props) => {
 
     const navigate = useNavigate();
 
+    // Hàm lấy dữ liệu sản phẩm
+    const fetchProductData = async () => {
+        try {
+            const productData = await getAllProductApi(); // Gọi API lấy sản phẩm
+            const formattedData = formatProductData(productData); // Định dạng dữ liệu
+            setProducts(formattedData); // Cập nhật state sản phẩm
+        } catch (error) {
+            console.error('Failed to fetch product data:', error.message);
+            toast.error('Failed to load products. Please try again.');
+        } finally {
+            setLoadingProducts(false); // Kết thúc trạng thái loading
+        }
+    };
+
+    // Gọi fetchProductData khi component được mount
+    useEffect(() => {
+        fetchProductData();
+    }, []);
+
     // Hàm để cập nhật trạng thái xác thực và lưu vào localStorage
     const handleAuthentication = (value) => {
         setIsAuthenticated(value);
         localStorage.setItem("isAuthenticated", JSON.stringify(value));
     };
 
-    const addToCart = async (itemId, size) => {
-
-        if (!size) {
-            toast.error('Select Product Size');
-            return;
-        }
-
-        let cartData = structuredClone(cartItems);
-        console.log(cartData);
-
-        if (cartData[itemId]) {
-            if (cartData[itemId][size]) {
-                cartData[itemId][size] += 1;
+    const addToCart = async (cartId, productId, quantity) => {
+    
+        try {    
+            // Gọi API để thêm sản phẩm vào giỏ hàng
+            const addResponse = await AddProductToCartApi(cartId, productId, quantity);
+            if (addResponse !== "Item added to cart") {
+                toast.error('Failed to add product to cart');
+                return;
             }
-            else{
-                cartData[itemId][size] = 1;
-            }
+    
+            // Gọi API để lấy dữ liệu giỏ hàng mới
+            const updatedCartData = await GetCartApi(cartId);
+    
+            // Cập nhật trạng thái cartItems
+            setCartItems(updatedCartData);
+    
+            toast.success('Product added to cart');
+        } catch (error) {
+            console.error('Add to cart error:', error);
+            toast.error('Error adding product to cart');
         }
-        else{
-            cartData[itemId] = {};
-            cartData[itemId][size] = 1;
-        }
-        setCartItems(cartData);
-
-    }
+    };       
 
     const getCartCount = () => {
         let totalCount = 0;
-        for(const items in cartItems){
-            for(const item in cartItems[items]){
-                try {
-                    if (cartItems[items][item] > 0) {
-                        totalCount += cartItems[items][item];
-                    } 
-                } catch (error) {
-                    
-                }
+    
+        // Kiểm tra nếu cartItems là mảng hoặc đối tượng chứa mảng items
+        const itemsArray = Array.isArray(cartItems) ? cartItems : cartItems.items || [];
+    
+        itemsArray.forEach(item => {
+            if (item.quantity > 0) {
+                totalCount += item.quantity;
             }
-        }
+        });
+    
         return totalCount;
+    };         
+
+    const updateQuantity = async (cartId, itemId, quantity) => {
+        const cartData = await updateQuantityItem(cartId, itemId, quantity);
+        if (cartData !== "Cart item quantity updated successfully") {
+            toast.error('Failed to update quantity product');
+            return;
+        }
+
+        const updatedCartData = await GetCartApi(cartId);
+
+        setCartItems(updatedCartData.items);
     }
 
-    const updateQuantity = async (itemId,size,quantity) => {
-        let cartData = structuredClone(cartItems);
+    const removeCartItem = async (cartId, itemId) => {
+        const cartData = await removeItem(cartId, itemId);
 
-        cartData[itemId][size] = quantity;
+        const updatedCartData = await GetCartApi(cartId);
 
-        setCartItems(cartData);
+        setCartItems(updatedCartData.items);
+    }
+
+    const removeAllCart = async (cartId) => {
+        const cartData = await clearCart(cartId);
+
+        const updatedCartData = await GetCartApi(cartId);
+
+        setCartItems(updatedCartData.items);
     }
 
     const getCartAmount = () => {
@@ -116,17 +155,17 @@ const ShopContextProvider = (props) => {
     };
     
     const value = {
-        products, currency, delivery_fee,
+        products, loadingProducts, currency, delivery_fee,
         search,setSearch,showSearch,setShowSearch,
-        cartItems,addToCart,
-        getCartCount,updateQuantity,
+        cartItems, setCartItems, addToCart,
+        getCartCount,updateQuantity, removeCartItem, removeAllCart,
         getCartAmount, navigate, 
         isAuthenticated, setIsAuthenticated, handleAuthentication, logout
     }
 
     return (
         <ShopContext.Provider value={value}>
-            {props.children}
+            {loadingProducts ? <div>Loading products...</div> : props.children}
         </ShopContext.Provider>
     )
 
