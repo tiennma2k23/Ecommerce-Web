@@ -1,6 +1,7 @@
 package com.backend.ecommerce.controller;
 
 
+import com.backend.ecommerce.dto.Response.CartResponse;
 import com.backend.ecommerce.model.Cart;
 import com.backend.ecommerce.model.CartItem;
 import com.backend.ecommerce.model.Product;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +32,24 @@ public class CartController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Cart> getCartById(@RequestParam Long id) {
+    public ResponseEntity<CartResponse> getCartById(@RequestParam Long id) {
         Cart cart = cartService.getCartById(id);
         if (cart == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(cart);
+
+        // Tính tổng giá trị từ các CartItem
+        List<CartItem> cartItems = cartService.getCartItems(cart);
+        BigDecimal total = cartItems.stream()
+                .map(item -> BigDecimal.valueOf(item.getProduct().getPrice())
+                        .multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        // Tạo DTO để trả về
+        CartResponse response = new CartResponse(cart, total.doubleValue());
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/get/items")
     public ResponseEntity<List<CartItem>> getCartItems(@RequestParam Long cartId) {
