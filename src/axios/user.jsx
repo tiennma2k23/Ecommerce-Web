@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 async function getAllUserApi(authToken) {
-    const url = "https://ecommercebe.southeastasia.cloudapp.azure.com/admin/users/get"; // Đường dẫn API
+    const url = "https://sporter.southeastasia.cloudapp.azure.com/admin/users/get"; // Đường dẫn API
     const token = authToken; 
 
     try {
@@ -32,7 +32,7 @@ async function changeRole(userEmail) {
         return;
     }
 
-    const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/user/${userEmail}/role?newRole=ADMIN`;
+    const url = `https://sporter.southeastasia.cloudapp.azure.com/user/${userEmail}/role?newRole=ADMIN`;
 
     try {
         const response = await axios.put(url, {}, {
