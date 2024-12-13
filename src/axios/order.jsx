@@ -8,7 +8,7 @@ async function CreateCartApi(userId) {
         }
 
         const response = await axios.post(
-            `https://ecommercebe.southeastasia.cloudapp.azure.com/cart/create`,
+            `https://sporter.southeastasia.cloudapp.azure.com/cart/create`,
             null,
             {
                 headers: {
@@ -36,7 +36,7 @@ async function GetCartApi(cartId) {
         }
 
         // Gửi yêu cầu GET
-        const response = await axios.get(`https://ecommercebe.southeastasia.cloudapp.azure.com/cart/get`, {
+        const response = await axios.get(`https://sporter.southeastasia.cloudapp.azure.com/cart/get`, {
             params: { id: cartId },
             headers: {
                 Authorization: `Bearer ${token}`
@@ -60,7 +60,7 @@ async function AddProductToCartApi(cartId, productId, quantity)
             throw new Error('Token not found. Please log in again.');
         }
 
-        const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/cart/add/items?cartId=${cartId}&productId=${productId}&quantity=${quantity}`;
+        const url = `https://sporter.southeastasia.cloudapp.azure.com/cart/add/items?cartId=${cartId}&productId=${productId}&quantity=${quantity}`;
 
         const response = await axios.post(url, null, {
             headers: {
@@ -87,7 +87,7 @@ async function updateQuantityItem(cartId, itemId, quantity) {
 
         // Gửi yêu cầu PUT với query parameters
         const response = await axios.put(
-            `https://ecommercebe.southeastasia.cloudapp.azure.com/cart/update/item/quantity`, 
+            `https://sporter.southeastasia.cloudapp.azure.com/cart/update/item/quantity`, 
             null, // No body content required for PUT request
             {
                 params: {
@@ -120,7 +120,7 @@ async function removeItem(cartId, itemId) {
 
         // Gửi yêu cầu DELETE
         const response = await axios.delete(
-            `https://ecommercebe.southeastasia.cloudapp.azure.com/cart/remove/items`, 
+            `https://sporter.southeastasia.cloudapp.azure.com/cart/remove/items`, 
             {
                 params: {
                     cartId: cartId,    // Query Parameter: Cart ID
@@ -151,7 +151,7 @@ async function clearCart(cartId) {
 
         // Gửi yêu cầu DELETE
         const response = await axios.delete(
-            `https://ecommercebe.southeastasia.cloudapp.azure.com/cart/clear`, 
+            `https://sporter.southeastasia.cloudapp.azure.com/cart/clear`, 
             {
                 params: {
                     id: cartId
@@ -176,7 +176,7 @@ async function CheckOutCartApi(userId, cartId, address) {
         const token = localStorage.getItem('authToken'); // Thay bằng token thực tế
 
         // URL endpoint
-        const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/orders/checkout?userId=${userId}&cartId=${cartId}`;
+        const url = `https://sporter.southeastasia.cloudapp.azure.com/orders/checkout?userId=${userId}&cartId=${cartId}`;
 
         // Body chứa thông tin địa chỉ
         const body = {
