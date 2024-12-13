@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {API_URL} from "../constant.js";
 
 async function CreateAccountApi(firstName, lastName, email, password) {
     console.log(firstName);
@@ -16,7 +17,7 @@ async function CreateAccountApi(firstName, lastName, email, password) {
     try {
         // Make the POST request to the server API
         const response = await axios.post(
-            'https://sporter.southeastasia.cloudapp.azure.com/auth/sign-up',
+            `${API_URL}/auth/sign-up`,
             requestData,
             {
                 headers: {
@@ -40,7 +41,7 @@ async function CreateAccountApi(firstName, lastName, email, password) {
 async function LoginApi(email, password) {
 
     try {
-        const response = await axios.post('https://sporter.southeastasia.cloudapp.azure.com/auth/sign-in', {
+        const response = await axios.post(`${API_URL}/auth/sign-in`, {
             email: email,
             password: password
         });
@@ -62,7 +63,7 @@ async function LoginApi(email, password) {
 async function LogoutApi(token) {
     try {
         const response = await axios.post(
-            'https://sporter.southeastasia.cloudapp.azure.com/auth/logout',
+            `${API_URL}/auth/logout`,
             null,
             {
                 headers: {
