@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import './userEdit.css';
@@ -9,14 +8,14 @@ export default function UserEdit() {
 
     // Tạo state để lưu trữ các giá trị có thể chỉnh sửa
     const [email, setEmail] = useState(user?.email || "");
-    const [name, setName] = useState(user?.name || "");
-    const [phone, setPhone] = useState(user?.phone || "");
-    const [address, setAddress] = useState(user?.address || "");
+    const [name, ] = useState(user?.firstname || "");
+    const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || "");
+    const [role, setRole] = useState(user?.role || "");
 
     const handleSubmit = (event) => {
         event.preventDefault();
         // Xử lý khi form được submit, có thể thêm logic cập nhật dữ liệu ở đây
-        console.log("Updated User Info:", { email, name, phone, address });
+        console.log("Updated User Info:", { email, name, phoneNumber, role });
     };
 
     return (
@@ -46,27 +45,27 @@ export default function UserEdit() {
                             id="name" 
                             name="name" 
                             value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            onChange={(e) => (e.target.value)}
                         />
                     </label>
-                    <label htmlFor="phone">
+                    <label htmlFor="phoneNumber">
                         <span>Số điện thoại</span>
                         <input 
                             type="number" 
-                            id="phone" 
-                            name="phone" 
-                            value={phone}
+                            id="phoneNumber" 
+                            name="phoneNumber" 
+                            value={phoneNumber}
                             onChange={(e) => setPhone(e.target.value)}
                         />
                     </label>
-                    <label htmlFor="address">
-                        <span>Địa chỉ</span>
+                    <label htmlFor="role">
+                        <span>Vai tro</span>
                         <input 
                             type="text" 
-                            id="address" 
-                            name="address" 
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
+                            id="role" 
+                            name="role" 
+                            value={role}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
                         />
                     </label>
                     <input type="submit" value="Chỉnh sửa"/>

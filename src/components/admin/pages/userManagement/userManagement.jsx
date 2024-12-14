@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from "react-router-dom";
-// import { getAllUserApi, changeRole } from "../../../../axios/user";
-import { getAllUserApi, changeRole } from "../../../../axios/user.jsx";
+import { faMagnifyingGlass, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Link, useNavigate } from "react-router-dom";
+import { getAllUserApi } from "../../../../axios/user.jsx";
 import './userManagement.css';
 
 export default function UserManagement() {
@@ -24,7 +23,7 @@ export default function UserManagement() {
             }
     
             try {
-                console.log("Token được sử dụng:", storedToken);
+                console.log("Token được sử dụng trang userManagement:", storedToken);
                 const data = await getAllUserApi(storedToken);
                 console.log("Danh sách người dùng:", data);
                 setUsers(Array.isArray(data) ? data : []); // Đảm bảo users luôn là mảng
@@ -43,16 +42,13 @@ export default function UserManagement() {
     };
 
     // Lọc dữ liệu dựa trên từ khóa tìm kiếm
-    const filteredData = users.filter((item) => {
-        const name = item.name || ""; // Đảm bảo có giá trị chuỗi mặc định
-        const email = item.email || "";
-        const role = item.role || "";
-        return (
-            name.toLowerCase().includes(searchInput.toLowerCase()) ||
-            email.toLowerCase().includes(searchInput.toLowerCase()) ||
-            role.includes(searchInput)
-        );
-    });    
+    const filteredData = users.filter(
+        (item) =>
+            (item.name?.toLowerCase().includes(searchInput.toLowerCase()) || false) ||
+            (item.email?.toLowerCase().includes(searchInput.toLowerCase()) || false) ||
+            (item.phone?.includes(searchInput) || false)
+    );
+    
 
     const totalPages = Math.ceil(filteredData.length / recordsPerPage);
     
@@ -72,20 +68,9 @@ export default function UserManagement() {
         }
     };
 
-    const handleEdit = async (userEmail) => {
-        try {
-            // Change the user's role
-            await changeRole(userEmail);
-            
-            // Update the users state to reflect the role change
-            const updatedUsers = users.map((user) =>
-                user.email === userEmail ? { ...user, role: newRole } : user
-            );
-            setUsers(updatedUsers);
-        } catch (error) {
-            console.error("Error changing role:", error);
-        }
-    };    
+    const handleEdit = (user) => {
+        navigate("/user-management/user-edit", { state: { user } });
+    };
 
     return (
         <div className="user-container">
@@ -95,11 +80,12 @@ export default function UserManagement() {
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                     <input
                         name="search"
-                        placeholder="Nhập Tên/ Email/ Vai trò"
+                        placeholder="Nhập Tên/ Email/ Số điện thoại"
                         value={searchInput}
                         onChange={handleChange}
                     />
                 </div>
+                {/* <Link to="/user-management/user-create" className="btn-add">Thêm tài khoản</Link> */}
             </div>
 
             <table className="user-table">
@@ -108,8 +94,9 @@ export default function UserManagement() {
                         <th>ID</th>
                         <th>Email</th>
                         <th>Tên</th>
+                        <th>Số điện thoại</th>
                         <th>Vai trò</th>
-                        <th>Cấp quyền</th>
+                        {/* <th>Hành động</th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -118,17 +105,18 @@ export default function UserManagement() {
                             <td>{item.id}</td>
                             <td>{item.email}</td>
                             <td>{item.firstname} {item.lastname}</td>
+                            <td>{item.phoneNumber}</td>
                             <td>{item.role}</td>
-                            <td>
+                            {/* <td>
                                 <div className="user-btn">
-                                    <button
-                                        className="btn-edit"
-                                        onClick={() => handleEdit(item.email)} // Pass email and current role
-                                    >
+                                    <button className="btn-edit" onClick={() => handleEdit(item)}>
                                         <FontAwesomeIcon icon={faPenToSquare} />
                                     </button>
+                                    <button className="btn-delete">
+                                        <FontAwesomeIcon icon={faTrash} />
+                                    </button>
                                 </div>
-                            </td>
+                            </td> */}
                         </tr>
                     ))}
                 </tbody>
@@ -146,4 +134,3 @@ export default function UserManagement() {
         </div>
     );
 }
-

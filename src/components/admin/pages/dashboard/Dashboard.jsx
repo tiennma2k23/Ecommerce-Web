@@ -30,7 +30,7 @@
     const [currentPage, setCurrentPage] = useState(0);
     const [productsPerPage] = useState(5);
     const [currentOrders, setCurrentOrders] = useState([]);
-    const [producstInWeek, setProductsInWeek] = useState([]);
+    const [producstInWeek, setProductsInWeek] = useState(0);
 
     const fetchData = async () => {
       try {

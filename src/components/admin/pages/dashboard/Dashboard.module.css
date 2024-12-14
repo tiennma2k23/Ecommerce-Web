@@ -176,6 +176,7 @@ td[data-label="STT"] {
 
 .daily__chart {
   margin-top: 20px;
+  margin-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
