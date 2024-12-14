@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
 import "./DailySales.css";
+import { API_URL } from "../../../../constant";
 
 import {
     Chart as ChartJS,
