@@ -30,7 +30,7 @@ function LayoutDefault() {
               <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/products" element={<Product />} />
-              <Route path="/admin/products/:id" element={<ProductDetail />} />
+              <Route path="/admin/dashboard/:id" element={<ProductDetail />} />
               <Route path="/admin/order" element={<OrderManagement />} />
               <Route path="/admin/product-management" element={<ProductManagement />} />
               <Route path="/admin/product-management/product-create" element={<ProductCreate />} />

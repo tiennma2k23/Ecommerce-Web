@@ -40,7 +40,7 @@ const Breadcrumbs = () => {
 
   useEffect(() => {
     const productId = pathnames[pathnames.length - 1];
-    if (pathnames.includes('products') && !isNaN(productId)) {
+    if (pathnames.includes('dashboard') && !isNaN(productId)) {
       const product = productList.find((item) => item.id === parseInt(productId));
       if (product) {
         setProductName(product.name);

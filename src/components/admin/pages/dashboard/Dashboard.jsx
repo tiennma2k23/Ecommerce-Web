@@ -247,12 +247,12 @@ import {API_URL} from "../../../../constant.js";
                           <tr key={index}>
                             <td data-label="STT">{index + 1 + offset}</td>
                             <td data-label="Hình ảnh">
-                              <Link to={`/admin/products/${product.id}`}>
+                              <Link to={`/admin/dashboard/${product.id}`}>
                                 <img src={product.image_1} alt="" />
                               </Link>
                             </td>
                             <td data-label="Sản phẩm">
-                              <Link to={`/admin/products/${product.id}`}>
+                              <Link to={`/admin/dashboard/${product.id}`}>
                                 <strong>{product.name}</strong>
                                 <br />
                                 <span>{product.price}</span>

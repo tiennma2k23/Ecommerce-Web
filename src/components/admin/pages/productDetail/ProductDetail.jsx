@@ -58,7 +58,6 @@ function ProductDetail() {
         </div>
         <div className="product-thumbnails">
           <img src={productDetail.image_1} alt="Thumbnail 1" className="product-thumbnail" />
-          <img src={productDetail.image_1} alt="Thumbnail 2" className="product-thumbnail" />
         </div>
       </div>
       <div className="detail">
