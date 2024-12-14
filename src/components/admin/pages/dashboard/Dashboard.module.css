@@ -86,7 +86,7 @@ td {
   background-color: #fff;
 }
 
-td img {
+td[data-label="Hình ảnh"] img {
   width: 60%;
   height: auto; /* Duy trì tỷ lệ khung hình */
   object-fit: contain; /* Đảm bảo ảnh nằm gọn trong khung */
