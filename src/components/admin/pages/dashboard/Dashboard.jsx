@@ -10,6 +10,8 @@
   import TruckIcon from '/src/components/admin/components/Assets/dashboard/truck.svg';
   import SackDollarIcon from '/src/components/admin/components/Assets/dashboard/sackDollar.svg';
   import { getAllProductApi } from "../../../../axios/product";
+import {API_URL} from "../../../../constant.js";
+
   import DailyChart from "../../components/Chart/DailySales";
 
   import {
@@ -57,7 +59,7 @@
         const token = localStorage.getItem('authToken')
         console.log(token);
         // Gửi yêu cầu API với token trong header Authorization
-        const response = await axios.get("https://ecommercebe.southeastasia.cloudapp.azure.com/admin/orders/current-month", {
+        const response = await axios.get(`${API_URL}/admin/orders/current-month`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -92,7 +94,7 @@
         const token = localStorage.getItem('authToken')
         console.log(token);
         // Gửi yêu cầu API với token trong header Authorization
-        const response = await axios.get("https://ecommercebe.southeastasia.cloudapp.azure.com/admin/orders/current-week", {
+        const response = await axios.get(`${API_URL}/admin/orders/current-week`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

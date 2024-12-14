@@ -33,7 +33,7 @@ const DailyChart = () => {
     try {
       const token = localStorage.getItem('authToken');
       const res = await axios.get(
-        "https://ecommercebe.southeastasia.cloudapp.azure.com/admin/orders/all",
+        `${API_URL}/admin/orders/all`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

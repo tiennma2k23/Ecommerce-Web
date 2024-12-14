@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchIcon from '../../components/Assets/dashboard/search.svg';
+import {API_URL} from "../../../../constant.js";
+
 import axios from 'axios';
 import './Orders.css';
 
@@ -24,7 +26,7 @@ const Order = () => {
     try {
       const token = localStorage.getItem('authToken');
       const res = await axios.get(
-        "https://ecommercebe.southeastasia.cloudapp.azure.com/admin/orders/all",
+        `${API_URL}/admin/orders/all`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -50,7 +52,7 @@ const Order = () => {
     try {
       const token = localStorage.getItem('authToken');
       const res = await axios.put(
-        `https://ecommercebe.southeastasia.cloudapp.azure.com/admin/orders/update-status?orderId=${orderId}&status=${statusCode}`,
+        `${API_URL}/admin/orders/update-status?orderId=${orderId}&status=${statusCode}`,
         {},
         {
           headers: {

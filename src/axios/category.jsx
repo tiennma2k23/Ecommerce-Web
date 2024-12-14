@@ -25,7 +25,7 @@ async function getAllCategoryApi(authToken) {
 }
 
 async function createCategoryApi(authToken, name) {
-    const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/admin/category/add`; // Đường dẫn API
+    const url = `${API_URL}/admin/category/add`; // Đường dẫn API
     const token = authToken; // Thay authToken bằng giá trị token hợp lệ
 
     try {
@@ -51,7 +51,7 @@ async function createCategoryApi(authToken, name) {
     }
 }
 async function updateCategoryApi(authToken, categoryId, name) {
-    const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/admin/category/update?categoryId=${categoryId}`; // Đường dẫn API
+    const url = `${API_URL}/admin/category/update?categoryId=${categoryId}`; // Đường dẫn API
 
     try {
         const response = await axios.put(
@@ -86,7 +86,7 @@ async function updateCategoryApi(authToken, categoryId, name) {
 }
 
 async function deleteCategoryApi(authToken, id) {
-    const url = `https://ecommercebe.southeastasia.cloudapp.azure.com/admin/category/delete?categoryId=${id}`; // Đường dẫn API
+    const url = `${API_URL}/admin/category/delete?categoryId=${id}`; // Đường dẫn API
 
     try {
         const response = await axios.delete(url, {

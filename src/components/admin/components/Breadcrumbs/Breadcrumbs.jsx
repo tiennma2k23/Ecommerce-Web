@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './Breadcrumbs.css'; 
+import {API_URL} from "../../../../constant.js";
+
 
 const Breadcrumbs = () => {
   const location = useLocation();
@@ -27,7 +29,7 @@ const Breadcrumbs = () => {
 
   useEffect(() => {
     // Tải danh sách tất cả sản phẩm
-    axios.get('https://ecommercebe.southeastasia.cloudapp.azure.com/user/products/all')
+    axios.get(`${API_URL}/user/products/all`)
       .then((response) => {
         if (response.status === 200) {
           setProductList(response.data);

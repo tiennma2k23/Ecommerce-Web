@@ -70,7 +70,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path='/admin/user-management' element={<UserManagement/>} />
+        {/* <Route path='/admin/user-management' element={<UserManagement/>} /> */}
       </Routes>
       <Footer/>
     </div>
