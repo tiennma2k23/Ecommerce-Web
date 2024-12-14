@@ -72,9 +72,9 @@ const Collection = () => {
       <div className="min-w-60">
         <p
           onClick={() => setShowFilter(!showFilter)}
-          className="my-2 text-xl flex items-center cursor-pointer gap-2"
+          className="font-sans my-2 text-xl flex items-center cursor-pointer gap-2"
         >
-          FILTERS
+          BỘ LỌC
           <img
             className={`h-3 sm:hidden ${showFilter ? 'rotate-90' : ''}`}
             src={assets.dropdown_icon}
@@ -87,7 +87,7 @@ const Collection = () => {
             showFilter ? '' : 'hidden'
           } sm:block`}
         >
-          <p className="mb-3 text-sm font-medium ">CATEGORIES</p>
+          <p className="font-sans mb-3 text-sm font-medium ">LOẠI</p>
           <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
             {categories.map((cat, index) => (
               <p key={index} className="flex gap-2">
@@ -111,11 +111,11 @@ const Collection = () => {
           {/* Product Sort */}
           <select
             onChange={(e) => setSortType(e.target.value)}
-            className="border-2 border-gray-300 text-sm px-2"
+            className="font-sans border-2 border-gray-300 text-sm px-2"
           >
-            <option value="relavent">Sort by: Relavent</option>
-            <option value="low-high">Sort by: Low to High</option>
-            <option value="high-low">Sort by: High to Low</option>
+            <option value="relavent">Sắp xếp: Có liên quan</option>
+            <option value="low-high">Sắp xếp: Thấp đến Cao</option>
+            <option value="high-low">Sắp xếp: Cao đến Thấp</option>
           </select>
         </div>
 
