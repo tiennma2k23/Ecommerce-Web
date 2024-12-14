@@ -200,6 +200,7 @@ export default function ProductManagement() {
                             <th>Tên</th>
                             <th>Giá</th>
                             <th>Số lượng</th>
+                            <th>Đã bán</th>
                             <th>Mô tả</th>
                             <th>Ảnh minh họa</th>
                             <th>Danh mục</th>
@@ -214,6 +215,7 @@ export default function ProductManagement() {
                                     <td className="table-cell">{item.name}</td>
                                     <td>{item.price}</td>
                                     <td>{item.quantity}</td>
+                                    <td>{item.b_quantity}</td>
                                     <td className="table-cell">{item.description}</td>
                                     <td>
                                         {item.image_1 ? (
