@@ -25,19 +25,32 @@ const PlaceOrder = () => {
     setAddress((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Hàm xử lý khi nhấn nút "PLACE ORDER"
   const handleCheckOutCart = async () => {
     try {
-        console.log(cartId);
-      await CheckOutCartApi(userId, cartId, address); // Truyền state address vào đây
-      if (localStorage.getItem('cartId'))
-        localStorage.removeItem('cartId');
+      console.log(cartId);
+      await CheckOutCartApi(userId, cartId, address); // Gọi API checkout
+      if (localStorage.getItem('cartId')) localStorage.removeItem('cartId');
       navigate('/orders');
       alert("Tạo đơn thành công");
     } catch (error) {
-      console.error('Error during checkout:', error);
+      console.log("API error response:", error.response);
+  
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data || "Có lỗi xảy ra."; // Lấy thông báo từ `data`
+        console.error("Error during checkout:", errorMessage);
+  
+        // Kiểm tra nếu lỗi liên quan đến số lượng sản phẩm
+        if (errorMessage.includes("does not have enough stock")) {
+          alert("Sản phẩm không còn đủ số lượng trong kho. Vui lòng chọn sản phẩm khác.");
+        } else {
+          alert(errorMessage); // Hiển thị lỗi khác (nếu có)
+        }
+      } else {
+        console.error("Unexpected error:", error);
+        alert("Có lỗi xảy ra khi tạo đơn hàng. Vui lòng thử lại sau.");
+      }
     }
-  };
+  };  
 
   return (
     <div className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t">
