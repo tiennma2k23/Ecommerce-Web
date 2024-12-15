@@ -8,6 +8,7 @@ import  CartIcon  from "../Assets/sidebar/cart.svg";
 import  LogoutIcon  from "../Assets/sidebar/logout.svg";
 import  TruckIcon  from "../Assets/sidebar/truck.svg";
 import SettingIcon  from "../Assets/sidebar/setting.svg";
+import {LogoutApi} from '../../../../axios/axios'
 
 function Sidebar() {
   return (
@@ -55,19 +56,35 @@ function Sidebar() {
             Quản lý tài khoản
           </NavLink>
           <NavLink
-            to="/admin/setting"
+            to="/admin/category-management"
             className={({ isActive }) =>
               isActive ? `${styles.menuItem} ${styles.active}` : styles.menuItem
             }
           >
             <img src={SettingIcon} className={styles.sideIcon} />
-            Cài đặt
+            Quản lý danh mục
           </NavLink>
           <NavLink
             to="/"
             className={({ isActive }) =>
               isActive ? `${styles.menuItem} ${styles.active}` : styles.menuItem
             }
+            onClick={async () => {
+              const token = localStorage.getItem('authToken'); // Lấy token từ localStorage
+              if (!token) {
+                alert('Không tìm thấy token, vui lòng đăng nhập lại!');
+                return;
+              }
+              try {
+                await LogoutApi(token); // Gọi API với token
+                alert('Đăng xuất thành công!');
+                localStorage.clear()
+                window.location.href = "/"; // Chuyển hướng về trang chủ
+              } catch (error) {
+                alert('Đăng xuất thất bại, vui lòng thử lại.');
+                console.error('Error during logout:', error.response || error.message);
+              }
+            }}
           >
             <img src={LogoutIcon} className={styles.sideIcon}/>
             Thoát

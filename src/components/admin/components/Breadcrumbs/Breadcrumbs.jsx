@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './Breadcrumbs.css'; 
+import {API_URL} from "../../../../constant.js";
+
 
 const Breadcrumbs = () => {
   const location = useLocation();
@@ -17,11 +19,17 @@ const Breadcrumbs = () => {
     "product-management": 'Quản lý sản phẩm',
     "user-management": 'Quản lý tài khoản',
     setting: 'Cài đặt',
+    "category-management": 'Quản lý danh mục',
+    "product-create": "Thêm sản phẩm mới",
+    "product-edit": "Chỉnh sửa sản phẩm",
+    "user-edit": "Chỉnh sửa người dùng",
+    "user-create": "Thêm mới người dùng",
+
   };
 
   useEffect(() => {
     // Tải danh sách tất cả sản phẩm
-    axios.get('https://ecommercebe.southeastasia.cloudapp.azure.com/user/products/all')
+    axios.get(`${API_URL}/user/products/all`)
       .then((response) => {
         if (response.status === 200) {
           setProductList(response.data);
@@ -32,7 +40,7 @@ const Breadcrumbs = () => {
 
   useEffect(() => {
     const productId = pathnames[pathnames.length - 1];
-    if (pathnames.includes('products') && !isNaN(productId)) {
+    if (pathnames.includes('dashboard') && !isNaN(productId)) {
       const product = productList.find((item) => item.id === parseInt(productId));
       if (product) {
         setProductName(product.name);

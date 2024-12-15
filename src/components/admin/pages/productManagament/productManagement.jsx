@@ -120,6 +120,12 @@ export default function ProductManagement() {
             return;
         }
 
+        const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?");
+    if (!confirmDelete) {
+        console.log("Người dùng hủy xóa.");
+        return; // Nếu người dùng không xác nhận, không thực hiện xóa
+    }
+
         try {
             await deleteProductApi(storedToken, id);
             setProducts((prevProducts) => {
@@ -130,6 +136,7 @@ export default function ProductManagement() {
                 }
                 return updatedProducts;
             });
+            alert(`Sản phẩm có ID ${id} đã được xóa thành công.`);
             console.log(`Sản phẩm có ID ${id} đã được xóa thành công.`);
         } catch (error) {
             console.error("Lỗi khi xóa sản phẩm:", error);
@@ -193,6 +200,7 @@ export default function ProductManagement() {
                             <th>Tên</th>
                             <th>Giá</th>
                             <th>Số lượng</th>
+                            <th>Đã bán</th>
                             <th>Mô tả</th>
                             <th>Ảnh minh họa</th>
                             <th>Danh mục</th>
@@ -207,6 +215,7 @@ export default function ProductManagement() {
                                     <td className="table-cell">{item.name}</td>
                                     <td>{item.price}</td>
                                     <td>{item.quantity}</td>
+                                    <td>{item.b_quantity}</td>
                                     <td className="table-cell">{item.description}</td>
                                     <td>
                                         {item.image_1 ? (
