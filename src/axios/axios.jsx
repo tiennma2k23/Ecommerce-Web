@@ -79,6 +79,7 @@ async function LogoutApi(token) {
 }
 
 async function CheckTokenApi() {
+
     try {
         const token = localStorage.getItem("authToken");
 

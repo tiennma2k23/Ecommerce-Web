@@ -11,6 +11,7 @@ const Product = () => {
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState('');
   const [quantity, setQuantity] = useState(1); // Quản lý số lượng
+  const [error, setError] = useState(null);
   const userId = localStorage.getItem('userId');
   const cartId = localStorage.getItem('defaultCartId');
 
@@ -28,13 +29,28 @@ const Product = () => {
     fetchProductData();
   }, [productId, products]);
 
-  const handleCreateCart = async() => {
-    const cart = await CreateCartApi(userId);
-    console.log(cart);
-    addToCart(cart.id, productData._id, quantity);
-    localStorage.setItem("cartId", cart.id);
-    navigate('/place-order')
-  }
+  const handleCreateCart = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setError("Bạn cần đăng nhập để thực hiện thao tác này.");
+        setTimeout(() => navigate("/login"), 2000); // Điều hướng đến trang login sau 2 giây
+        return;
+      }
+  
+      const cart = await CreateCartApi(userId);
+      addToCart(cart.id, productData._id, quantity);
+      localStorage.setItem("cartId", cart.id);
+      navigate('/place-order');
+    } catch (error) {
+      if (error.isAuthError) {
+        setError("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+        setTimeout(() => navigate("/login"), 2000);
+      } else {
+        setError(error.message || "Đã xảy ra lỗi. Vui lòng thử lại.");
+      }
+    }
+  };  
 
   return productData ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
@@ -86,6 +102,11 @@ const Product = () => {
               className="border py-2 px-4"
             />
           </div>
+          {error && (
+            <div className="bg-red-100 text-red-700 px-4 py-3 rounded relative my-4" role="alert">
+              {error}
+            </div>
+          )}
           <div className="flex justify-between">
             <button
               onClick={() => addToCart(cartId, productData._id, quantity)}

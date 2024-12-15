@@ -52,14 +52,9 @@ const ShopContextProvider = (props) => {
     };
 
     const addToCart = async (cartId, productId, quantity) => {
-    
         try {    
             // Gọi API để thêm sản phẩm vào giỏ hàng
             const addResponse = await AddProductToCartApi(cartId, productId, quantity);
-            if (addResponse !== "Item added to cart") {
-                toast.error('Failed to add product to cart');
-                return;
-            }
     
             // Gọi API để lấy dữ liệu giỏ hàng mới
             const updatedCartData = await GetCartApi(cartId);
@@ -69,10 +64,15 @@ const ShopContextProvider = (props) => {
     
             toast.success('Product added to cart');
         } catch (error) {
-            console.error('Add to cart error:', error);
-            toast.error('Error adding product to cart');
+            if (error.isAuthError) {
+                toast.error('Please log in to continue.');
+                setTimeout(() => navigate("/login"), 2000);
+            } else {
+                console.error('Add to cart error:', error);
+                toast.error('Error adding product to cart');
+            }
         }
-    };       
+    };         
 
     const getCartCount = () => {
         let totalCount = 0;
