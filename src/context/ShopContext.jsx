@@ -101,6 +101,7 @@ const ShopContextProvider = (props) => {
         const updatedCartData = await GetCartApi(cartId);
 
         setCartItems(updatedCartData.cart.items);
+        setTotal(updatedCartData.total);
     }
 
     const removeCartItem = async (cartId, itemId) => {
@@ -109,6 +110,7 @@ const ShopContextProvider = (props) => {
         const updatedCartData = await GetCartApi(cartId);
 
         setCartItems(updatedCartData.cart.items);
+        setTotal(updatedCartData.total);
     }
 
     const removeAllCart = async (cartId) => {
