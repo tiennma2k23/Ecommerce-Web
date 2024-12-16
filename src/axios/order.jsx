@@ -189,6 +189,7 @@ async function CheckOutCartApi(userId, cartId, address) {
             street: address.street,
             city: address.city,
             district: address.district,
+            contactNumber: address.phone
         };
 
         // Gửi yêu cầu POST
@@ -207,6 +208,63 @@ async function CheckOutCartApi(userId, cartId, address) {
     }
 }
 
+async function Payment(id_dh, amount) {
+    try {
+        // URL endpoint
+        const url = "https://api.vietqr.io/v2/generate";
+
+        // Body chứa thông tin địa chỉ
+        const body = {
+            "accountNo": "0964406858",
+            "accountName": "DINH THI PHUONG THUY",
+            "acqId": "970422",
+            "addInfo": `Thanh toán đơn hàng ${id_dh}`,
+            "amount": String(amount), // Chuyển sang chuỗi nếu cần
+            "template": "compact2"
+        };
+
+        // Gửi yêu cầu POST
+        const response = await axios.post(url, body, {
+            headers: {
+                'Content-Type': 'application/json', // Đảm bảo đúng định dạng JSON
+            },
+        });
+
+        // Trả về kết quả
+        return response.data;
+    } catch (error) {
+        console.error('Error while processing payment:', error.response ? error.response.data : error.message);
+        throw error; // Ném lỗi để xử lý bên ngoài nếu cần
+    }
+}
+
+async function GetAllOrderApi() {
+    try {
+        const token = localStorage.getItem('authToken');
+        const userId = localStorage.getItem('userId');
+
+        if (!token) {
+            throw new Error('Token not found. Please log in again.');
+        }
+
+        // Gọi API với cấu hình đúng
+        const response = await axios.get(`${API_URL}/orders/all`, {
+            params: {
+                userId: userId // Truyền userId qua params
+            },
+            headers: {
+                Authorization: `Bearer ${token}` // Header với token
+            }
+        });
+
+        // Trả về kết quả
+        return response.data;
+    } catch (error) {
+        console.error('Error while fetching orders:', error.response ? error.response.data : error.message);
+        throw error; // Ném lỗi để xử lý bên ngoài nếu cần
+    }
+}
+
 export { 
     CreateCartApi, 
     GetCartApi, 
@@ -215,4 +273,6 @@ export {
     removeItem,
     clearCart,
     CheckOutCartApi, 
+    Payment,
+    GetAllOrderApi
 };
