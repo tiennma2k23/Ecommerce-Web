@@ -16,7 +16,6 @@ const Cart = () => {
     const fetchCartData = async () => {
       try {
         if (cartId) {
-          console.log(cartId);
           const updatedCart = await GetCartApi(cartId);
           console.log(updatedCart);
           setTotal(updatedCart.total);
