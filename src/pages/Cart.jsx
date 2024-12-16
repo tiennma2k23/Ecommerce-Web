@@ -33,7 +33,7 @@ const Cart = () => {
   return (
     <div className="border-t pt-14">
       <div className="text-2xl mb-3">
-        <Title text1={'YOUR'} text2={'CART'} />
+        <Title text1={'GIỎ HÀNG'} text2={'CỦA BẠN'} />
       </div>
 
       <div>
@@ -47,9 +47,9 @@ const Cart = () => {
                 <div className="flex items-start gap-6">
                   <img className="w-16 sm:w-20" src={item.product.image_1} alt={item.product.name} />
                   <div>
-                    <p className="text-xs sm:text-lg font-medium">{item.product.name}</p>
+                    <p className="font-sans text-xs sm:text-lg font-medium">{item.product.name}</p>
                     <div className="flex items-center gap-5 mt-2">
-                      <p>{currency}{item.product.price}</p>
+                      <p>{Intl.NumberFormat().format(item.product.price)}{currency}</p>
                     </div>
                   </div>
                 </div>
@@ -62,7 +62,7 @@ const Cart = () => {
                 />
                 <div 
                   onClick={() => updateQuantity(cartId, item.id, item.quantity)} // Gọi API với giá trị mới
-                  className="w-4 mr-4 sm:w-5 cursor-pointer"
+                  className="font-sans w-4 mr-4 sm:w-5 cursor-pointer"
                 >
                   Cập nhật
                 </div>
@@ -76,18 +76,18 @@ const Cart = () => {
             );
           })
         ) : (
-          <p>No items in the cart</p>
+          <p className="font-sans">Chưa có sản phẩm trong giỏ hàng.</p>
         )}
       </div>
 
-      <button onClick={() => removeAllCart(cartId)}>Clear Cart</button>
+      <button onClick={() => removeAllCart(cartId)}>Xóa giỏ hàng</button>
 
       <div className="flex justify-end my-20">
         <div className="w-full sm:w-[450px]">
           <CartTotal total={total}/>
           <div className="w-full text-end">
-            <button onClick={() => navigate('/place-order')} className="bg-black text-white text-sm my-8 px-8 py-3">
-              PROCEED TO CHECKOUT
+            <button onClick={() => navigate('/place-order')} className="font-sans bg-black text-white text-sm my-8 px-8 py-3">
+              TIẾN HÀNH THANH TOÁN
             </button>
           </div>
         </div>

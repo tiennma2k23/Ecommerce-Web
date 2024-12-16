@@ -1,17 +1,19 @@
 import axios from 'axios';
 import {API_URL} from "../constant.js";
 
-async function CreateAccountApi(firstName, lastName, email, password) {
+async function CreateAccountApi(firstName, lastName, email, password, phoneNumber) {
     console.log(firstName);
     console.log(lastName);
     console.log(email);
     console.log(password);
+    console.log(phoneNumber);
     // Prepare the data to be sent in JSON format
     const requestData = {
         firstname: firstName,
         lastname: lastName,
         email: email,
         password: password,
+        phonenumber: phoneNumber,
     };
 
     try {
