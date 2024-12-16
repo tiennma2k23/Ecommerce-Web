@@ -80,7 +80,7 @@ const Cart = () => {
         )}
       </div>
 
-      <button onClick={() => removeAllCart(cartId)}>Xóa giỏ hàng</button>
+      <button onClick={() => removeAllCart(cartId)} className='font-sans'>Xóa giỏ hàng</button>
 
       <div className="flex justify-end my-20">
         <div className="w-full sm:w-[450px]">
