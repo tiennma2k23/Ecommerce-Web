@@ -18,6 +18,7 @@ const ShopContextProvider = (props) => {
     const [cartItems,setCartItems] = useState({});
     const [products, setProducts] = useState([]); // State để lưu danh sách sản phẩm
     const [loadingProducts, setLoadingProducts] = useState(true); // Trạng thái tải sản phẩm
+    const [total, setTotal] = useState("");
     // Lấy trạng thái từ localStorage (mặc định là false nếu chưa có giá trị)
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
         return JSON.parse(localStorage.getItem("isAuthenticated")) || false;
@@ -51,33 +52,33 @@ const ShopContextProvider = (props) => {
     };
 
     const addToCart = async (cartId, productId, quantity) => {
-    
         try {    
             // Gọi API để thêm sản phẩm vào giỏ hàng
             const addResponse = await AddProductToCartApi(cartId, productId, quantity);
-            if (addResponse !== "Item added to cart") {
-                toast.error('Failed to add product to cart');
-                return;
-            }
     
             // Gọi API để lấy dữ liệu giỏ hàng mới
             const updatedCartData = await GetCartApi(cartId);
     
             // Cập nhật trạng thái cartItems
-            setCartItems(updatedCartData);
+            setCartItems(updatedCartData.cart);
     
             toast.success('Product added to cart');
         } catch (error) {
-            console.error('Add to cart error:', error);
-            toast.error('Error adding product to cart');
+            if (error.isAuthError) {
+                toast.error('Please log in to continue.');
+                setTimeout(() => navigate("/login"), 2000);
+            } else {
+                console.error('Add to cart error:', error);
+                toast.error('Error adding product to cart');
+            }
         }
-    };       
+    };         
 
     const getCartCount = () => {
         let totalCount = 0;
     
-        // Kiểm tra nếu cartItems là mảng hoặc đối tượng chứa mảng items
-        const itemsArray = Array.isArray(cartItems) ? cartItems : cartItems.items || [];
+        // Kiểm tra nếu cartItems có giá trị và cartItems.items là một mảng
+        const itemsArray = Array.isArray(cartItems?.items) ? cartItems.items : [];
     
         itemsArray.forEach(item => {
             if (item.quantity > 0) {
@@ -86,9 +87,10 @@ const ShopContextProvider = (props) => {
         });
     
         return totalCount;
-    };         
+    };           
 
     const updateQuantity = async (cartId, itemId, quantity) => {
+        console.log(cartId, itemId, quantity);
         const cartData = await updateQuantityItem(cartId, itemId, quantity);
         if (cartData !== "Cart item quantity updated successfully") {
             toast.error('Failed to update quantity product');
@@ -97,7 +99,7 @@ const ShopContextProvider = (props) => {
 
         const updatedCartData = await GetCartApi(cartId);
 
-        setCartItems(updatedCartData.items);
+        setCartItems(updatedCartData.cart.items);
     }
 
     const removeCartItem = async (cartId, itemId) => {
@@ -105,16 +107,20 @@ const ShopContextProvider = (props) => {
 
         const updatedCartData = await GetCartApi(cartId);
 
-        setCartItems(updatedCartData.items);
+        setCartItems(updatedCartData.cart.items);
     }
 
     const removeAllCart = async (cartId) => {
-        const cartData = await clearCart(cartId);
-
-        const updatedCartData = await GetCartApi(cartId);
-
-        setCartItems(updatedCartData.items);
-    }
+        try {
+          await clearCart(cartId); // Xóa toàn bộ giỏ hàng qua API
+          
+          const updatedCartData = await GetCartApi(cartId); // Lấy lại dữ liệu giỏ hàng
+          setCartItems(updatedCartData.cart.items); // Cập nhật danh sách sản phẩm trong context
+          setTotal(updatedCartData.total); // Cập nhật tổng giá trị giỏ hàng trong context
+        } catch (error) {
+          console.error("Error clearing cart:", error);
+        }
+      };
 
     const getCartAmount = () => {
         let totalAmount = 0;
@@ -159,7 +165,7 @@ const ShopContextProvider = (props) => {
         search,setSearch,showSearch,setShowSearch,
         cartItems, setCartItems, addToCart,
         getCartCount,updateQuantity, removeCartItem, removeAllCart,
-        getCartAmount, navigate, 
+        getCartAmount, navigate, total, setTotal,
         isAuthenticated, setIsAuthenticated, handleAuthentication, logout
     }
 

@@ -27,6 +27,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  width: calc(100% - 250px);
 }
 .main-content {
   display: flex;

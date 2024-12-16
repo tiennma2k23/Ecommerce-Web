@@ -6,8 +6,9 @@ import CartTotal from '../components/CartTotal';
 import { GetCartApi } from "../axios/order";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate, setCartItems, removeCartItem, removeAllCart } = useContext(ShopContext);
+  const { total, setTotal, currency, cartItems, updateQuantity, navigate, setCartItems, removeCartItem, removeAllCart } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
+
   const cartId = localStorage.getItem("defaultCartId");
 
   // Fetch cart data from API
@@ -15,8 +16,11 @@ const Cart = () => {
     const fetchCartData = async () => {
       try {
         if (cartId) {
+          console.log(cartId);
           const updatedCart = await GetCartApi(cartId);
-          setCartItems(updatedCart.items); // Set context cart items
+          console.log(updatedCart);
+          setTotal(updatedCart.total);
+          setCartItems(updatedCart.cart.items); // Set context cart items
         }
       } catch (error) {
         console.error('Error fetching cart data:', error);
@@ -80,7 +84,7 @@ const Cart = () => {
 
       <div className="flex justify-end my-20">
         <div className="w-full sm:w-[450px]">
-          <CartTotal />
+          <CartTotal total={total}/>
           <div className="w-full text-end">
             <button onClick={() => navigate('/place-order')} className="bg-black text-white text-sm my-8 px-8 py-3">
               PROCEED TO CHECKOUT

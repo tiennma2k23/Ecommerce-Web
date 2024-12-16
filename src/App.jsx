@@ -15,7 +15,6 @@ import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UserManagement from './components/admin/userManagement/userManagement';
 import { CheckTokenApi } from './axios/axios';
 import LayoutDefault from './components/admin/layouts/LayoutDefault';
 
@@ -71,7 +70,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path='/admin/user-management' element={<UserManagement/>} />
+        {/* <Route path='/admin/user-management' element={<UserManagement/>} /> */}
       </Routes>
       <Footer/>
     </div>

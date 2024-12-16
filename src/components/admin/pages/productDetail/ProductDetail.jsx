@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import GroceryIcon from "../../components/Assets/product-detail/grocery.svg";
 import axios from "axios";
 import "./productDetail.css";
+import {API_URL} from "../../../../constant.js";
+
 
 function ProductDetail() {
   const { id } = useParams(); // Lấy ID từ URL
@@ -14,7 +16,7 @@ function ProductDetail() {
     async function fetchProductDetail() {
       try {
         const authToken = localStorage.getItem('authToken'); 
-        const url = "https://ecommercebe.southeastasia.cloudapp.azure.com/user/products/all"; 
+        const url = `${API_URL}/user/products/all`; 
 
         // Gọi API để lấy danh sách sản phẩm
         const response = await axios.get(url, {
@@ -56,7 +58,6 @@ function ProductDetail() {
         </div>
         <div className="product-thumbnails">
           <img src={productDetail.image_1} alt="Thumbnail 1" className="product-thumbnail" />
-          <img src={productDetail.image_1} alt="Thumbnail 2" className="product-thumbnail" />
         </div>
       </div>
       <div className="detail">

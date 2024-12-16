@@ -23,6 +23,9 @@ async function CreateCartApi(userId) {
         return response.data;
     } catch (error) {
         console.error('Error during CreateCartApi: ', error.response ? error.response.data : error.message);
+        if (error.message === 'Token not found. Please log in again.') {
+            error.isAuthError = true; // Đánh dấu đây là lỗi xác thực
+        }
         throw error;
     }
 }
@@ -52,8 +55,7 @@ async function GetCartApi(cartId) {
     }
 }
 
-async function AddProductToCartApi(cartId, productId, quantity)
-{
+async function AddProductToCartApi(cartId, productId, quantity) {
     try {
         const token = localStorage.getItem('authToken');
 
@@ -69,10 +71,12 @@ async function AddProductToCartApi(cartId, productId, quantity)
             },
         });
 
-        console.log(response);
         return response.data;
     } catch (error) {
         console.error('Error while adding product to cart:', error.response ? error.response.data : error.message);
+        if (error.message === 'Token not found. Please log in again.') {
+            error.isAuthError = true; // Đánh dấu đây là lỗi xác thực
+        }
         throw error;
     }
 }
