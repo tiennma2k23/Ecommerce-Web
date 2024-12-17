@@ -12,6 +12,7 @@ const Login = () => {
     lastName: '',
     email: '',
     password: '',
+    phoneNumber: '',
   });
 
   const handleInputChange = (event) => {
@@ -29,7 +30,8 @@ const Login = () => {
                 formData.firstName,
                 formData.lastName,
                 formData.email,
-                formData.password
+                formData.password,
+                formData.phoneNumber
             );
             console.log(response);
             if (response === "Verify you email") {
@@ -48,12 +50,12 @@ const Login = () => {
             const response = await LoginApi(formData.email, formData.password);
             if (response && response.token) {
                 localStorage.setItem('authToken', response.token);
-          localStorage.setItem('userName', response.name);
-          localStorage.setItem('userId', response.userId);
-          localStorage.setItem('userEmail', response.email);
-          localStorage.setItem('userName', response.name);
-          localStorage.setItem('userRole', response.role);
-          localStorage.setItem('defaultCartId', response.defaultCartId);
+                localStorage.setItem('userName', response.name);
+                localStorage.setItem('userId', response.userId);
+                localStorage.setItem('userEmail', response.email);
+                localStorage.setItem('userName', response.name);
+                localStorage.setItem('userRole', response.role);
+                localStorage.setItem('defaultCartId', response.defaultCartId);
                 localStorage.setItem('role', response.role);
                 handleAuthentication(true); // Cập nhật trạng thái đăng nhập
                 if(response.role == "USER") {
@@ -85,8 +87,8 @@ const Login = () => {
           <input
             type="text"
             name="firstName"
-            className="w-full px-3 py-2 border border-gray-800"
-            placeholder="First Name"
+            className="font-sans w-full px-3 py-2 border border-gray-800"
+            placeholder="Họ"
             value={formData.firstName}
             onChange={handleInputChange}
             required
@@ -94,9 +96,18 @@ const Login = () => {
           <input
             type="text"
             name="lastName"
-            className="w-full px-3 py-2 border border-gray-800"
-            placeholder="Last Name"
+            className="font-sans w-full px-3 py-2 border border-gray-800"
+            placeholder="Tên"
             value={formData.lastName}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="tel"
+            name="phoneNumber"
+            className="font-sans w-full px-3 py-2 border border-gray-800"
+            placeholder="Số điện thoại"
+            value={formData.phoneNumber}
             onChange={handleInputChange}
             required
           />
@@ -105,7 +116,7 @@ const Login = () => {
       <input
         type="email"
         name="email"
-        className="w-full px-3 py-2 border border-gray-800"
+        className="font-sans w-full px-3 py-2 border border-gray-800"
         placeholder="Email"
         value={formData.email}
         onChange={handleInputChange}
@@ -114,8 +125,8 @@ const Login = () => {
       <input
         type="password"
         name="password"
-        className="w-full px-3 py-2 border border-gray-800"
-        placeholder="Password"
+        className="font-sans w-full px-3 py-2 border border-gray-800"
+        placeholder="Mật khẩu"
         value={formData.password}
         onChange={handleInputChange}
         required

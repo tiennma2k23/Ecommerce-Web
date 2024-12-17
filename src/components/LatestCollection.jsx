@@ -14,10 +14,10 @@ const LatestCollection = () => {
 
   return (
     <div className='my-10'>
-        <div className='text-center py-8 text-3xl'>
-            <Title text1={'LATEST'} text2={'COLLECTIONS'}/>
-            <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
-            Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the.
+        <div className='font-sans text-center py-8 text-3xl'>
+            <Title text1={'SẢN PHẨM'} text2={'MỚI'}/>
+            <p className='font-sans w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
+            Khám Phá Bộ Sưu Tập Thể Thao Mới Nhất - Phong Cách Đỉnh Cao, Hiệu Suất Tối Ưu!
             </p>
         </div>
 

@@ -72,40 +72,40 @@ const PlaceOrder = () => {
       {/* Left Side */}
       <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
         <div className="text-xl sm:text-2xl my-3">
-          <Title text1={'DELIVERY'} text2={'INFORMATION'} />
+          <Title text1={'THÔNG TIN'} text2={'GIAO HÀNG'} />
         </div>
 
         {/* Input Fields */}
         <input
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+          className="font-sans border border-gray-300 rounded py-1.5 px-3.5 w-full"
           type="text"
           name="doorNumber"
-          placeholder="Door Number"
+          placeholder="Số nhà"
           value={address.doorNumber}
           onChange={handleInputChange}
         />
         <input
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+          className="font-sans border border-gray-300 rounded py-1.5 px-3.5 w-full"
           type="text"
           name="street"
-          placeholder="Street"
+          placeholder="Đường phố"
           value={address.street}
           onChange={handleInputChange}
         />
         <div className="flex gap-3">
           <input
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+            className="font-sans border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
             name="district"
-            placeholder="District"
+            placeholder="Quận"
             value={address.district}
             onChange={handleInputChange}
           />
           <input
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+            className="font-sans border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
             name="city"
-            placeholder="City"
+            placeholder="Thành phố (Tỉnh)"
             value={address.city}
             onChange={handleInputChange}
           />
@@ -128,7 +128,7 @@ const PlaceOrder = () => {
         </div>
 
         <div className="mt-12">
-          <Title text1={'PAYMENT'} text2={'METHOD'} />
+          <Title text1={'PHƯƠNG THỨC'} text2={'THANH TOÁN'} />
           {/* Payment Method Selection */}
           <div className="flex gap-3 flex-col lg:flex-row">
             <div
@@ -140,8 +140,8 @@ const PlaceOrder = () => {
                   method === 'cod' ? 'bg-green-400' : ''
                 }`}
               ></p>
-              <p className="text-gray-500 text-sm font-medium mx-4">
-                CASH ON DELIVERY
+              <p className="font-sans text-gray-500 text-sm font-medium mx-4">
+                Thanh toán khi nhận hàng
               </p>
             </div>
           </div>
@@ -149,9 +149,9 @@ const PlaceOrder = () => {
           <div className="w-full text-end mt-8">
             <button
               onClick={handleCheckOutCart}
-              className="bg-black text-white px-16 py-3 text-sm"
+              className="font-sans bg-black text-white px-16 py-3 text-sm"
             >
-              PLACE ORDER
+              ĐẶT HÀNG
             </button>
           </div>
         </div>

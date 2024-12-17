@@ -23,25 +23,30 @@ const Orders = () => {
   return (
     <div className="border-t pt-16">
       <div className="text-2xl">
-        <Title text1={"MY"} text2={"ORDERS"} />
+        <Title text1={"ĐƠN HÀNG"} text2={"CỦA TÔI"} />
       </div>
 
       <div>
         {orders.length === 0 ? (
-          <p className="text-gray-500 text-center">No orders found.</p>
+          <p className="font-sans text-gray-500 text-center">Không tìm thấy đơn đặt hàng nào.</p>
         ) : (
           orders.map((order) => (
             <div
               key={order.id}
               className="py-4 border-t border-b text-gray-700 flex flex-col gap-4"
             >
-              <div>
-                <p className="text-lg font-medium">Order ID: {order.id}</p>
-                <p className="text-gray-500">
-                  Date: <span className="text-gray-400">{order.orderDate}</span>
-                </p>
-                <p className="text-gray-500">
-                  Status: <span>{order.statusDescription}</span>
+              <div className="flex justify-between items-center border-b pb-4 mb-4">
+                <div>
+                  <p className="font-sans text-lg font-semibold">
+                    ID đơn hàng: {order.id}
+                  </p>
+                  <p className="font-sans text-gray-500 mt-1">
+                    Ngày: <span className="text-gray-400">{order.orderDate}</span>
+                  </p>
+                </div>
+                <p className="font-sans text-gray-700 font-medium">
+                  Trạng thái:{" "}
+                  <span className="font-sans text-gray-600">{order.statusDescription}</span>
                 </p>
               </div>
 
@@ -58,15 +63,15 @@ const Orders = () => {
                       alt={item.product?.name || "Product"}
                     />
                     <div>
-                      <p className="sm:text-base font-medium">
+                      <p className="font-sans sm:text-base font-medium">
                         {item.product?.name || "Product Name"}
                       </p>
                       <div className="flex items-center gap-3 mt-2 text-base text-gray-700">
                         <p className="text-lg">
+                          {Intl.NumberFormat().format(item.orderedProductPrice)}
                           {currency}
-                          {item.orderedProductPrice}
                         </p>
-                        <p>Quantity: {item.quantity}</p>
+                        <p className='font-sans'>Số lượng: {item.quantity}</p>
                       </div>
                     </div>
                   </div>
@@ -74,8 +79,8 @@ const Orders = () => {
               </div>
 
               <div className="flex justify-between items-center mt-4">
-                <p className="text-lg font-semibold">
-                  Total: {currency}{order.totalAmount}
+                <p className="font-sans text-lg font-semibold">
+                  Tổng tiền: {Intl.NumberFormat().format(order.totalAmount)}{currency}
                 </p>
               </div>
             </div>

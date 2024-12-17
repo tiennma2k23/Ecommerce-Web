@@ -8,12 +8,12 @@ const Footer = () => {
 
         <div>
           <img src={assets.logo} className='mb-5 w-32 ' alt="" />
-          <p className='w-full md:w-2/3 text-gray-600 '>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+          <p className='font-sans w-full md:w-2/3 text-gray-600 '>
+          Sporter chuyên cung cấp đồ thể thao chất lượng cao, từ trang phục, giày dép đến phụ kiện. Chúng tôi cam kết mang đến sự thoải mái, hiệu quả và dịch vụ tận tâm cho mọi khách hàng.
           </p>
         </div>
 
-        <div>
+        {/* <div>
             <p className='text-xl font-medium mb-5'>COMPANY</p>
             <ul className='flex flex-col gap-1 text-gray-600'>
                 <li>Home</li>
@@ -21,10 +21,10 @@ const Footer = () => {
                 <li>Delivery</li>
                 <li>Privacy policy</li>
             </ul>
-        </div>
+        </div> */}
 
         <div>
-            <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
+            <p className='font-sans text-xl font-medium mb-5'>THÔNG TIN LIÊN LẠC</p>
             <ul className='flex flex-col gap-1 text-gray-600'>
                 <li>+1-234-567-890</li>
                 <li>contact@sporter.com</li>
@@ -35,7 +35,7 @@ const Footer = () => {
 
       <div>
           <hr />
-          <p className='py-5 text-sm text-center'>Copyright 2024@ sporter.com - All Right Reserved.</p>
+          <p className='py-5 text-sm text-center'>Bản quyền thuộc về 2024@sporter.com.</p>
       </div>
 
     </div>

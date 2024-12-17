@@ -1,46 +1,46 @@
 import React from 'react'
 import Title from '../components/Title'
 import { assets } from '../assets/assets'
-import NewsletterBox from '../components/NewsletterBox'
+//import NewsletterBox from '../components/NewsletterBox'
 
 const About = () => {
   return (
     <div>
       
       <div className='text-2xl text-center pt-8 border-t'>
-          <Title text1={'ABOUT'} text2={'US'} />
+          <Title text1={'VỀ'} text2={'CHÚNG TÔI'} />
       </div>
       
       <div className='my-10 flex flex-col md:flex-row gap-16'>
           <img className='w-full md:max-w-[450px]' src={assets.about_img} alt="" />
           <div className='flex flex-col justify-center gap-6 md:w-2/4 text-gray-600'>
-              <p>Sporter was born out of a passion for innovation and a desire to revolutionize the way people shop online. Our journey began with a simple idea: to provide a platform where customers can easily discover, explore, and purchase a wide range of products from the comfort of their homes.</p>
-              <p>Since our inception, we've worked tirelessly to curate a diverse selection of high-quality products that cater to every taste and preference. From fashion and beauty to electronics and home essentials, we offer an extensive collection sourced from trusted brands and suppliers.</p>
-              <b className='text-gray-800'>Our Mission</b>
-              <p>Our mission at Sporter is to empower customers with choice, convenience, and confidence. We're dedicated to providing a seamless shopping experience that exceeds expectations, from browsing and ordering to delivery and beyond.</p>
+              <p className='font-sans'>Sporter ra đời từ niềm đam mê đổi mới và mong muốn cách mạng hóa cách mọi người mua sắm trực tuyến. Hành trình của chúng tôi bắt đầu với ý tưởng đơn giản: tạo ra một nền tảng nơi khách hàng có thể dễ dàng khám phá, trải nghiệm và mua sắm các sản phẩm thể thao ngay tại nhà.</p>
+              <p className='font-sans'>Từ khi thành lập, Sporter không ngừng nỗ lực để chọn lọc những sản phẩm chất lượng cao, đáp ứng mọi nhu cầu và sở thích. Từ trang phục, giày dép đến phụ kiện thể thao, chúng tôi mang đến bộ sưu tập đa dạng từ những thương hiệu và nhà cung cấp đáng tin cậy.</p>
+              <b className='font-sans text-gray-800'>Sứ Mệnh</b>
+              <p className='font-sans'>Sứ mệnh của Sporter là mang đến cho khách hàng sự lựa chọn, tiện lợi và sự tin tưởng. Chúng tôi cam kết mang lại trải nghiệm mua sắm hoàn hảo, vượt xa mong đợi của bạn, từ việc tìm kiếm và đặt hàng cho đến giao hàng và hỗ trợ sau đó.</p>
           </div>
       </div>
 
       <div className='text-xl py-4'>
-          <Title text1={'WHY'} text2={'CHOOSE US'} />
+          <Title text1={'ĐẾN VỚI'} text2={'CHÚNG TÔI'} />
       </div>
 
       <div className='flex flex-col md:flex-row text-sm mb-20'>
           <div className='border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5'>
-            <b>Quality Assurance:</b>
-            <p className='text-gray-600'>We meticulously select and vet each product to ensure it meets our stringent quality standards.</p>
+            <b className='font-sans'>Đảm bảo chất lượng:</b>
+            <p className='font-sans text-gray-600'>Chúng tôi lựa chọn và kiểm tra kỹ lưỡng từng sản phẩm để đảm bảo đáp ứng các tiêu chuẩn chất lượng nghiêm ngặt.</p>
           </div>
           <div className='border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5'>
-            <b>Convenience:</b>
-            <p className='text-gray-600'>With our user-friendly interface and hassle-free ordering process, shopping has never been easier.</p>
+            <b className='font-sans'>Tiện lợi:</b>
+            <p className='font-sans text-gray-600'>Với giao diện thân thiện với người dùng và quy trình đặt hàng đơn giản, việc mua sắm chưa bao giờ dễ dàng đến thế.</p>
           </div>
           <div className='border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5'>
-            <b>Exceptional Customer Service:</b>
-            <p className='text-gray-600'>Our team of dedicated professionals is here to assist you the way, ensuring your satisfaction is our top priority.</p>
+            <b className='font-sans'>Dịch vụ khách hàng tận tâm:</b>
+            <p className='font-sans text-gray-600'>Đội ngũ chuyên gia tận tâm của chúng tôi luôn sẵn sàng hỗ trợ bạn, đảm bảo sự hài lòng của bạn là ưu tiên hàng đầu của chúng tôi.</p>
           </div>
       </div>
 
-      <NewsletterBox/>
+      {/* <NewsletterBox/> */}
 
     </div>
   )
