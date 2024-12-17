@@ -111,18 +111,18 @@ const Product = () => {
               {error}
             </div>
           )}
-          <div className="flex justify-between">
+          <div className="flex justify-start">
             <button
               onClick={() => addToCart(cartId, productData._id, quantity)}
-              className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700 mr-1"
+              className="font-sans bg-black text-white px-8 py-3 text-sm active:bg-gray-700 mr-1"
             >
-              ADD TO CART
+              THÊM VÀO GIỎ
             </button>
             <button
               onClick={() => handleCreateCart(productData._id, quantity)}
-              className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
+              className="font-sans bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
             >
-              BUY
+              MUA NGAY
             </button>
           </div>
           <hr className="mt-8 sm:w-4/5" />
@@ -141,7 +141,7 @@ const Product = () => {
           {/* <p className="border px-5 py-3 text-sm">Reviews (122)</p> */}
         </div>
         <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
-          <p>
+          <p className='font-sans'>
             {productData.description}
           </p>
           {/* <p>
