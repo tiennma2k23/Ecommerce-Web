@@ -9,7 +9,7 @@ const CartTotal = ({total}) => {
   return (
     <div className='w-full'>
       <div className='text-2xl'>
-        <Title text1={'CART'} text2={'TOTALS'} />
+        <Title text1={'THÀNH'} text2={'TIỀN'} />
       </div>
 
       <div className='flex flex-col gap-2 mt-2 text-sm'>
@@ -24,8 +24,8 @@ const CartTotal = ({total}) => {
             </div>
             <hr /> */}
             <div className='flex justify-between'>
-                <b>Total</b>
-                <b>{total}</b>
+                <b className="font-sans">Tổng tiền</b>
+                <b className="font-sans">{Intl.NumberFormat().format(total)}{currency}</b>
             </div>
       </div>
     </div>

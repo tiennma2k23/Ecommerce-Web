@@ -79,22 +79,22 @@ const Product = () => {
 
         {/* Product Info */}
         <div className="flex-1">
-          <h1 className="font-medium text-2xl mt-2">{productData.name}</h1>
-          <div className="flex items-center gap-1 mt-2">
+          <h1 className="font-sans font-medium text-2xl mt-2">{productData.name}</h1>
+          {/* <div className="flex items-center gap-1 mt-2">
             <img src={assets.star_icon} alt="" className="w-3 5" />
             <img src={assets.star_icon} alt="" className="w-3 5" />
             <img src={assets.star_icon} alt="" className="w-3 5" />
             <img src={assets.star_icon} alt="" className="w-3 5" />
             <img src={assets.star_dull_icon} alt="" className="w-3 5" />
             <p className="pl-2">(122)</p>
-          </div>
+          </div> */}
           <p className="mt-5 text-3xl font-medium">
+            {Intl.NumberFormat().format(productData.price)}
             {currency}
-            {productData.price}
           </p>
-          <p className="mt-5 text-gray-500 md:w-4/5">{productData.description}</p>
+          <p className="font-sans mt-5 text-gray-500 md:w-4/5">{productData.description}</p>
           <div className="flex flex-col gap-4 my-8">
-            <p>Select Quantity</p>
+            <p className='font-sans'>Số lượng</p>
             <input
               type="number"
               value={quantity}
@@ -102,6 +102,7 @@ const Product = () => {
               onChange={(e) =>
                 setQuantity(Math.max(1, parseInt(e.target.value) || 1))
               }
+              style={{ width: '100px' }}
               className="border py-2 px-4"
             />
           </div>
@@ -110,25 +111,25 @@ const Product = () => {
               {error}
             </div>
           )}
-          <div className="flex justify-between">
+          <div className="flex justify-start">
             <button
               onClick={() => addToCart(cartId, productData._id, quantity)}
-              className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
+              className="font-sans bg-black text-white px-8 py-3 text-sm active:bg-gray-700 mr-1"
             >
-              ADD TO CART
+              THÊM VÀO GIỎ
             </button>
             <button
               onClick={() => handleCreateCart(productData._id, quantity)}
-              className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
+              className="font-sans bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
             >
-              BUY
+              MUA NGAY
             </button>
           </div>
           <hr className="mt-8 sm:w-4/5" />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
-            <p>100% Original product.</p>
-            <p>Cash on delivery is available on this product.</p>
-            <p>Easy return and exchange policy within 7 days.</p>
+            <p className="font-sans">100% Chất liệu tự nhiên.</p>
+            <p className="font-sans">Thanh toán bằng tiền mặt khi nhận hàng.</p>
+            <p className="font-sans">Đổi trả dễ dàng trong vòng 7 ngày.</p>
           </div>
         </div>
       </div>
@@ -136,20 +137,18 @@ const Product = () => {
       {/* Description & Review Section */}
       <div className="mt-20">
         <div className="flex">
-          <b className="border px-5 py-3 text-sm">Description</b>
-          <p className="border px-5 py-3 text-sm">Reviews (122)</p>
+          <b className="font-sans border px-5 py-3 text-sm">Mô tả</b>
+          {/* <p className="border px-5 py-3 text-sm">Reviews (122)</p> */}
         </div>
         <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
-          <p>
+          <p className='font-sans'>
+            {productData.description}
+          </p>
+          {/* <p>
             A lightweight, usually knitted, pullover shirt, close-fitting and
             with a round neckline and short sleeves, worn as an undershirt or
             outer garment.
-          </p>
-          <p>
-            A lightweight, usually knitted, pullover shirt, close-fitting and
-            with a round neckline and short sleeves, worn as an undershirt or
-            outer garment.
-          </p>
+          </p> */}
         </div>
       </div>
 
