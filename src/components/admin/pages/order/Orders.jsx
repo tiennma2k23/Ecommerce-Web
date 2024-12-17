@@ -201,7 +201,7 @@ const Order = () => {
                   {order.statusDescription}
                 </span>
               </td>
-              <td>{order.user.phoneNumber}</td>
+              <td>{order.address.contactNumber}</td>
               <td>{order.totalAmount.toFixed(2)} VNĐ</td>
               <td>{order.payment === 'CASH_ON_DELIVERY' ? 'Thanh toán khi nhận hàng' : order.payment}</td>
               <td>
