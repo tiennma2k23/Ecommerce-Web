@@ -63,7 +63,6 @@ public class VnPayController {
                     "</body>" +
                     "</html>";
         } else {
-            orderService.updateOrderStatus(Long.valueOf(orderInfo), OrderStatus.PAID);
             htmlResponse = "<html>" +
                     "<head>" +
                     "<title>Thanh toán thất bại</title>" +
