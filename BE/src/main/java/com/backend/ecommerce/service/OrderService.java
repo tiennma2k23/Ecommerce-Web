@@ -36,7 +36,7 @@ public class OrderService {
     private ProductRepository productRepository;
 
     @Transactional
-    public Order placeOrder(Long cartId, Address address) {
+    public Order placeOrder(Long cartId, Address address, String paymentMethod) {
         // Find the cart with the given ID
         Optional<Cart> optionalCart = cartRepository.findById(cartId);
         if (!optionalCart.isPresent()) {
@@ -65,7 +65,7 @@ public class OrderService {
         Order order = new Order();
         order.setUser(cart.getUser());
         order.setOrderDate(LocalDate.now());
-        order.setPayment(PaymentMethod.CASH_ON_DELIVERY);
+        order.setPayment(paymentMethod);
         order.setAddress(savedAddress);
         orderRepository.save(order);
 
@@ -122,13 +122,14 @@ public class OrderService {
         orderRepository.delete(order);
     }
 
-    public void checkout(Integer userId, Long cartId, Address address) throws MessagingException {
-        Order order = this.placeOrder(cartId, address);
+    public long checkout(Integer userId, Long cartId, Address address, String paymentMethod) throws MessagingException {
+        Order order = this.placeOrder(cartId, address,paymentMethod);
 
         Optional<User> savedUser = userRepository.findById(userId);
 
         if (savedUser.isPresent()) {
             emailService.sendConfirmationEmail(order.getId(), savedUser.get().getEmail());
+            return order.getId();
         } else {
             throw new IllegalArgumentException("Invalid user id: " + userId);
         }
