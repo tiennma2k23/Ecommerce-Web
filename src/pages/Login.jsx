@@ -67,7 +67,7 @@ const Login = () => {
                 alert('Đăng nhập thật bại. Vui lòng xác thực tài khoản.');
             }
         } catch (error) {
-            alert('ăng nhập thật bại. Vui lòng thử lại.');
+            alert('Đăng nhập thật bại. Vui lòng thử lại.');
             console.error(error);
         }
     }

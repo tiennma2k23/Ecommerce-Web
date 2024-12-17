@@ -2,10 +2,10 @@ import React, { useContext, useState } from 'react';
 import Title from '../components/Title';
 import CartTotal from '../components/CartTotal';
 import { ShopContext } from '../context/ShopContext';
-import { CheckOutCartApi, Payment } from '../axios/order';
+import { CheckOutCartApi, Payment, VNPay } from '../axios/order';
 
 const PlaceOrder = () => {
-  const [method, setMethod] = useState('cod');
+  const [method, setMethod] = useState('cod'); // State chọn phương thức thanh toán
   const { navigate, total, setQRCode, setCartItems } = useContext(ShopContext);
   const [loading, setLoading] = useState(false); // State loading
 
@@ -32,28 +32,39 @@ const PlaceOrder = () => {
       alert("Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số).");
       return;
     }
-
+  
     setLoading(true); // Bắt đầu loading
     try {
-      console.log(cartId);
-      await CheckOutCartApi(userId, cartId, address);
+      let paymentMethod = "";
+      if (method === 'cod') {
+        paymentMethod = "Thanh toán khi nhận hàng";
+      } else if (method === 'qr') {
+        paymentMethod = "Chuyển khoản qua QR code";
+      } else if (method === 'vnpay') {
+        paymentMethod = "Thanh toán qua VNPay";
+      }
 
+      // Gọi API CheckOutCartApi
+      const orderId = await CheckOutCartApi(userId, cartId, address, paymentMethod);
       if (localStorage.getItem('cartId')) localStorage.removeItem('cartId');
-
+      // Xử lý các phương thức thanh toán khác nhau
       if (method === 'cod') {
         setCartItems({});
         navigate('/');
         alert("Tạo đơn thành công. Thanh toán khi nhận hàng.");
       } else if (method === 'qr') {
-        const data = await Payment(cartId, total);
+        const data = await Payment(orderId, total);
         setQRCode(data);
         setCartItems({});
         navigate('/pay');
         alert("Tạo đơn thành công. Vui lòng thanh toán qua QR code.");
+      } else if (method === 'vnpay') {
+        const vnpayData = await VNPay(orderId, total); // Gọi API VNPay
+        setCartItems({});
+        window.location.href = vnpayData; // Redirect đến URL thanh toán VNPay
       }
     } catch (error) {
       console.log("API error response:", error.response);
-
       const errorMessage = error.response?.data || "Có lỗi xảy ra.";
       alert(errorMessage.includes("does not have enough stock")
         ? "Sản phẩm không đủ số lượng. Vui lòng thử lại."
@@ -61,7 +72,7 @@ const PlaceOrder = () => {
     } finally {
       setLoading(false); // Kết thúc loading
     }
-  };
+  };  
 
   return (
     <div className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t">
@@ -94,6 +105,10 @@ const PlaceOrder = () => {
             <div onClick={() => setMethod('qr')} className="flex items-center gap-3 border p-2 px-3 cursor-pointer">
               <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'qr' ? 'bg-green-400' : ''}`}></p>
               <p>Thanh toán bằng QR code</p>
+            </div>
+            <div onClick={() => setMethod('vnpay')} className="flex items-center gap-3 border p-2 px-3 cursor-pointer">
+              <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'vnpay' ? 'bg-green-400' : ''}`}></p>
+              <p>Thanh toán qua VNPay</p>
             </div>
           </div>
 

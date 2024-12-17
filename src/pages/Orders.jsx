@@ -48,6 +48,10 @@ const Orders = () => {
                   Trạng thái:{" "}
                   <span className="font-sans text-gray-600">{order.statusDescription}</span>
                 </p>
+                <p className="font-sans text-gray-700 font-medium">
+                  Thanh toán:{" "}
+                  <span className="font-sans text-gray-600">{order.payment}</span>
+                </p>
               </div>
 
               {/* Duyệt qua tất cả các sản phẩm trong orderItems */}
