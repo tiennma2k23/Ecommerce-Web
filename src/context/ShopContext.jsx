@@ -19,6 +19,7 @@ const ShopContextProvider = (props) => {
     const [products, setProducts] = useState([]); // State để lưu danh sách sản phẩm
     const [loadingProducts, setLoadingProducts] = useState(true); // Trạng thái tải sản phẩm
     const [total, setTotal] = useState("");
+    const [QRCode, setQRCode] = useState("");
     // Lấy trạng thái từ localStorage (mặc định là false nếu chưa có giá trị)
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
         return JSON.parse(localStorage.getItem("isAuthenticated")) || false;
@@ -100,6 +101,7 @@ const ShopContextProvider = (props) => {
         const updatedCartData = await GetCartApi(cartId);
 
         setCartItems(updatedCartData.cart.items);
+        setTotal(updatedCartData.total);
     }
 
     const removeCartItem = async (cartId, itemId) => {
@@ -108,6 +110,7 @@ const ShopContextProvider = (props) => {
         const updatedCartData = await GetCartApi(cartId);
 
         setCartItems(updatedCartData.cart.items);
+        setTotal(updatedCartData.total);
     }
 
     const removeAllCart = async (cartId) => {
@@ -166,6 +169,7 @@ const ShopContextProvider = (props) => {
         cartItems, setCartItems, addToCart,
         getCartCount,updateQuantity, removeCartItem, removeAllCart,
         getCartAmount, navigate, total, setTotal,
+        QRCode, setQRCode,
         isAuthenticated, setIsAuthenticated, handleAuthentication, logout
     }
 

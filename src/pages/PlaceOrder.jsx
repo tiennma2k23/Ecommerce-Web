@@ -2,11 +2,11 @@ import React, { useContext, useState } from 'react';
 import Title from '../components/Title';
 import CartTotal from '../components/CartTotal';
 import { ShopContext } from '../context/ShopContext';
-import { CheckOutCartApi } from '../axios/order';
+import { CheckOutCartApi, Payment } from '../axios/order';
 
 const PlaceOrder = () => {
   const [method, setMethod] = useState('cod');
-  const { navigate } = useContext(ShopContext);
+  const { navigate, total, setQRCode, setCartItems } = useContext(ShopContext);
 
   const userId = localStorage.getItem("userId");
   const cartId = localStorage.getItem("cartId") ? localStorage.getItem("cartId") : localStorage.getItem("defaultCartId");
@@ -17,6 +17,7 @@ const PlaceOrder = () => {
     street: '',
     district: '',
     city: '',
+    phone: ''
   });
 
   // Hàm xử lý khi người dùng nhập vào input
@@ -25,12 +26,26 @@ const PlaceOrder = () => {
     setAddress((prev) => ({ ...prev, [name]: value }));
   };
 
+  const isPhoneValid = (phone) => {
+    const phoneRegex = /^[0-9]{10,11}$/; // Chỉ chấp nhận 10-11 chữ số
+    return phoneRegex.test(phone);
+  };  
+
   const handleCheckOutCart = async () => {
+    if (!isPhoneValid(address.phone)) {
+      alert("Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số).");
+      return;
+    }
     try {
       console.log(cartId);
       await CheckOutCartApi(userId, cartId, address); // Gọi API checkout
       if (localStorage.getItem('cartId')) localStorage.removeItem('cartId');
-      navigate('/orders');
+      console.log(total);
+      const data = await Payment(cartId, total);
+      console.log("data: ", data);
+      setQRCode(data);
+      setCartItems({});
+      navigate('/pay');
       alert("Tạo đơn thành công");
     } catch (error) {
       console.log("API error response:", error.response);
@@ -95,12 +110,21 @@ const PlaceOrder = () => {
             onChange={handleInputChange}
           />
         </div>
+        <input
+          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+          type="tel"
+          name="phone"
+          placeholder="Phone (10-11 digits)"
+          value={address.phone}
+          onChange={handleInputChange}
+        />
+        <small className="text-gray-400">Nhập số điện thoại gồm 10-11 chữ số</small>
       </div>
 
       {/* Right Side */}
       <div className="mt-8">
         <div className="mt-8 min-w-80">
-          <CartTotal />
+          <CartTotal total={total}/>
         </div>
 
         <div className="mt-12">

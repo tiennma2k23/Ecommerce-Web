@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
-import { CreateCartApi } from '../axios/order';
+import { CreateCartApi, GetCartApi } from '../axios/order';
 
 const Product = () => {
   const { productId } = useParams();
-  const { products, currency, addToCart, navigate } = useContext(ShopContext);
+  const { products, currency, addToCart, navigate, setTotal } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState('');
   const [quantity, setQuantity] = useState(1); // Quản lý số lượng
@@ -40,6 +40,9 @@ const Product = () => {
   
       const cart = await CreateCartApi(userId);
       addToCart(cart.id, productData._id, quantity);
+      const updatedCart = await GetCartApi(cart.id);
+      console.log(updatedCart);
+      setTotal(updatedCart.total);
       localStorage.setItem("cartId", cart.id);
       navigate('/place-order');
     } catch (error) {
