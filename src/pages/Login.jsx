@@ -35,11 +35,11 @@ const Login = () => {
             );
             console.log(response);
             if (response === "Verify you email") {
-                alert('Account created successfully! Please verify your email.');
+                alert('Tạo tài khoản thành công. Vui lòng xác minh email của bạn.');
                 setCurrentState('Login'); // Chuyển sang trạng thái đăng nhập
                 navigate("/login");
             } else {
-                throw new Error('Account creation failed');
+                throw new Error('Tạo tài khoản thất bại');
             }
         } catch (error) {
             // alert('Failed to create account. Please try again.');
@@ -64,10 +64,10 @@ const Login = () => {
                   navigate("/admin")
                 }
             } else {
-                alert('Login failed. Please check your credentials.');
+                alert('Đăng nhập thật bại. Vui lòng xác thực tài khoản.');
             }
         } catch (error) {
-            alert('Login failed. Please try again.');
+            alert('ăng nhập thật bại. Vui lòng thử lại.');
             console.error(error);
         }
     }
@@ -79,7 +79,9 @@ const Login = () => {
       className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800"
     >
       <div className="inline-flex items-center gap-2 mb-2 mt-10">
-        <p className="prata-regular text-3xl">{currentState}</p>
+      <p className="prata-regular text-3xl">
+        {currentState === "Sign Up" ? "Đăng ký" : "Đăng nhập"}
+      </p>
         <hr className="border-none h-[1.5px] w-8 bg-gray-800" />
       </div>
       {currentState === 'Sign Up' && (
@@ -132,16 +134,16 @@ const Login = () => {
         required
       />
       <div className="w-full flex justify-between text-sm mt-[-8px]">
-        <p className="cursor-pointer">Forgot your password?</p>
+        {/* <p className="cursor-pointer">Forgot your password?</p> */}
         <p
           onClick={() => setCurrentState(currentState === 'Login' ? 'Sign Up' : 'Login')}
           className="cursor-pointer"
         >
-          {currentState === 'Login' ? 'Create account' : 'Login Here'}
+          {currentState === 'Login' ? 'Tạo tài khoản' : 'Đăng nhập'}
         </p>
       </div>
       <button className="bg-black text-white font-light px-8 py-2 mt-4">
-        {currentState === 'Login' ? 'Sign In' : 'Sign Up'}
+        {currentState === 'Login' ? 'Đăng nhập' : 'Đăng ký'}
       </button>
     </form>
   );
