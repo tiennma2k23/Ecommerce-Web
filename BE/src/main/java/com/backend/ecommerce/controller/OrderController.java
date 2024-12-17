@@ -18,11 +18,10 @@ public class OrderController {
     private OrderService orderService;
 
 
-
     @PostMapping("/checkout")
-    public ResponseEntity<String> processCheckout(@RequestParam Integer userId,@RequestParam Long cartId, @RequestBody Address address) throws MessagingException {
-        orderService.checkout(userId,cartId, address);
-     return ResponseEntity.ok("checkout successful");
+    public ResponseEntity<String> processCheckout(@RequestParam Integer userId,@RequestParam Long cartId, @RequestBody Address address, @RequestParam String paymentMethod) throws MessagingException {
+        long orderId=orderService.checkout(userId,cartId, address,paymentMethod);
+     return ResponseEntity.ok(String.valueOf(orderId));
     }
 
     @DeleteMapping("/orders/{id}")
@@ -39,14 +38,5 @@ public class OrderController {
             return ResponseEntity.ok(orders);
         }
     }
-
-
-
-
-
-
-
-
-
 
 }

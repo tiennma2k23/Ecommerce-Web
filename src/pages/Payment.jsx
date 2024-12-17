@@ -5,13 +5,19 @@ const Payment = () => {
   const { QRCode } = useContext(ShopContext);
 
   if (!QRCode || !QRCode.data) {
-    return <p>Loading QR Code...</p>; // Hiển thị khi chưa có dữ liệu
+    return <p>Đang tải QR Code...</p>; 
   }
 
   return (
-    <div>
-      {/* <p>QR Code Data: {QRCode.data.qrCode}</p> */}
-
+    <div
+      style={{
+        display: 'flex',            
+        justifyContent: 'center',   
+        alignItems: 'center',       
+        height: '100vh',            
+        margin: 0,                  
+      }}
+    >
       {/* Hiển thị hình ảnh QR Code nếu có */}
       {QRCode.data.qrDataURL && (
         <img

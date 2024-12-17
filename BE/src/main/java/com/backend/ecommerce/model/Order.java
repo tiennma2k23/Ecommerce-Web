@@ -25,8 +25,7 @@ public class Order {
     @OneToMany(mappedBy = "order",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
-    private PaymentMethod payment;
+    private String payment;
 
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
@@ -85,11 +84,11 @@ public class Order {
         }
     }
 
-    public PaymentMethod getPayment() {
+    public String getPayment() {
         return payment;
     }
 
-    public void setPayment(PaymentMethod payment) {
+    public void setPayment(String payment) {
         this.payment = payment;
     }
 

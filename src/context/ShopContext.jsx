@@ -35,7 +35,7 @@ const ShopContextProvider = (props) => {
             setProducts(formattedData); // Cập nhật state sản phẩm
         } catch (error) {
             console.error('Failed to fetch product data:', error.message);
-            toast.error('Failed to load products. Please try again.');
+            toast.error('Lỗi tải sản phẩm. Vui lòng đợi.');
         } finally {
             setLoadingProducts(false); // Kết thúc trạng thái loading
         }
@@ -63,14 +63,14 @@ const ShopContextProvider = (props) => {
             // Cập nhật trạng thái cartItems
             setCartItems(updatedCartData.cart);
     
-            toast.success('Product added to cart');
+            toast.success('Sản phẩm đã được thêm vào giỏ');
         } catch (error) {
             if (error.isAuthError) {
-                toast.error('Please log in to continue.');
+                toast.error('Bạn cần đăng nhập để thực hiện thao tác này.');
                 setTimeout(() => navigate("/login"), 2000);
             } else {
                 console.error('Add to cart error:', error);
-                toast.error('Error adding product to cart');
+                toast.error('Lỗi thêm sản phẩm vào giỏ');
             }
         }
     };         
@@ -94,9 +94,11 @@ const ShopContextProvider = (props) => {
         console.log(cartId, itemId, quantity);
         const cartData = await updateQuantityItem(cartId, itemId, quantity);
         if (cartData !== "Cart item quantity updated successfully") {
-            toast.error('Failed to update quantity product');
+            toast.error('Lỗi khi cập nhật số lượng sản phẩm');
             return;
         }
+
+        toast.success('Số lượng sản phẩm đã được cập nhật');
 
         const updatedCartData = await GetCartApi(cartId);
 
@@ -175,7 +177,7 @@ const ShopContextProvider = (props) => {
 
     return (
         <ShopContext.Provider value={value}>
-            {loadingProducts ? <div>Loading products...</div> : props.children}
+            {loadingProducts ? <div>Đang tải sản phẩm, vui lòng đợi ...</div> : props.children}
         </ShopContext.Provider>
     )
 
