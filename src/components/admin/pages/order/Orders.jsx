@@ -225,8 +225,9 @@ const Order = () => {
       </table>
 
       {/* Phân trang */}
-      <div className="pagination">
+      <div className="pagination-order">
         <button
+          className='btn-prev'
           disabled={currentPage === 1}
           onClick={() => setCurrentPage(currentPage - 1)}
         >
@@ -242,6 +243,7 @@ const Order = () => {
           </button>
         ))}
         <button
+          className='btn-next'
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage(currentPage + 1)}
         >

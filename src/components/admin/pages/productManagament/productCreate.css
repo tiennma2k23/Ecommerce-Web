@@ -77,3 +77,9 @@ img.image-preview {
 .category-list li:hover {
     background-color: #f0f0f0;
 }
+
+textarea {
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    outline: none; 
+  }

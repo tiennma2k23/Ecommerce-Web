@@ -142,8 +142,8 @@ export default function CategoryManagement() {
                         <tr>
                             <th>ID</th>
                             <th>Danh mục</th>
-                            <th>Số sản phẩm</th>
-                            <th>Số sản phẩm đã bán</th>
+                            {/* <th>Số sản phẩm</th> */}
+                            {/* <th>Số sản phẩm đã bán</th> */}
                             <th>Xóa</th>
                         </tr>
                     </thead>
@@ -153,8 +153,8 @@ export default function CategoryManagement() {
                                 <tr key={category.id}>
                                     <td>{category.id}</td>
                                     <td>{category.name}</td>
-                                    <td>1</td>
-                                    <td>1</td>
+                                    {/* <td>1</td> */}
+                                    {/* <td>1</td> */}
                                     <td>
                                         <div className="category-actions">
                                             <button className="btn-delete" onClick={() => handleDelete(category.id)}>

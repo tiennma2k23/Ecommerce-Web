@@ -127,11 +127,12 @@
   margin: 2px;
 }
 
-.pagination {
+.pagination-order {
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 }
-.pagination button {
+.pagination-order button {
   padding: 8px 16px;
   font-size: 1rem;
   border: 1px solid #ddd;
@@ -142,23 +143,34 @@
   transition: all 0.3s ease;
 }
 
-.pagination button:hover {
+.pagination-order button:hover {
   background-color: #e0e0e0;
 }
 
-.pagination button:disabled {
+.pagination-order button:disabled {
   background-color: #f1f1f1 !important;
   color: #aaa;
   cursor: not-allowed;
 }
 
-.pagination button.active {
+.pagination-order button.active {
   background-color: #0088ff !important; /* Highlight color */
   color: #fff; /* Text color for active button */
   font-weight: bold;
   border-color: #007bff;
 }
 
+.pagination-order .btn-next {
+  background-color: #0088ff ;
+  color: #fff; 
+  font-weight: bold;
+}
+
+.pagination-order .btn-prev {
+  background-color: #0088ff ;
+  color: #fff; 
+  font-weight: bold;
+}
 /* Container chính của modal */
 .order-detail-modal {
   position: fixed;

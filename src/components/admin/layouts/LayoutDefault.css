@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
-  font-weight: 500px;
+  font-weight: 800px;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
 }
 .sidebar {
   width: 250px; /* Hoặc chiều rộng bạn muốn */
