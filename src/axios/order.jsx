@@ -175,13 +175,13 @@ async function clearCart(cartId) {
     }
 }
 
-async function CheckOutCartApi(userId, cartId, address) {
+async function CheckOutCartApi(userId, cartId, address, paymentMethod) {
     try {
         // Token từ localStorage hoặc thay thế bằng giá trị cố định (nếu cần)
         const token = localStorage.getItem('authToken'); // Thay bằng token thực tế
 
         // URL endpoint
-        const url = `${API_URL}/orders/checkout?userId=${userId}&cartId=${cartId}`;
+        const url = `${API_URL}/orders/checkout?userId=${userId}&cartId=${cartId}&paymentMethod=${paymentMethod}`;
 
         // Body chứa thông tin địa chỉ
         const body = {
@@ -238,6 +238,32 @@ async function Payment(id_dh, amount) {
     }
 }
 
+async function VNPay(id_dh, amount) {
+    try {
+      // URL endpoint
+        const url = `${API_URL}/api/vnpay/create-payment?amount=${amount}&orderInfo=${id_dh}`;
+  
+        console.log("Requesting VNPay API with:", { id_dh, amount });
+    
+        // Gửi yêu cầu POST mà không cần body
+        const response = await axios.post(url, {}, {
+            headers: {
+            'Content-Type': 'application/json', // Đảm bảo đúng định dạng JSON
+            },
+        });
+    
+        // Log và trả về kết quả
+        console.log("VNPay API Response:", response.data);
+        return response.data;
+        } catch (error) {
+        console.error('Error while processing payment:', error);
+    
+        // Lấy thông tin lỗi chi tiết
+        const errorMessage = error.response?.data || error.message || "Có lỗi xảy ra.";
+        throw new Error(`Payment error: ${errorMessage}`);
+    }
+}
+
 async function GetAllOrderApi() {
     try {
         const token = localStorage.getItem('authToken');
@@ -274,5 +300,6 @@ export {
     clearCart,
     CheckOutCartApi, 
     Payment,
-    GetAllOrderApi
+    GetAllOrderApi,
+    VNPay
 };
